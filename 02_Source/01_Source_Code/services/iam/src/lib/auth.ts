@@ -1,5 +1,7 @@
 import { betterAuth } from "better-auth";
+import { admin } from "better-auth/plugins";
 import pg from "pg";
+
 import { env } from "../../env.js";
 
 export const auth = betterAuth({
@@ -14,4 +16,5 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 100,
   },
+  plugins: [admin()],
 });
