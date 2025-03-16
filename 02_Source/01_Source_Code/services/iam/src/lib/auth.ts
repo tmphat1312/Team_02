@@ -3,6 +3,13 @@ import { admin } from "better-auth/plugins";
 import pg from "pg";
 
 import { env } from "../../env.js";
+import {
+  ac as accessControl,
+  admin as adminRole,
+  guest as guestRole,
+  host as hostRole,
+  tenant as tenantRole,
+} from "../auth/permissions.js";
 
 export const auth = betterAuth({
   database: new pg.Pool({
@@ -16,5 +23,17 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 100,
   },
-  plugins: [admin()],
+  plugins: [
+    admin({
+      defaultRole: "user",
+      adminRoles: ["admin"],
+      ac: accessControl,
+      roles: {
+        admin: adminRole,
+        host: hostRole,
+        tenant: tenantRole,
+        guest: guestRole,
+      },
+    }),
+  ],
 });
