@@ -8,4 +8,10 @@ export const auth = betterAuth({
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 2_000,
   }),
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: true,
+    minPasswordLength: 8,
+    maxPasswordLength: 100,
+  },
 });
