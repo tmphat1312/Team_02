@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY 02_Source/01_Source_Code/services/iam/package*json \
      02_Source/01_Source_Code/services/iam/tsconfig.json \
+     02_Source/01_Source_Code/services/iam/env.ts \
      02_Source/01_Source_Code/services/iam/src \
      ./
 
