@@ -28,12 +28,6 @@ services:
       context: ./apps/api-gateway
       dockerfile: Dockerfile
     image: rento-api-gateway
-    environment:
-      - PORT=3001
-      - ADMIN_APP_URL=http://localhost:3000
-      - WEB_APP_URL=http://localhost:5173
-      - BETTER_AUTH_SECRET=o4HJcFm8y7h72FAlQaECEDpe1xJPTMkx
-      - DATABASE_URL=postgresql://rento_onwer:npg_UfV7kprbWiq0@ep-green-grass-a12j6381-pooler.ap-southeast-1.aws.neon.tech/rento_iam?sslmode=require
     ports:
       - "3001:3001"
     networks:
