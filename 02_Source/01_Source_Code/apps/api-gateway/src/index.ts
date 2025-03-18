@@ -3,6 +3,8 @@ import { Hono } from "hono";
 import { env } from "hono/adapter";
 import { cors } from "hono/cors";
 
+import consola from "consola";
+
 import { auth } from "./lib/auth.js";
 import { only } from "./middlewares/only.js";
 
@@ -38,6 +40,6 @@ serve(
     port: Number(process.env.PORT) || 3000,
   },
   (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
+    consola.info(`Server is running on port ${info.port}`);
   }
 );
