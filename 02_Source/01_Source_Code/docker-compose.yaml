@@ -4,6 +4,7 @@ services:
       context: ./apps/web
       dockerfile: Dockerfile
     image: rento-web
+    env_file: ./apps/web/.env
     ports:
       - "3000:3000"
     networks:
@@ -16,6 +17,7 @@ services:
       context: ./apps/admin
       dockerfile: Dockerfile
     image: rento-admin
+    env_file: ./apps/admin/.env
     ports:
       - "5173:80"
     networks:
@@ -29,7 +31,8 @@ services:
       dockerfile: Dockerfile
     image: rento-api-gateway
     ports:
-      - "3001:3001"
+      - "8787:3001"
+    env_file: ./apps/api-gateway/.env
     networks:
       - app-network
 

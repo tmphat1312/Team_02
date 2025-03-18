@@ -10,8 +10,6 @@ COPY  package*json \
      src \
      ./
 
-COPY .env .env
-
 RUN npm ci && \
     npm run build && \
     npm prune --production
