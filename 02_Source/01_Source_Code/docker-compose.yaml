@@ -1,0 +1,44 @@
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    image: rento-web
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - api-gateway
+
+  admin:
+    build:
+      context: ./apps/admin
+      dockerfile: Dockerfile
+    image: rento-admin
+    ports:
+      - "5173:80"
+    networks:
+      - app-network
+    depends_on:
+      - api-gateway
+
+  api-gateway:
+    build:
+      context: ./apps/api-gateway
+      dockerfile: Dockerfile
+    image: rento-api-gateway
+    environment:
+      - PORT=3001
+      - ADMIN_APP_URL=http://localhost:3000
+      - WEB_APP_URL=http://localhost:5173
+      - BETTER_AUTH_SECRET=o4HJcFm8y7h72FAlQaECEDpe1xJPTMkx
+      - DATABASE_URL=postgresql://rento_onwer:npg_UfV7kprbWiq0@ep-green-grass-a12j6381-pooler.ap-southeast-1.aws.neon.tech/rento_iam?sslmode=require
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
