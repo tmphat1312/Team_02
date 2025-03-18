@@ -28,6 +28,10 @@ app.get("/health", only(["admin"]), (c) => {
   return c.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
+app.get("/", (c) => {
+  return c.json({ message: "Hello World" });
+});
+
 serve(
   {
     fetch: app.fetch,
