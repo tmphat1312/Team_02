@@ -25,6 +25,6 @@ COPY --from=builder --chown=api-gateway:nodejs /app/dist /app/dist
 COPY --from=builder --chown=api-gateway:nodejs /app/package.json /app/package.json
 
 USER api-gateway
-EXPOSE 3001
+EXPOSE 3001/tcp
 
-CMD ["node", "/app/dist/index.js"]
+CMD ["node", "/app/dist/server.js"]

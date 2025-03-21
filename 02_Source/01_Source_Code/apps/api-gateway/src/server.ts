@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { consola } from "consola";
 
-import app from "./src/index";
+import app from "./app.js";
 
 serve(
   {
