@@ -1,6 +1,7 @@
 {
   "name": "property",
   "scripts": {
+    "start": "bun run src/index.ts",
     "dev": "bun run --hot src/index.ts",
     "db:seed": "bun run src/db/seed.ts",
     "db:generate": "drizzle-kit generate",
