@@ -28,20 +28,28 @@ export const propertiesTable = pgTable("properties", {
   price: integer().notNull(),
 });
 
-export const propertyAmenitiesTable = pgTable("property_amenities", {
+export const propertyAmenitiesTable = pgTable("propertyAmenities", {
   propertyId: integer()
     .notNull()
-    .references(() => propertiesTable.id),
+    .references(() => propertiesTable.id, {
+      onDelete: "cascade",
+    }),
   amenityId: integer()
     .notNull()
-    .references(() => amenitiesTable.id),
+    .references(() => amenitiesTable.id, {
+      onDelete: "cascade",
+    }),
 });
 
-export const propertyCategoriesTable = pgTable("property_categories", {
+export const propertyCategoriesTable = pgTable("propertyCategories", {
   propertyId: integer()
     .notNull()
-    .references(() => propertiesTable.id),
+    .references(() => propertiesTable.id, {
+      onDelete: "cascade",
+    }),
   categoryId: integer()
     .notNull()
-    .references(() => categoriesTable.id),
+    .references(() => categoriesTable.id, {
+      onDelete: "cascade",
+    }),
 });

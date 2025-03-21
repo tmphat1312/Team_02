@@ -1,72 +1,147 @@
 import { db } from "./";
-import { amenitiesTable, categoriesTable, propertiesTable } from "./schema";
+import {
+  categoriesTable,
+  amenitiesTable,
+  propertiesTable,
+  propertyAmenitiesTable,
+  propertyCategoriesTable,
+} from "./schema";
+import { consola } from "consola";
 
-async function seed() {
-  console.log("🌱 Seeding database...");
+const categories = [
+  {
+    name: "Luxury",
+    description: "High-end properties",
+    imagePath: "/images/luxury.jpg",
+  },
+  {
+    name: "Family",
+    description: "Perfect for families",
+    imagePath: "/images/family.jpg",
+  },
+  {
+    name: "Apartment",
+    description: "Urban apartments",
+    imagePath: "/images/apartment.jpg",
+  },
+];
 
-  const categoryId = await db
-    .insert(categoriesTable)
-    .values([
+const amenities = [
+  {
+    name: "Pool",
+    description: "Swimming pool",
+    imagePath: "/images/pool.jpg",
+  },
+  {
+    name: "Gym",
+    description: "Fitness center",
+    imagePath: "/images/gym.jpg",
+  },
+  {
+    name: "Parking",
+    description: "Parking space",
+    imagePath: "/images/parking.jpg",
+  },
+];
+
+const properties = [
+  {
+    title: "Modern Villa",
+    description: "Spacious and modern villa",
+    price: 500000,
+  },
+  {
+    title: "Cozy Apartment",
+    description: "Comfortable urban apartment",
+    price: 300000,
+  },
+  {
+    title: "Luxury Mansion",
+    description: "Exquisite mansion with all amenities",
+    price: 1500000,
+  },
+];
+
+async function seedDatabase() {
+  await Promise.try(async () => {
+    await db.delete(propertyAmenitiesTable);
+    await db.delete(propertyCategoriesTable);
+    await db.delete(propertiesTable);
+    await db.delete(amenitiesTable);
+    await db.delete(categoriesTable);
+  }).catch((error) => {
+    consola.error("Error deleting tables", error);
+  });
+
+  await Promise.try(async () => {
+    const seededCategories = await db
+      .insert(categoriesTable)
+      .values(categories)
+      .returning({
+        id: categoriesTable.id,
+      });
+    const seededAmenities = await db
+      .insert(amenitiesTable)
+      .values(amenities)
+      .returning({
+        id: amenitiesTable.id,
+      });
+    const seededProperties = await db
+      .insert(propertiesTable)
+      .values(properties)
+      .returning({
+        id: propertiesTable.id,
+      });
+
+    const propertyAmenities = [
       {
-        name: "Luxury",
-        description: "High-end properties",
-        imagePath: "/images/luxury.jpg",
+        propertyId: seededProperties[0].id,
+        amenityId: seededAmenities[0].id,
       },
       {
-        name: "Budget",
-        description: "Affordable properties",
-        imagePath: "/images/budget.jpg",
+        propertyId: seededProperties[0].id,
+        amenityId: seededAmenities[1].id,
       },
-    ])
-    .returning({ id: categoriesTable.id });
+      {
+        propertyId: seededProperties[1].id,
+        amenityId: seededAmenities[2].id,
+      },
+      {
+        propertyId: seededProperties[2].id,
+        amenityId: seededAmenities[0].id,
+      },
+      {
+        propertyId: seededProperties[2].id,
+        amenityId: seededAmenities[1].id,
+      },
+      {
+        propertyId: seededProperties[2].id,
+        amenityId: seededAmenities[2].id,
+      },
+    ];
 
-  console.log("✅ Categories seeded");
+    const propertyCategories = [
+      {
+        propertyId: seededProperties[0].id,
+        categoryId: seededCategories[0].id,
+      },
+      {
+        propertyId: seededProperties[1].id,
+        categoryId: seededCategories[1].id,
+      },
+      {
+        propertyId: seededProperties[2].id,
+        categoryId: seededCategories[0].id,
+      },
+    ];
 
-  // const amenityId = await db
-  //   .insert(amenitiesTable)
-  //   .values([
-  //     {
-  //       name: "Pool",
-  //       description: "Private swimming pool",
-  //       imagePath: "/images/pool.jpg",
-  //     },
-  //     {
-  //       name: "Gym",
-  //       description: "Fully-equipped gym",
-  //       imagePath: "/images/gym.jpg",
-  //     },
-  //   ])
-  //   .returning({ id: amenitiesTable.id });
+    await db.insert(propertyCategoriesTable).values(propertyCategories);
+    await db.insert(propertyAmenitiesTable).values(propertyAmenities);
 
-  // console.log("✅ Amenities seeded");
-
-  // if (categoryId.length > 0 && amenityId.length > 0) {
-  //   await db.insert(propertiesTable).values([
-  //     {
-  //       title: "Luxury Villa",
-  //       description: "A beautiful luxury villa with a pool",
-  //       price: 500000,
-  //       imagePath: "/images/villa.jpg",
-  //       categoryId: categoryId[0].id,
-  //       amenitiesId: amenityId[0].id,
-  //     },
-  //     {
-  //       title: "Budget Apartment",
-  //       description: "Affordable apartment in the city",
-  //       price: 100000,
-  //       imagePath: "/images/apartment.jpg",
-  //       categoryId: categoryId[1].id,
-  //       amenitiesId: amenityId[1].id,
-  //     },
-  //   ]);
-  //   console.log("✅ Properties seeded");
-  // }
-
-  console.log("🌱 Database seeding complete!");
+    consola.success("Database seeded successfully");
+  }).catch((error) => {
+    consola.error("Error seeding database", error);
+  });
 }
 
-seed()
-  .catch((error) => {
-    console.error("❌ Seeding failed:", error);
-  })
-  .finally(() => process.exit());
+seedDatabase();
