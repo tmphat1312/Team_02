@@ -13,7 +13,7 @@ export function DashboardLayout() {
           <div className="border-b border-gray-300">
             <Header />
           </div>
-          <div className="p-8">
+          <div className="px-8 py-3">
             <Outlet />
           </div>
         </div>
