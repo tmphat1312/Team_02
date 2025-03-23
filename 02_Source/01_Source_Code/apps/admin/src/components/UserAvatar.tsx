@@ -1,3 +1,9 @@
+import { LogoutButton } from './LogoutButton';
+
 export function UserAvatar() {
-  return <div>UserAvatar</div>;
+  return (
+    <div>
+      <LogoutButton />
+    </div>
+  );
 }

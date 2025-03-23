@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router';
 import { authClient } from '../../lib/auth-client';
 
-export function AuthLayout() {
+export function ProtectedLayout() {
   const { isPending, data, error } = authClient.useSession();
 
   if (isPending) {
@@ -12,13 +12,13 @@ export function AuthLayout() {
     return <div>Error: {error.message}</div>;
   }
 
-  if (data && data.user.role === 'admin') {
-    return <Navigate to="/users" replace={true} />;
+  if (!data) {
+    return <Navigate to="/login" replace={true} />;
   }
 
-  return (
-    <main className="grid min-h-dvh place-content-center bg-gray-50">
-      <Outlet />
-    </main>
-  );
+  if (data.user.role !== 'admin') {
+    return <div>You are not authorized to access this site. </div>;
+  }
+
+  return <Outlet />;
 }

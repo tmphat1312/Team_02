@@ -1,8 +1,12 @@
+import { useRef, useState, useTransition } from 'react';
+
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { Message } from 'primereact/message';
 
 import { AdminIcon } from '../components/icons/Admin';
 import { Logo } from '../components/Logo';
+import { authClient } from '../lib/auth-client';
 
 export function Login() {
   return (
@@ -32,11 +36,41 @@ export function LeftSection() {
 }
 
 export function RightSection() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isPending, startTransition] = useTransition();
+  const [msg, setMsg] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(formRef.current!);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    startTransition(async () => {
+      await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: '/users',
+        fetchOptions: {
+          onError: (ctx) => {
+            setMsg(ctx.error.message);
+          },
+        },
+      });
+    });
+  };
+
   return (
     <section className="w-[42ch] space-y-6 p-12">
       <Logo />
       <h2 className="sr-only">Login to admin account</h2>
-      <form action="">
+      {msg && (
+        <div className="mb-2.5">
+          <Message severity="error" text={msg} className="w-full" />
+        </div>
+      )}
+      <form onSubmit={handleSubmit} ref={formRef}>
         <div className="mb-4 flex flex-col gap-2">
           <label htmlFor="email" className="space-x-0.5 text-sm">
             <span aria-hidden>*</span>
@@ -48,6 +82,7 @@ export function RightSection() {
             type="email"
             inputMode="email"
             id="email"
+            name="email"
             aria-describedby="email-help"
             className="p-inputtext-sm"
           />
@@ -65,6 +100,7 @@ export function RightSection() {
             required
             type="password"
             id="password"
+            name="password"
             minLength={8}
             aria-describedby="password-help"
             className="p-inputtext-sm"
@@ -74,9 +110,13 @@ export function RightSection() {
           </small>
         </div>
         <div className="text-center">
-          <Button className="px-4" size="small">
-            Login
-          </Button>
+          <Button
+            className="px-4"
+            size="small"
+            loading={isPending}
+            icon="pi pi-sign-in"
+            label="Login"
+          />
         </div>
       </form>
     </section>
