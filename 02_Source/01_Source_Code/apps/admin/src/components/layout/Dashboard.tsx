@@ -4,16 +4,18 @@ import { Sidebar } from './Sidebar';
 
 export function DashboardLayout() {
   return (
-    <main className="min-h-dvh">
-      <div className="border-b border-gray-300">
-        <Header />
-      </div>
-      <div className="grid h-full grid-cols-10 gap-4">
+    <main className="flex min-h-dvh flex-col">
+      <div className="grid h-full flex-grow grid-cols-12">
         <div className="col-span-2 border-r border-gray-300">
           <Sidebar />
         </div>
-        <div className="col-span-8">
-          <Outlet />
+        <div className="col-span-10 bg-gray-50">
+          <div className="border-b border-gray-300">
+            <Header />
+          </div>
+          <div className="p-8">
+            <Outlet />
+          </div>
         </div>
       </div>
     </main>
