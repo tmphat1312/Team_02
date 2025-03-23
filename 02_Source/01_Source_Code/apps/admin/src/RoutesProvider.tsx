@@ -17,8 +17,8 @@ export function RoutesProvider() {
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="*" element={<div>Not Found</div>} />
         </Route>
+        <Route path="*" element={<div>Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );
