@@ -1,18 +1,22 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
 
+import { AuthLayout } from './components/layout/Auth';
+import { DashboardLayout } from './components/layout/Dashboard';
+
 import { Amenities } from './routes/Amenities';
 import { Categories } from './routes/Categories';
 import { Login } from './routes/Login';
 import { Properties } from './routes/Properties';
 import { Users } from './routes/Users';
-import { Dashboard } from './components/layout/Dashboard';
 
 export function RoutesProvider() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<Dashboard />}>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<DashboardLayout />}>
           <Route path="/users" element={<Users />} />
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/properties" element={<Properties />} />

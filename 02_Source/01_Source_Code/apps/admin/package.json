@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "@fontsource/caveat-brush": "^5.2.5",
     "@tailwindcss/vite": "^4.0.15",
     "primereact": "^10.9.3",
     "react": "^19.0.0",
