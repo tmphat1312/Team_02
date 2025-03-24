@@ -1,15 +1,16 @@
+import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { AuthLayout } from './components/layout/Auth';
 import { DashboardLayout } from './components/layout/Dashboard';
-
-import { Amenities } from './routes/Amenities';
-import { Categories } from './routes/Categories';
-import { Login } from './routes/Login';
-import { Properties } from './routes/Properties';
-import { Users } from './routes/Users';
 import { ProtectedLayout } from './components/layout/Protected';
-import { Dashboard } from './routes/Dashboard';
+
+const Properties = lazy(() => import('./routes/Properties'));
+const Categories = lazy(() => import('./routes/Categories'));
+const Amenities = lazy(() => import('./routes/Amenities'));
+const Dashboard = lazy(() => import('./routes/Dashboard'));
+const Login = lazy(() => import('./routes/Login'));
+const Users = lazy(() => import('./routes/Users'));
 
 export function RoutesProvider() {
   return (

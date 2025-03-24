@@ -21,7 +21,7 @@ type LazyTableState = {
   page: number;
 };
 
-export function Categories() {
+export default function Categories() {
   const [lazyState, setLazyState] = useState<LazyTableState>({
     first: 0,
     rows: 10,

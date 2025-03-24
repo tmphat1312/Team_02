@@ -1,7 +1,7 @@
 import { Breadcrumb } from '../components/layout/Breadcrumb';
 import { PageContent } from '../components/layout/PageContent';
 
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }]} />

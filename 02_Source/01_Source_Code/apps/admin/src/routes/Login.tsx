@@ -8,7 +8,7 @@ import { AdminIcon } from '../components/icons/Admin';
 import { Logo } from '../components/Logo';
 import { authClient } from '../lib/auth-client';
 
-export function Login() {
+export default function Login() {
   return (
     <div className="flex rounded-lg bg-white shadow-lg">
       <LeftSection />

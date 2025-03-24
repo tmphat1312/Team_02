@@ -38,7 +38,7 @@ const users = [
   },
 ];
 
-export function Users() {
+export default function Users() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Users', to: '/users' }]} />
