@@ -8,7 +8,7 @@ export function PageContent({
   PageActionComponent?: React.ReactNode;
 }) {
   return (
-    <section className="py-4">
+    <section className="py-2">
       {PageActionComponent ? (
         <div className="mb-4 flex items-center justify-between">
           <PageHeading label={label} />

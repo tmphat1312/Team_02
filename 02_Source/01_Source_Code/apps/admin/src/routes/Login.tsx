@@ -51,7 +51,7 @@ export function RightSection() {
       await authClient.signIn.email({
         email,
         password,
-        callbackURL: '/users',
+        callbackURL: '/dashboard',
         fetchOptions: {
           onError: (ctx) => {
             setMsg(ctx.error.message);

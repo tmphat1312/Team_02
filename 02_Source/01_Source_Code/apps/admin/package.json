@@ -28,6 +28,7 @@
     "@tailwindcss/vite": "^4.0.15",
     "better-auth": "^1.2.4",
     "clsx": "^2.1.1",
+    "nuqs": "^2.4.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.3",
     "react": "^19.0.0",
