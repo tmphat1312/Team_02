@@ -5,7 +5,7 @@ import { DataTable } from 'primereact/datatable';
 import { Breadcrumb } from '../components/layout/Breadcrumb';
 import { PageContent } from '../components/layout/PageContent';
 
-const products = [
+const users = [
   {
     code: '001',
     name: 'Product 1',
@@ -55,7 +55,7 @@ export function Users() {
       >
         <div className="overflow-clip rounded-2xl shadow">
           <DataTable
-            value={products}
+            value={users}
             tableStyle={{ minWidth: '50rem' }}
             stripedRows
             showGridlines
