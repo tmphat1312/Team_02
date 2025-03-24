@@ -9,6 +9,7 @@ import { Login } from './routes/Login';
 import { Properties } from './routes/Properties';
 import { Users } from './routes/Users';
 import { ProtectedLayout } from './components/layout/Protected';
+import { Dashboard } from './routes/Dashboard';
 
 export function RoutesProvider() {
   return (
@@ -19,6 +20,7 @@ export function RoutesProvider() {
         </Route>
         <Route element={<ProtectedLayout />}>
           <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/users" element={<Users />} />
             <Route path="/amenities" element={<Amenities />} />
             <Route path="/properties" element={<Properties />} />

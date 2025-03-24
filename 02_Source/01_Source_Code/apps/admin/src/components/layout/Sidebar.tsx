@@ -6,6 +6,11 @@ import { TextLogo } from '../TextLogo';
 
 const NAV_ITEMS = [
   {
+    label: 'Dashboard',
+    to: '/dashboard',
+    icon: PrimeIcons.HOME,
+  },
+  {
     label: 'Users',
     to: '/users',
     icon: PrimeIcons.USERS,
