@@ -1,30 +1,24 @@
+import { consola } from "consola";
+import {
+  randFilePath,
+  randProductCategory,
+  randProductDescription,
+} from "@ngneat/falso";
+
 import { db } from "./";
 import {
-  categoriesTable,
   amenitiesTable,
+  categoriesTable,
   propertiesTable,
   propertyAmenitiesTable,
   propertyCategoriesTable,
 } from "./schema";
-import { consola } from "consola";
 
-const categories = [
-  {
-    name: "Luxury",
-    description: "High-end properties",
-    imagePath: "/images/luxury.jpg",
-  },
-  {
-    name: "Family",
-    description: "Perfect for families",
-    imagePath: "/images/family.jpg",
-  },
-  {
-    name: "Apartment",
-    description: "Urban apartments",
-    imagePath: "/images/apartment.jpg",
-  },
-];
+const categories = Array.from({ length: 100 }, (_, i) => ({
+  name: randProductCategory(),
+  description: randProductDescription(),
+  imagePath: randFilePath(),
+}));
 
 const amenities = [
   {
@@ -79,7 +73,8 @@ async function seedDatabase() {
       .values(categories)
       .returning({
         id: categoriesTable.id,
-      });
+      })
+      .onConflictDoNothing();
     const seededAmenities = await db
       .insert(amenitiesTable)
       .values(amenities)
@@ -92,51 +87,6 @@ async function seedDatabase() {
       .returning({
         id: propertiesTable.id,
       });
-
-    const propertyAmenities = [
-      {
-        propertyId: seededProperties[0].id,
-        amenityId: seededAmenities[0].id,
-      },
-      {
-        propertyId: seededProperties[0].id,
-        amenityId: seededAmenities[1].id,
-      },
-      {
-        propertyId: seededProperties[1].id,
-        amenityId: seededAmenities[2].id,
-      },
-      {
-        propertyId: seededProperties[2].id,
-        amenityId: seededAmenities[0].id,
-      },
-      {
-        propertyId: seededProperties[2].id,
-        amenityId: seededAmenities[1].id,
-      },
-      {
-        propertyId: seededProperties[2].id,
-        amenityId: seededAmenities[2].id,
-      },
-    ];
-
-    const propertyCategories = [
-      {
-        propertyId: seededProperties[0].id,
-        categoryId: seededCategories[0].id,
-      },
-      {
-        propertyId: seededProperties[1].id,
-        categoryId: seededCategories[1].id,
-      },
-      {
-        propertyId: seededProperties[2].id,
-        categoryId: seededCategories[0].id,
-      },
-    ];
-
-    await db.insert(propertyCategoriesTable).values(propertyCategories);
-    await db.insert(propertyAmenitiesTable).values(propertyAmenities);
 
     consola.success("Database seeded successfully");
   }).catch((error) => {
