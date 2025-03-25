@@ -9,8 +9,8 @@ import {
 
 type Env = {
   Variables: {
-    data: (data: unknown) => void;
-    unauthorized: (errorMsg: string) => void;
+    data: (data: unknown, meta?: unknown) => void;
+    unauthorized: (errorMsg: string, meta?: unknown) => void;
     notFound: (errorMsg?: string) => void;
   };
   Bindings: {
@@ -19,17 +19,22 @@ type Env = {
 };
 
 const defineResponseFunctions = createMiddleware<Env>(async (c, next) => {
-  const returnData = (data: unknown) => {
+  const returnData = (data: unknown, meta?: unknown) => {
     return c.json({
       data,
       error: null,
+      metadata: meta ?? {},
     });
   };
-  const returnError = (error: {
-    message: string;
-    statusCode: number;
-    statusText: string;
-  }) => {
+
+  const returnError = (
+    error: {
+      message: string;
+      statusCode: number;
+      statusText: string;
+    },
+    meta?: unknown
+  ) => {
     c.status(error.statusCode as StatusCode);
     return c.json({
       data: null,
@@ -38,25 +43,32 @@ const defineResponseFunctions = createMiddleware<Env>(async (c, next) => {
         statusCode: error.statusCode,
         statusText: error.statusText,
       },
+      metadata: meta ?? {},
     });
   };
 
   c.set("data", returnData);
 
-  c.set("unauthorized", (errorMsg) =>
-    returnError({
-      message: errorMsg,
-      statusCode: UNAUTHORIZED,
-      statusText: UNAUTHORIZED_TEXT,
-    })
+  c.set("unauthorized", (errorMsg = "Unauthorized", meta?: unknown) =>
+    returnError(
+      {
+        message: errorMsg,
+        statusCode: UNAUTHORIZED,
+        statusText: UNAUTHORIZED_TEXT,
+      },
+      meta
+    )
   );
 
-  c.set("notFound", (errorMsg = "Resource Not Found") =>
-    returnError({
-      message: errorMsg,
-      statusCode: NOT_FOUND,
-      statusText: NOT_FOUND_TEXT,
-    })
+  c.set("notFound", (errorMsg = "Resource Not Found", meta?: unknown) =>
+    returnError(
+      {
+        message: errorMsg,
+        statusCode: NOT_FOUND,
+        statusText: NOT_FOUND_TEXT,
+      },
+      meta
+    )
   );
 
   await next();
