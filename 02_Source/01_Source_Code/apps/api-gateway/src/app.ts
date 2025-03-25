@@ -10,6 +10,7 @@ import { corsMiddleware } from "./middlewares/cors.js";
 import { iamService } from "./services/iam.js";
 import { internalService } from "./services/internal.js";
 import { propertyService } from "./services/property.js";
+import { showRoutes } from "hono/dev";
 
 const app = new Hono();
 
@@ -20,5 +21,7 @@ registerServices({
   app,
   services: [iamService, propertyService, internalService],
 });
+
+showRoutes(app);
 
 export default app;
