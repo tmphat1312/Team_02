@@ -3,6 +3,7 @@ import {
   randFilePath,
   randProductCategory,
   randProductDescription,
+  randProductMaterial,
 } from "@ngneat/falso";
 
 import { db } from "./";
@@ -14,8 +15,8 @@ import {
   propertyCategoriesTable,
 } from "./schema";
 
-const categories = Array.from({ length: 100 }, (_, i) => ({
-  name: randProductCategory(),
+const categories = Array.from({ length: 5_000 }, (_, i) => ({
+  name: randProductCategory() + i + randProductMaterial(),
   description: randProductDescription(),
   imagePath: randFilePath(),
 }));
