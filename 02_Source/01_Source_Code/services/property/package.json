@@ -19,6 +19,7 @@
     "valibot": "^1.0.0"
   },
   "devDependencies": {
+    "@ngneat/falso": "^7.3.0",
     "@types/bun": "latest",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.5",

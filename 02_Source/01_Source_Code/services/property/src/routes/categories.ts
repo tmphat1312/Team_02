@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { count as countFunction, eq } from "drizzle-orm";
 
 import { db } from "../db";
 import { categoriesTable } from "../db/schema";
@@ -7,8 +7,32 @@ import { routeFactory } from "../utils/route-factory";
 const route = routeFactory.createApp();
 
 route.get("/", async (c) => {
-  const categories = await db.select().from(categoriesTable);
-  return c.var.data(categories);
+  const { page, limit } = c.req.query();
+
+  const parsedPage = Number(page) || 1;
+  const parsedLimit = Number(limit) || 10;
+
+  const [categories, [{ count }]] = await Promise.all([
+    db
+      .select()
+      .from(categoriesTable)
+      .offset((parsedPage - 1) * parsedLimit)
+      .limit(parsedLimit),
+    db
+      .select({
+        count: countFunction(),
+      })
+      .from(categoriesTable),
+  ]);
+
+  return c.var.data(categories, {
+    pagination: {
+      page: parsedPage,
+      limit: parsedLimit,
+      totalItems: count,
+      totalPages: Math.ceil(count / parsedLimit),
+    },
+  });
 });
 
 route.get("/:id", async (c) => {
