@@ -8,9 +8,9 @@ export function PageContent({
   PageActionComponent?: React.ReactNode;
 }) {
   return (
-    <section className="py-2">
+    <section className="space-y-3.5 py-2">
       {PageActionComponent ? (
-        <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <PageHeading label={label} />
           {PageActionComponent}
         </div>
@@ -23,5 +23,5 @@ export function PageContent({
 }
 
 function PageHeading({ label }: { label: string }) {
-  return <h1 className="mb-4 text-3xl">{label}</h1>;
+  return <h1 className="text-xl font-medium">{label}</h1>;
 }

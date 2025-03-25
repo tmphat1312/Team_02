@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router';
 import { authClient } from '../../lib/auth-client';
+import { DashboardSkeleton } from './Dashboard';
 
 export function AuthLayout() {
   const { isPending, data, error } = authClient.useSession();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <DashboardSkeleton />;
   }
 
   if (error) {
@@ -13,7 +14,7 @@ export function AuthLayout() {
   }
 
   if (data && data.user.role === 'admin') {
-    return <Navigate to="/users" replace={true} />;
+    return <Navigate to="/dashboard" replace={true} />;
   }
 
   return (

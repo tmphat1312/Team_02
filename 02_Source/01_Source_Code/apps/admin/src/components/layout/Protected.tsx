@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router';
 import { authClient } from '../../lib/auth-client';
+import { DashboardSkeleton } from './Dashboard';
 
 export function ProtectedLayout() {
   const { isPending, data, error } = authClient.useSession();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <DashboardSkeleton />;
   }
 
   if (error) {
