@@ -9,7 +9,7 @@ export function LogoutButton() {
   const handleLogout = () => {
     startTransition(async () => {
       // !DEMO ONLY
-      await new Promise((resolve) => setTimeout(resolve, 10_000));
+      // await new Promise((resolve) => setTimeout(resolve, 10_000));
       await authClient.signOut();
     });
   };

@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router';
 import { authClient } from '../../lib/auth-client';
 import { DashboardSkeleton } from './Dashboard';
+import { Message } from 'primereact/message';
 
 export function AuthLayout() {
   const { isPending, data, error } = authClient.useSession();
@@ -10,7 +11,7 @@ export function AuthLayout() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <Message severity="error" text={error.message} />;
   }
 
   if (data && data.user.role === 'admin') {
