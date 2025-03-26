@@ -28,16 +28,16 @@ export function DashboardSkeleton() {
       aria-hidden
     >
       {/* Sidebar Skeleton */}
-      <div className="border-r border-gray-300 bg-gray-200"></div>
+      <div className="border-r border-gray-300 bg-gray-100"></div>
 
       {/* Main Content Skeleton */}
       <div className="grid max-h-dvh grid-rows-[auto_1fr] overflow-clip bg-gray-50">
         {/* Header Skeleton */}
-        <div className="h-12 border-b border-gray-300 bg-gray-200"></div>
+        <div className="h-12 border-b border-gray-300 bg-gray-100"></div>
 
         {/* Content Skeleton */}
         <div className="space-y-4 overflow-y-auto p-8">
-          <div className="size-full rounded bg-gray-200"></div>
+          <div className="size-full rounded bg-gray-100"></div>
         </div>
       </div>
     </div>
