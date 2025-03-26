@@ -3,6 +3,14 @@ import { admin } from "better-auth/plugins";
 import pg from "pg";
 
 export const auth = betterAuth({
+  advanced: {
+    defaultCookieAttributes: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none", // Allows CORS-based cookie sharing across subdomains
+      partitioned: true, // New browser standards will mandate this for foreign cookies
+    },
+  },
   user: {
     additionalFields: {
       isHost: {
@@ -18,7 +26,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [admin()], 
+  plugins: [admin()],
   trustedOrigins: [process.env.WEB_APP_URL!, process.env.ADMIN_APP_URL!],
   secret: process.env.BETTER_AUTH_SECRET!,
 });
