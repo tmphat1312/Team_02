@@ -9,10 +9,9 @@ export const corsMiddleware: Handler = async (c, next) => {
   }>(c);
   const corsMiddlewareHandler = cors({
     origin: [ADMIN_APP_URL, WEB_APP_URL],
-    allowMethods: ["POST", "GET", "OPTIONS", "PUT", "PATCH", "DELETE"],
     allowHeaders: ["Content-Type", "Authorization"],
-    maxAge: 600,
     credentials: true,
   });
+
   return corsMiddlewareHandler(c, next);
 };
