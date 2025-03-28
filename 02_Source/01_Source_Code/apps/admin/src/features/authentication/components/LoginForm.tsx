@@ -1,23 +1,28 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Message } from 'primereact/message';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Logo } from '../../../components/Logo';
 import { authClient } from '../../../lib/auth-client';
 
+type Inputs = {
+  email: string;
+  password: string;
+};
+
 export function LoginForm() {
-  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const [isPending, startTransition] = useTransition();
   const [msg, setMsg] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const formData = new FormData(formRef.current!);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const { email, password } = data;
     startTransition(async () => {
       await authClient.signIn.email({
         email,
@@ -41,7 +46,7 @@ export function LoginForm() {
           <Message severity="error" text={msg} className="w-full" />
         </div>
       )}
-      <form onSubmit={handleSubmit} ref={formRef}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 flex flex-col gap-2">
           <label htmlFor="email" className="space-x-0.5 text-sm">
             <span aria-hidden>*</span>
@@ -49,17 +54,28 @@ export function LoginForm() {
             <span>Email Address</span>
           </label>
           <InputText
-            required
             type="email"
             inputMode="email"
             id="email"
-            name="email"
+            autoComplete="email"
             aria-describedby="email-help"
             className="p-inputtext-sm"
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Invalid email address',
+              },
+            })}
           />
           <small id="email-help" className="sr-only">
             Your email address. It is required.
           </small>
+          {errors.email && (
+            <small className="text-xs text-red-500" role="alert">
+              {errors.email.message}
+            </small>
+          )}
         </div>
         <div className="mb-6 flex flex-col gap-2">
           <label htmlFor="password" className="space-x-0.5 text-sm">
@@ -68,17 +84,26 @@ export function LoginForm() {
             <span>Password</span>
           </label>
           <InputText
-            required
             type="password"
             id="password"
-            name="password"
-            minLength={8}
             aria-describedby="password-help"
             className="p-inputtext-sm"
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 8,
+                message: 'Password must be at least 8 characters long',
+              },
+            })}
           />
           <small id="password-help" className="sr-only">
             Your password. It is required.
           </small>
+          {errors.password && (
+            <small className="text-xs text-red-500" role="alert">
+              {errors.password.message}
+            </small>
+          )}
         </div>
         <div className="text-center">
           <Button
