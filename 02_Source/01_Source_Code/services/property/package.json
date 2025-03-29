@@ -1,9 +1,9 @@
 {
   "name": "property",
   "scripts": {
+    "dev": "pylon dev -c 'bun run .pylon/index.js'",
+    "build": "pylon build",
     "start": "bun run src/index.ts",
-    "dev": "bun run --hot src/index.ts",
-    "db:seed": "bun run src/db/seed.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -11,14 +11,14 @@
     "generate:http-statuses": "bun run scripts/update-http-statuses.ts"
   },
   "dependencies": {
-    "@hono/valibot-validator": "^0.5.2",
+    "@getcronit/pylon": "^2.9.4",
     "@neondatabase/serverless": "^0.10.4",
     "consola": "^3.4.2",
     "drizzle-orm": "^0.40.1",
-    "hono": "^4.7.4",
-    "valibot": "^1.0.0"
+    "hono": "^4.7.4"
   },
   "devDependencies": {
+    "@getcronit/pylon-dev": "^1.0.4",
     "@ngneat/falso": "^7.3.0",
     "@types/bun": "latest",
     "dotenv": "^16.4.7",

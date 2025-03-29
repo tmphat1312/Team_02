@@ -3,3 +3,9 @@ node_modules/
 
 # env
 .env
+
+# pylon
+.pylon
+
+# Editor
+.vscode
