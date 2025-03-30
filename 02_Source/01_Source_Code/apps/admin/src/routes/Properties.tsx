@@ -1,5 +1,5 @@
-import { Breadcrumb } from '../components/layout/Breadcrumb';
-import { PageContent } from '../components/layout/PageContent';
+import { Breadcrumb } from '../components/Breadcrumb';
+import { PageContent } from '../components/PageContent';
 
 export default function Properties() {
   return (

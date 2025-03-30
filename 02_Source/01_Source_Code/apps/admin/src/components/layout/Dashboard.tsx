@@ -12,7 +12,12 @@ export function DashboardLayout() {
         <div className="border-b border-gray-300">
           <Header />
         </div>
-        <div className="overflow-y-auto px-8 py-3">
+        <div
+          className="overflow-y-auto px-8 py-3"
+          style={{
+            scrollbarGutter: 'stable',
+          }}
+        >
           <Outlet />
         </div>
       </div>

@@ -1,28 +1,36 @@
-import { Button } from 'primereact/button';
 import { useTransition } from 'react';
+
+import { Button } from '@heroui/button';
+import { cn } from '@heroui/theme';
+import { LogOutIcon } from 'lucide-react';
 
 import { authClient } from '../lib/auth-client';
 
-export function LogoutButton() {
+export function LogoutButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = () => {
     startTransition(async () => {
       // !DEMO ONLY
-      // await new Promise((resolve) => setTimeout(resolve, 10_000));
+      await new Promise((resolve) => setTimeout(resolve, 10_000));
       await authClient.signOut();
     });
   };
 
   return (
     <Button
-      onClick={handleLogout}
-      label="Logout"
-      size="small"
-      icon="pi pi-sign-out"
-      loading={isPending}
+      isLoading={isPending}
+      onPress={handleLogout}
       disabled={isPending}
-      text
-    />
+      variant="light"
+      className={cn('inline-flex items-center', className)}
+      startContent={<LogOutIcon className={isPending ? 'hidden' : ''} />}
+      {...props}
+    >
+      Logout
+    </Button>
   );
 }
