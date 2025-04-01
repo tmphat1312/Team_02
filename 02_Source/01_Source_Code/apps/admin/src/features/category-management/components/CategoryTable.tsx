@@ -1,7 +1,6 @@
 import {
   Alert,
   Image,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -9,65 +8,54 @@ import {
   TableHeader,
   TableRow,
 } from '@heroui/react';
-import { parseAsInteger, useQueryState } from 'nuqs';
 
+import { Pagination } from '../../../components/Pagination';
+import { TableSkeleton } from '../../../components/TableSkeleton';
 import { useCategories } from '../hooks/useCategories';
 import { DeleteCategoryButton } from './DeleteCategoryButton';
 
-export function CategoryTable() {
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
-  const {
-    isLoading,
-    error,
-    categories,
-    pagination: { limit: pageSize, totalItems, totalPages },
-  } = useCategories();
+const columns = [
+  { key: 'id', label: 'ID' },
+  { key: 'image', label: 'IMAGE' },
+  { key: 'name', label: 'NAME' },
+  { key: 'description', label: 'DESCRIPTION' },
+  { key: 'actions', label: 'ACTIONS' },
+];
 
-  if (isLoading) {
-    return <TableSkeleton />;
-  }
+export function CategoryTable() {
+  const {
+    error,
+    isLoading,
+    categories,
+    pagination: { pageSize, totalItems, totalPages },
+  } = useCategories();
 
   if (error) {
     return <Alert color="danger">{error.message}</Alert>;
   }
 
+  if (isLoading) {
+    return <TableSkeleton />;
+  }
+
   return (
     <Table
-      aria-label="Example static collection table"
-      selectionMode="multiple"
+      aria-label="Category Table"
       bottomContent={
-        <div className="my-2 flex w-full items-center justify-center gap-4">
-          <Pagination
-            isCompact
-            showControls
-            showShadow
-            page={page}
-            total={totalPages}
-            onChange={(page) => setPage(page)}
-          />
-          <span className="text-sm text-gray-500">
-            ({(page - 1) * pageSize + 1} -{' '}
-            {Math.min(page * pageSize, totalItems)} of {totalItems})
-          </span>
-        </div>
+        <Pagination
+          totalPages={totalPages}
+          pageSize={pageSize}
+          totalItems={totalItems}
+        />
       }
     >
-      <TableHeader>
-        <TableColumn key="id">ID</TableColumn>
-        <TableColumn key="image">IMAGE</TableColumn>
-        <TableColumn key="name">NAME</TableColumn>
-        <TableColumn key="description">DESCRIPTION</TableColumn>
-        <TableColumn key="actions">ACTIONS</TableColumn>
+      <TableHeader columns={columns}>
+        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
       <TableBody
-        items={
-          categories as {
-            id: string;
-            name: string;
-            description: string;
-          }[]
-        }
+        items={categories}
         isLoading={isLoading}
+        emptyContent={'No rows to display.'}
       >
         {(item) => (
           <TableRow key={item.id}>
@@ -90,28 +78,5 @@ export function CategoryTable() {
         )}
       </TableBody>
     </Table>
-  );
-}
-
-export function TableSkeleton() {
-  return (
-    <div
-      className="animate-pulse space-y-4 p-4"
-      aria-label="Loading Table"
-      aria-hidden
-    >
-      {/* Table Header Skeleton */}
-      <div className="h-10 rounded bg-gray-100"></div>
-
-      {/* Table Rows Skeleton */}
-      <div className="space-y-2">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="h-6 rounded bg-gray-100"></div>
-        ))}
-      </div>
-
-      {/* Paginator Skeleton */}
-      <div className="mt-4 h-10 rounded bg-gray-100"></div>
-    </div>
   );
 }
