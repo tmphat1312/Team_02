@@ -13,10 +13,7 @@ export function Pagination(props: PaginationProps) {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
 
   const handlePageChange = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages) {
-      return;
-    }
-
+    if (newPage < 1 || newPage > totalPages || page == newPage) return;
     setPage(newPage);
   };
 
@@ -27,7 +24,6 @@ export function Pagination(props: PaginationProps) {
   return (
     <div className="my-2 flex w-full items-center justify-center gap-4">
       <HRPagination
-        isCompact
         showControls
         page={page}
         total={totalPages}

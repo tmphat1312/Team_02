@@ -10,6 +10,7 @@ const getCategoriesQuery = `
         id
         name
         description
+        imagePath
       }
       metadata {
         pagination {
@@ -27,6 +28,7 @@ type Category = {
   id: string;
   name: string;
   description: string;
+  imagePath: string;
 };
 
 type Pagination = {
@@ -59,7 +61,10 @@ const fetchKey = ({ page }: { page: number }) => `/categories?page=${page}`;
 
 export function useCategories() {
   const [page] = useQueryState('page', parseAsInteger.withDefault(1));
-  const { isLoading, error, data } = useSWR(fetchKey({ page }), fetcher);
+  const { isLoading, error, data, mutate } = useSWR(
+    fetchKey({ page }),
+    fetcher
+  );
 
   if (data) {
     if (page - 1 > 0) {
@@ -81,5 +86,6 @@ export function useCategories() {
       totalItems: 0,
       totalPages: 0,
     },
+    revalidateCategories: mutate,
   };
 }

@@ -11,8 +11,9 @@ import {
 
 import { Pagination } from '../../../components/Pagination';
 import { TableSkeleton } from '../../../components/TableSkeleton';
-import { useCategories } from '../hooks/useCategories';
 import { DeleteCategoryButton } from './DeleteCategoryButton';
+
+import { useCategories } from '../hooks/useCategories';
 
 const columns = [
   { key: 'id', label: 'ID' },
@@ -30,13 +31,9 @@ export function CategoryTable() {
     pagination: { pageSize, totalItems, totalPages },
   } = useCategories();
 
-  if (error) {
-    return <Alert color="danger">{error.message}</Alert>;
-  }
+  if (error) return <Alert color="danger">{error.message}</Alert>;
 
-  if (isLoading) {
-    return <TableSkeleton />;
-  }
+  if (isLoading) return <TableSkeleton />;
 
   return (
     <Table
@@ -50,28 +47,33 @@ export function CategoryTable() {
       }
     >
       <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+        {(column) => (
+          <TableColumn
+            key={column.key}
+            align={column.key === 'actions' ? 'end' : 'center'}
+          >
+            {column.label}
+          </TableColumn>
+        )}
       </TableHeader>
-      <TableBody
-        items={categories}
-        isLoading={isLoading}
-        emptyContent={'No rows to display.'}
-      >
+      <TableBody items={categories} emptyContent={'No rows to display.'}>
         {(item) => (
           <TableRow key={item.id}>
             <TableCell>{item.id}</TableCell>
             <TableCell>
-              <Image
-                alt="HeroUI hero Image with delay"
-                src="https://app.requestly.io/delay/1000/https://heroui.com/images/hero-card-complete.jpeg"
-                height={60}
-                width={60}
-                className="size-[60px] object-cover"
-              />
+              <div className="flex justify-center">
+                <Image
+                  alt={item.name}
+                  src={item.imagePath}
+                  height={60}
+                  width={60}
+                  className="size-[60px] object-cover"
+                />
+              </div>
             </TableCell>
-            <TableCell>{item.name}</TableCell>
-            <TableCell>{item.description}</TableCell>
-            <TableCell>
+            <TableCell width={240}>{item.name}</TableCell>
+            <TableCell width={360}>{item.description}</TableCell>
+            <TableCell width={40}>
               <DeleteCategoryButton />
             </TableCell>
           </TableRow>

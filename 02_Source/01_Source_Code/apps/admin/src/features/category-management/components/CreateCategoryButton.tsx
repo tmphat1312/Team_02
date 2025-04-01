@@ -28,7 +28,7 @@ export function CreateCategoryButton() {
             Create New Category
           </ModalHeader>
           <ModalBody>
-            <CreateCategoryForm />
+            <CreateCategoryForm onClose={onClose} onSubmit={onClose} />
           </ModalBody>
           <ModalFooter className="p-1" />
         </ModalContent>
