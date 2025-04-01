@@ -1,6 +1,7 @@
 import { app } from "@getcronit/pylon";
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
+import { cors } from "hono/cors";
 
 import { consola } from "consola";
 
@@ -13,6 +14,12 @@ import { internalRoute } from "./routes/internal";
 import { propertiesRoute } from "./routes/properties";
 
 app.use(logger(consola.info));
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 app.route("/", internalRoute);
 app.route("/properties", propertiesRoute);
