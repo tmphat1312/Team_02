@@ -8,6 +8,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "db:seed": "bun run ./src/db/seed.ts",
     "generate:http-statuses": "bun run scripts/update-http-statuses.ts"
   },
   "dependencies": {
@@ -19,7 +20,6 @@
   },
   "devDependencies": {
     "@getcronit/pylon-dev": "^1.0.4",
-    "@ngneat/falso": "^7.3.0",
     "@types/bun": "latest",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.5",
