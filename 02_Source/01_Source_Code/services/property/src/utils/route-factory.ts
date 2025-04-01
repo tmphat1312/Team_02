@@ -1,17 +1,26 @@
 import { createFactory, createMiddleware } from "hono/factory";
-import { StatusCode } from "hono/utils/http-status";
+import { ContentfulStatusCode } from "hono/utils/http-status";
 
-import { NOT_FOUND, UNAUTHORIZED } from "../constants/http-status-codes";
 import {
+  BAD_REQUEST,
+  CREATED,
+  NOT_FOUND,
+  OK,
+  UNAUTHORIZED,
+} from "../constants/http-status-codes";
+import {
+  BAD_REQUEST as BAD_REQUEST_TEXT,
   NOT_FOUND as NOT_FOUND_TEXT,
   UNAUTHORIZED as UNAUTHORIZED_TEXT,
 } from "../constants/http-status-phrases";
 
 type Env = {
   Variables: {
-    data: (data: unknown, meta?: unknown) => void;
-    unauthorized: (errorMsg: string, meta?: unknown) => void;
+    ok: (data: unknown, meta?: unknown) => void;
+    created: (data: unknown, meta?: unknown) => void;
+    unauthorized: (errorMsg?: string) => void;
     notFound: (errorMsg?: string) => void;
+    badRequest: (errorMsg?: string) => void;
   };
   Bindings: {
     NODE_ENV: string;
@@ -19,56 +28,57 @@ type Env = {
 };
 
 const defineResponseFunctions = createMiddleware<Env>(async (c, next) => {
-  const returnData = (data: unknown, meta?: unknown) => {
-    return c.json({
-      data,
-      error: null,
-      metadata: meta ?? {},
-    });
-  };
+  const returnData =
+    (statusCode: ContentfulStatusCode) => (data: unknown, meta?: unknown) =>
+      c.json(
+        { data, error: null, metadata: meta ?? {} },
+        { status: statusCode }
+      );
 
-  const returnError = (
-    error: {
-      message: string;
-      statusCode: number;
-      statusText: string;
-    },
-    meta?: unknown
-  ) => {
-    c.status(error.statusCode as StatusCode);
-    return c.json({
-      data: null,
-      error: {
-        message: error.message,
-        statusCode: error.statusCode,
-        statusText: error.statusText,
-      },
-      metadata: meta ?? {},
-    });
-  };
-
-  c.set("data", returnData);
-
-  c.set("unauthorized", (errorMsg = "Unauthorized", meta?: unknown) =>
-    returnError(
+  const returnError = (error: {
+    message: string;
+    statusCode: ContentfulStatusCode;
+    statusText: string;
+  }) => {
+    return c.json(
       {
-        message: errorMsg,
-        statusCode: UNAUTHORIZED,
-        statusText: UNAUTHORIZED_TEXT,
+        data: null,
+        error: {
+          message: error.message,
+          statusCode: error.statusCode,
+          statusText: error.statusText,
+        },
+        metadata: {},
       },
-      meta
-    )
+      { status: error.statusCode }
+    );
+  };
+
+  c.set("ok", returnData(OK));
+  c.set("created", returnData(CREATED));
+
+  c.set("unauthorized", (errorMsg = "Unauthorized") =>
+    returnError({
+      message: errorMsg,
+      statusCode: UNAUTHORIZED,
+      statusText: UNAUTHORIZED_TEXT,
+    })
   );
 
-  c.set("notFound", (errorMsg = "Resource Not Found", meta?: unknown) =>
-    returnError(
-      {
-        message: errorMsg,
-        statusCode: NOT_FOUND,
-        statusText: NOT_FOUND_TEXT,
-      },
-      meta
-    )
+  c.set("notFound", (errorMsg = "Resource Not Found") =>
+    returnError({
+      message: errorMsg,
+      statusCode: NOT_FOUND,
+      statusText: NOT_FOUND_TEXT,
+    })
+  );
+
+  c.set("badRequest", (errorMsg = "Bad Request") =>
+    returnError({
+      message: errorMsg,
+      statusCode: BAD_REQUEST,
+      statusText: BAD_REQUEST_TEXT,
+    })
   );
 
   await next();

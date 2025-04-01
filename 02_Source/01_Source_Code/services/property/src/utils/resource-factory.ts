@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { PgColumn, PgTable } from "drizzle-orm/pg-core";
 
 import { db } from "../db";
@@ -23,11 +23,20 @@ export function resourceFactory<TSelect extends object>(
   };
 
   return {
-    index: async (page: number, pageSize: number): Promise<TIndexReturn> => {
+    index: async (pagination: {
+      page: number;
+      pageSize: number;
+    }): Promise<TIndexReturn> => {
+      const { page, pageSize } = pagination;
       const offset = (page - 1) * pageSize;
 
       const [resources, totalItems] = (await Promise.all([
-        db.select().from(table).limit(pageSize).offset(offset),
+        db
+          .select()
+          .from(table)
+          .limit(pageSize)
+          .offset(offset)
+          .orderBy(desc(table.id)),
         db.$count(table),
       ])) as [Array<TSelect>, number];
 

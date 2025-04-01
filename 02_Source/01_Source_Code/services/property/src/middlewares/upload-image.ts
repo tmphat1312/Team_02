@@ -7,31 +7,22 @@ type Env = {
   };
 };
 
-export function uploadImageMiddleware(options: {
-  // maxFileSize: number;
-  // allowedMimeTypes: string[];
+type UploadImageMiddlewareOptions = {
   inputFieldName: string;
-  // onError: (error: Error) => void;
-  // onSuccess: (filePath: string) => void;
-}) {
-  const { inputFieldName } = options;
+  folder: "Categories" | "Amenities" | "Properties" | "Users";
+};
+
+export function uploadImageMiddleware(options: UploadImageMiddlewareOptions) {
+  const { inputFieldName, folder } = options;
 
   return createMiddleware<Env>(async (c, next) => {
     const body = await c.req.parseBody();
     const file = body[inputFieldName] as File;
 
-    const [res, err] = await cloudinaryClient.upload({
-      file,
-      folder: "Categories",
-    });
+    const [data, err] = await cloudinaryClient.upload({ file, folder });
 
-    if (res) {
-      c.set("imageUrl", res.secure_url);
-    }
-
-    if (err) {
-      throw new Error(err.message);
-    }
+    if (data) c.set("imageUrl", data.secure_url);
+    if (err) throw new Error(err.message);
 
     await next();
   });
