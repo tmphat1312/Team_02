@@ -74,7 +74,10 @@ export function AmenityTable() {
             <TableCell width={240}>{item.name}</TableCell>
             <TableCell width={360}>{item.description}</TableCell>
             <TableCell width={40}>
-              <DeleteAmenityButton />
+              <DeleteAmenityButton
+                amenityId={item.id}
+                amenityName={item.name}
+              />
             </TableCell>
           </TableRow>
         )}

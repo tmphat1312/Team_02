@@ -42,4 +42,10 @@ route.post(
   }
 );
 
+route.delete("/:id", async (c) => {
+  const id = c.req.param("id");
+  await db.delete(amenitiesTable).where(eq(amenitiesTable.id, Number(id)));
+  return c.var.noContent();
+});
+
 export const amenitiesRoute = route;
