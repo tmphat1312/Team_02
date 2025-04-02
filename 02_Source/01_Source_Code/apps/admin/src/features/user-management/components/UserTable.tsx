@@ -16,8 +16,6 @@ export function UserTable() {
   if (error) return <div>Error: {error.message}</div>;
   if (!users) return <div>No users</div>;
 
-  console.log(users);
-
   return (
     <Table aria-label="User Table">
       <TableHeader>
