@@ -1,5 +1,11 @@
 import { sql } from "drizzle-orm";
-import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 const baseColumns = {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -21,35 +27,11 @@ export const amenitiesTable = pgTable("amenities", {
   imageUrl: varchar({ length: 255 }).notNull(),
 });
 
-export const propertiesTable = pgTable("properties", {
+export const ruleTypeEnum = pgEnum("type", ["common", "custom"]);
+
+export const rulesTable = pgTable("rules", {
   ...baseColumns,
-  title: varchar({ length: 255 }).notNull(),
+  name: varchar({ length: 255 }).notNull().unique(),
   description: varchar({ length: 255 }).notNull(),
-  price: integer().notNull(),
-});
-
-export const propertyAmenitiesTable = pgTable("propertyAmenities", {
-  propertyId: integer()
-    .notNull()
-    .references(() => propertiesTable.id, {
-      onDelete: "cascade",
-    }),
-  amenityId: integer()
-    .notNull()
-    .references(() => amenitiesTable.id, {
-      onDelete: "cascade",
-    }),
-});
-
-export const propertyCategoriesTable = pgTable("propertyCategories", {
-  propertyId: integer()
-    .notNull()
-    .references(() => propertiesTable.id, {
-      onDelete: "cascade",
-    }),
-  categoryId: integer()
-    .notNull()
-    .references(() => categoriesTable.id, {
-      onDelete: "cascade",
-    }),
+  type: ruleTypeEnum().default("common"),
 });
