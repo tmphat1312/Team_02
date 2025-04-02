@@ -5,6 +5,7 @@ import { categoriesTable } from "../db/schema";
 
 import { uploadImageMiddleware } from "../middlewares/upload-image";
 
+import { cloudinaryClient } from "../lib/cloudinary-client";
 import { routeFactory } from "../utils/route-factory";
 
 const route = routeFactory.createApp();
@@ -47,7 +48,15 @@ route.post(
 
 route.delete("/:id", async (c) => {
   const id = c.req.param("id");
-  await db.delete(categoriesTable).where(eq(categoriesTable.id, Number(id)));
+  const [deleted] = await db
+    .delete(categoriesTable)
+    .where(eq(categoriesTable.id, Number(id)))
+    .returning();
+
+  if (deleted) {
+    cloudinaryClient.delete(deleted.imageUrl);
+  }
+
   return c.var.noContent();
 });
 

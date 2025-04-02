@@ -35,7 +35,7 @@ export const cloudinaryClient = {
           (err, data) => resolve(err || data)
         )
         .end(Buffer.from(fileArrayBuffer));
-    }) as Promise<UploadApiResponse | UploadApiErrorResponse | undefined>;
+    });
 
     const result = await uploadPromise;
 
@@ -48,6 +48,31 @@ export const cloudinaryClient = {
 
     return [null, new Error("Unknown upload error")] as const;
   },
+
+  delete: async function (secureUrl: string) {
+    const publicId = extractPublicId(secureUrl);
+
+    if (!publicId) {
+      return [null, new Error("Invalid secure URL")] as const;
+    }
+
+    const deletePromise = new Promise((resolve) => {
+      cloudinary.uploader.destroy(publicId, (err, data) =>
+        resolve(err || data)
+      );
+    });
+    const result = await deletePromise;
+
+    if (isUploadError(result)) {
+      return [null, result] as const;
+    }
+
+    if (isUploadSuccess(result)) {
+      return [result, null] as const;
+    }
+
+    return [null, new Error("Unknown delete error")] as const;
+  },
 };
 
 function normalizeFileName(fileName: string) {
@@ -57,6 +82,12 @@ function normalizeFileName(fileName: string) {
     .slice(0, -1)
     .join(".")
     .toLowerCase();
+}
+
+function extractPublicId(secureUrl: string) {
+  const parts = secureUrl.split("/");
+  const publicId = parts.slice(-2).join("/").split(".")[0];
+  return publicId;
 }
 
 function isUploadError(result: unknown): result is UploadApiErrorResponse {

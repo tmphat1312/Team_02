@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { amenitiesTable } from "../db/schema";
+import { cloudinaryClient } from "../lib/cloudinary-client";
 import { uploadImageMiddleware } from "../middlewares/upload-image";
 import { routeFactory } from "../utils/route-factory";
 
@@ -44,7 +45,15 @@ route.post(
 
 route.delete("/:id", async (c) => {
   const id = c.req.param("id");
-  await db.delete(amenitiesTable).where(eq(amenitiesTable.id, Number(id)));
+  const [deleted] = await db
+    .delete(amenitiesTable)
+    .where(eq(amenitiesTable.id, Number(id)))
+    .returning();
+
+  if (deleted) {
+    await cloudinaryClient.delete(deleted.imageUrl);
+  }
+
   return c.var.noContent();
 });
 
