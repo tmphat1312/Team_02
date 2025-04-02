@@ -11,8 +11,7 @@ export function proxyMiddleware({ target }: { target: string }) {
       : `?${new URLSearchParams(query)}`;
 
     return proxy(`${target}${c.req.path}${proxiedQuery}`, {
-      ...c.req.raw,
-      headers: { ...c.req.header() },
+      ...c.req,
     });
   });
 }

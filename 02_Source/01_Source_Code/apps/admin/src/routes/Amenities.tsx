@@ -1,7 +1,7 @@
-import { Button } from 'primereact/button';
-
-import { Breadcrumb } from '../components/layout/Breadcrumb';
-import { PageContent } from '../components/layout/PageContent';
+import { Breadcrumb } from '../components/Breadcrumb';
+import { PageContent } from '../components/PageContent';
+import { AmenityTable } from '../features/amenity-management/components/AmenityTable';
+import { CreateAmenityButton } from '../features/amenity-management/components/CreateAmenityButton';
 
 export default function Amenities() {
   return (
@@ -9,11 +9,9 @@ export default function Amenities() {
       <Breadcrumb items={[{ label: 'Amenities', to: '/amenities' }]} />
       <PageContent
         label="Amenity Management"
-        PageActionComponent={
-          <Button icon="pi pi-plus" label="Create new" size="small" outlined />
-        }
+        PageActionComponent={<CreateAmenityButton />}
       >
-        Hello from amenities
+        <AmenityTable />
       </PageContent>
     </>
   );

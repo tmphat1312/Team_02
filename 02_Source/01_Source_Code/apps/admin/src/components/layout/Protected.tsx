@@ -18,7 +18,7 @@ export function ProtectedLayout() {
   }
 
   if (data.user.role !== 'admin') {
-    return <div>You are not authorized to access this site. </div>;
+    return <div>You are not authorized to access this site.</div>;
   }
 
   return <Outlet />;

@@ -1,0 +1,222 @@
+[
+  {
+    "name": "Air Conditioner",
+    "description": "A cooling system to keep the room comfortable during hot weather.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574865/Amenities/air-conditioner_o86skw.svg"
+  },
+  {
+    "name": "Barbecue Utensils",
+    "description": "Essential tools for grilling and enjoying a barbecue experience.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574867/Amenities/barbecue-utensils_b1ombv.svg"
+  },
+  {
+    "name": "Bed Linens",
+    "description": "Fresh, clean sheets and pillowcases for a comfortable sleep.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574871/Amenities/bed-linens_gx6xi7.svg"
+  },
+  {
+    "name": "Bidet",
+    "description": "A plumbing fixture for personal hygiene after using the toilet.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574872/Amenities/bidet_rlhonh.svg"
+  },
+  {
+    "name": "Body Soap",
+    "description": "A cleaning product to wash and moisturize your skin.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574872/Amenities/body-soap_tddtak.svg"
+  },
+  {
+    "name": "Books and Reading Material",
+    "description": "A collection of books and magazines for your reading pleasure.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574872/Amenities/books-and-reading-material_etgpmo.svg"
+  },
+  {
+    "name": "Building Staff",
+    "description": "On-site personnel available to assist with your needs.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574868/Amenities/building-staff_ynegy8.svg"
+  },
+  {
+    "name": "Ceiling Fans",
+    "description": "Fans installed on the ceiling to circulate air and keep the space cool.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574872/Amenities/ceiling-fans_zcxtuj.svg"
+  },
+  {
+    "name": "Cleaning Products",
+    "description": "Products to keep the space clean and tidy during your stay.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574873/Amenities/cleaning-products_urohs1.svg"
+  },
+  {
+    "name": "Coffee Maker",
+    "description": "An appliance for brewing fresh coffee during your stay.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574873/Amenities/coffee-maker_wsxqdd.svg"
+  },
+  {
+    "name": "Cooking Basics",
+    "description": "Essential items like pots, pans, and utensils for cooking meals.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574873/Amenities/cooking-basics_i1wgvf.svg"
+  },
+  {
+    "name": "Dining Table",
+    "description": "A table set for enjoying meals with family and friends.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574868/Amenities/dining-table_visyls.svg"
+  },
+  {
+    "name": "Dishes and Silverware",
+    "description": "Plates, glasses, and utensils for dining and enjoying meals.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574874/Amenities/dishes-and-silverware_eeuaog.svg"
+  },
+  {
+    "name": "Essentials",
+    "description": "Basic necessities like toilet paper, towels, and soap for your stay.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574876/Amenities/essentials_dkjmzs.svg"
+  },
+  {
+    "name": "Extra Pillows and Blankets",
+    "description": "Additional pillows and blankets for extra comfort and warmth.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574875/Amenities/extra-pillows-and-blankets_oclyhc.svg"
+  },
+  {
+    "name": "Fire Extinguisher",
+    "description": "A safety device used to put out small fires in emergency situations.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574859/Amenities/fire-extinguisher_nlfx94.svg"
+  },
+  {
+    "name": "Fire Pit",
+    "description": "An outdoor fire pit for enjoying a cozy fire under the stars.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574859/Amenities/fire-pit_xhbxib.svg"
+  },
+  {
+    "name": "First Aid Kit",
+    "description": "A kit containing basic medical supplies for minor injuries and emergencies.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574859/Amenities/first-aid-kit_nutur7.svg"
+  },
+  {
+    "name": "Free Parking on Premises",
+    "description": "Convenient parking available on the property for guests.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574867/Amenities/free-parking-on-premises_r1bvwj.svg"
+  },
+  {
+    "name": "Hair Dryer",
+    "description": "A hairdryer to dry and style your hair quickly after a shower.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574865/Amenities/hair-dryer_inddpd.svg"
+  },
+  {
+    "name": "Hammock",
+    "description": "A relaxing hammock for outdoor lounging or napping.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574868/Amenities/hammock_wbtx6c.svg"
+  },
+  {
+    "name": "Hangers",
+    "description": "Clothing hangers for hanging clothes in the closet.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574865/Amenities/hangers_nokmqh.svg"
+  },
+  {
+    "name": "Heating",
+    "description": "A system to heat the room for comfort during cooler weather.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574864/Amenities/heating_v6fnwi.svg"
+  },
+  {
+    "name": "Hot Water",
+    "description": "Access to hot water for showers, washing dishes, and more.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574870/Amenities/hot-water_dlfn8h.svg"
+  },
+  {
+    "name": "Iron",
+    "description": "An iron for pressing clothes and removing wrinkles.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574865/Amenities/iron_ci4b8x.svg"
+  },
+  {
+    "name": "JBL Bluetooth and System",
+    "description": "A Bluetooth speaker system for playing music wirelessly.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574861/Amenities/jbl-bluetooth-and-system_qcoxej.svg"
+  },
+  {
+    "name": "Microwave",
+    "description": "A microwave oven for quickly reheating meals and snacks.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574861/Amenities/microwave_vbjlsy.svg"
+  },
+  {
+    "name": "Mini Fridge",
+    "description": "A small refrigerator for keeping drinks and snacks cool.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574859/Amenities/mini-fridge_efvvf2.svg"
+  },
+  {
+    "name": "Mosquito Net",
+    "description": "A net to protect against mosquitoes while sleeping or lounging outdoors.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574859/Amenities/mosquito-net_aopejx.svg"
+  },
+  {
+    "name": "Outdoor Furniture",
+    "description": "Furniture for relaxing and enjoying the outdoors, such as chairs and tables.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574869/Amenities/outdoor-furniture_rplhhm.svg"
+  },
+  {
+    "name": "Patio or Balcony",
+    "description": "A private outdoor area for relaxing or enjoying the view.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574861/Amenities/patio-or-balcony_vs1id2.svg"
+  },
+  {
+    "name": "Pet Allowed",
+    "description": "Pets are welcome, making your stay pet-friendly.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574861/Amenities/pet-allowed_q1yy1u.svg"
+  },
+  {
+    "name": "Portable Fans",
+    "description": "Portable fans to help cool down the room or outdoor areas.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574861/Amenities/portable-fans_m2y6l4.svg"
+  },
+  {
+    "name": "Private Backyard Fully Fenced",
+    "description": "A private backyard with a full fence for added privacy and security.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574862/Amenities/private-backyard-fully-fenced_ekruoe.svg"
+  },
+  {
+    "name": "Private Entrance",
+    "description": "A private entrance for guests, offering more privacy and convenience.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574870/Amenities/private-entrance_knbe1v.svg"
+  },
+  {
+    "name": "Rice Maker",
+    "description": "A convenient appliance for cooking rice quickly and easily.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574863/Amenities/rice-maker_yjcyez.svg"
+  },
+  {
+    "name": "Self Check-in",
+    "description": "A convenient self check-in process for a smooth arrival.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574870/Amenities/self-check-in_jndxrr.svg"
+  },
+  {
+    "name": "Shampoo",
+    "description": "Shampoo for washing and maintaining clean, healthy hair.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574863/Amenities/shampoo_chkiyu.svg"
+  },
+  {
+    "name": "Smoke Alarm",
+    "description": "A safety feature that alerts you to smoke or fire hazards.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574863/Amenities/smoke-alarm_dsexhd.svg"
+  },
+  {
+    "name": "Stove",
+    "description": "A stove for cooking meals with gas or electric burners.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574863/Amenities/stove_stt88v.svg"
+  },
+  {
+    "name": "Sun Loungers",
+    "description": "Comfortable loungers for soaking up the sun and relaxing outdoors.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574870/Amenities/sun-loungers_osellv.svg"
+  },
+  {
+    "name": "TV",
+    "description": "A television for watching your favorite shows and movies.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574865/Amenities/tv_pve6k2.svg"
+  },
+  {
+    "name": "Wi-Fi",
+    "description": "High-speed internet connection for browsing, streaming, and staying connected.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574866/Amenities/wifi_olgx9j.svg"
+  },
+  {
+    "name": "Wine Glasses",
+    "description": "Elegant wine glasses for enjoying your favorite wines.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743574864/Amenities/wine-glasses_grjt4v.svg"
+  }
+]

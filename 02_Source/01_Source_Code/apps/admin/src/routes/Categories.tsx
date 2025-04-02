@@ -1,7 +1,7 @@
-import { Breadcrumb } from '../components/layout/Breadcrumb';
-import { PageContent } from '../components/layout/PageContent';
-import { CategoryTable } from '../features/categories/components/CategoryTable';
-import { CreateCategoryButton } from '../features/categories/components/CreateCategoryButton';
+import { Breadcrumb } from '../components/Breadcrumb';
+import { PageContent } from '../components/PageContent';
+import { CategoryTable } from '../features/category-management/components/CategoryTable';
+import { CreateCategoryButton } from '../features/category-management/components/CreateCategoryButton';
 
 export default function Categories() {
   return (

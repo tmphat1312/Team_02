@@ -1,15 +1,35 @@
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { Message } from 'primereact/message';
 import { useState, useTransition } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
-import { Logo } from '../../../components/Logo';
+import { addToast, Button, Form, Input } from '@heroui/react';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
+
 import { authClient } from '../../../lib/auth-client';
 
 type Inputs = {
   email: string;
   password: string;
+};
+
+const validationRules: {
+  email: RegisterOptions<Inputs, 'email'>;
+  password: RegisterOptions<Inputs, 'password'>;
+} = {
+  email: {
+    required: 'Email is required',
+    pattern: {
+      value: /\S+@\S+\.\S+/,
+      message: 'Invalid email address',
+    },
+  },
+  password: {
+    required: 'Password is required',
+    minLength: {
+      value: 8,
+      message: 'Password must be at least 8 characters long',
+    },
+  },
 };
 
 export function LoginForm() {
@@ -18,103 +38,87 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [msg, setMsg] = useState('');
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const { email, password } = data;
+  const toggleVisibility = () => setIsVisible((prev) => !prev);
+
+  const onSubmit: SubmitHandler<Inputs> = ({ email, password }) => {
     startTransition(async () => {
-      await authClient.signIn.email({
-        email,
-        password,
-        callbackURL: '/dashboard',
-        fetchOptions: {
-          onError: (ctx) => {
-            setMsg(ctx.error.message);
+      await authClient.signIn.email(
+        { email, password },
+        {
+          onSuccess: () => {
+            navigate('/dashboard');
           },
-        },
-      });
+          onError: (ctx) => {
+            addToast({
+              title: ctx.error.message,
+              color: 'danger',
+            });
+          },
+        }
+      );
     });
   };
 
   return (
-    <section className="w-[42ch] space-y-6 p-12">
-      <Logo />
+    <section className="w-[42ch]">
       <h2 className="sr-only">Login to admin account</h2>
-      {msg && (
-        <div className="mb-2.5">
-          <Message severity="error" text={msg} className="w-full" />
-        </div>
-      )}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4 flex flex-col gap-2">
-          <label htmlFor="email" className="space-x-0.5 text-sm">
-            <span aria-hidden>*</span>
-            <span className="sr-only">Email is required</span>
-            <span>Email Address</span>
-          </label>
-          <InputText
-            type="email"
-            inputMode="email"
-            id="email"
-            autoComplete="email"
-            aria-describedby="email-help"
-            className="p-inputtext-sm"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: 'Invalid email address',
-              },
-            })}
-          />
-          <small id="email-help" className="sr-only">
-            Your email address. It is required.
-          </small>
-          {errors.email && (
-            <small className="text-xs text-red-500" role="alert">
-              {errors.email.message}
-            </small>
-          )}
-        </div>
-        <div className="mb-6 flex flex-col gap-2">
-          <label htmlFor="password" className="space-x-0.5 text-sm">
-            <span aria-hidden>*</span>
-            <span className="sr-only">Password is required</span>
-            <span>Password</span>
-          </label>
-          <InputText
-            type="password"
-            id="password"
-            aria-describedby="password-help"
-            className="p-inputtext-sm"
-            {...register('password', {
-              required: 'Password is required',
-              minLength: {
-                value: 8,
-                message: 'Password must be at least 8 characters long',
-              },
-            })}
-          />
-          <small id="password-help" className="sr-only">
-            Your password. It is required.
-          </small>
-          {errors.password && (
-            <small className="text-xs text-red-500" role="alert">
-              {errors.password.message}
-            </small>
-          )}
-        </div>
-        <div className="text-center">
-          <Button
-            className="px-4"
-            size="small"
-            loading={isPending}
-            icon="pi pi-sign-in"
-            label="Login"
-          />
-        </div>
-      </form>
+      <Form className="w-full max-w-xs" onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          label="Email Address"
+          description="Admin email address"
+          placeholder="e.g. admin@rento.com"
+          autoComplete="email"
+          inputMode="email"
+          className="mb-2"
+          labelPlacement="outside"
+          variant="bordered"
+          isRequired
+          isClearable
+          errorMessage={errors.email?.message}
+          isInvalid={!!errors.email}
+          {...register('email', validationRules.email)}
+        />
+        <Input
+          label="Password"
+          description="Password must be at least 8 characters long"
+          placeholder="Enter your password"
+          type={isVisible ? 'text' : 'password'}
+          className="mb-4"
+          labelPlacement="outside"
+          variant="bordered"
+          isRequired
+          {...register('password', validationRules.password)}
+          errorMessage={errors.password?.message}
+          isInvalid={!!errors.password}
+          endContent={
+            <button
+              aria-label="toggle password visibility"
+              className="focus:outline-hidden"
+              type="button"
+              onClick={toggleVisibility}
+            >
+              {isVisible ? (
+                <EyeIcon className="text-sm text-default-400" />
+              ) : (
+                <EyeOffIcon className="text-sm text-default-400" />
+              )}
+            </button>
+          }
+        />
+        <Button
+          type="submit"
+          isLoading={isPending}
+          variant="solid"
+          className="w-full"
+          color="primary"
+        >
+          Login
+        </Button>
+      </Form>
     </section>
   );
 }

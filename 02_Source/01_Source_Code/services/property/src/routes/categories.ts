@@ -1,64 +1,63 @@
-import { count as countFunction, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { db } from "../db";
 import { categoriesTable } from "../db/schema";
+
+import { uploadImageMiddleware } from "../middlewares/upload-image";
+
+import { cloudinaryClient } from "../lib/cloudinary-client";
 import { routeFactory } from "../utils/route-factory";
 
 const route = routeFactory.createApp();
 
-route.get("/", async (c) => {
-  const { page, limit } = c.req.query();
+route.post(
+  "/",
+  async (c, next) => {
+    const { name } = await c.req.parseBody();
 
-  const parsedPage = Number(page) || 1;
-  const parsedLimit = Number(limit) || 10;
-
-  const [categories, [{ count }]] = await Promise.all([
-    db
+    const [existingCategory] = await db
       .select()
       .from(categoriesTable)
-      .offset((parsedPage - 1) * parsedLimit)
-      .limit(parsedLimit),
-    db
-      .select({
-        count: countFunction(),
+      .where(eq(categoriesTable.name, name as string));
+
+    if (existingCategory) {
+      return c.var.badRequest(`Category with name "${name}" already exists.`);
+    }
+
+    await next();
+  },
+  uploadImageMiddleware({
+    inputFieldName: "image",
+    folder: "Categories",
+  }),
+  async (c) => {
+    const { name, description } = await c.req.parseBody();
+
+    const [res] = await db
+      .insert(categoriesTable)
+      .values({
+        name: name as string,
+        description: description as string,
+        imageUrl: c.var.imageUrl,
       })
-      .from(categoriesTable),
-  ]);
+      .returning();
 
-  return c.var.data(categories, {
-    pagination: {
-      page: parsedPage,
-      limit: parsedLimit,
-      totalItems: count,
-      totalPages: Math.ceil(count / parsedLimit),
-    },
-  });
-});
+    return c.var.created(res);
+  }
+);
 
-route.get("/:id", async (c) => {
-  const id = Number(c.req.param("id"));
-  const [category] = await db
-    .select()
-    .from(categoriesTable)
-    .where(eq(categoriesTable.id, id));
+route.delete("/:id", async (c) => {
+  const id = c.req.param("id");
+  const [deleted] = await db
+    .delete(categoriesTable)
+    .where(eq(categoriesTable.id, Number(id)))
+    .returning();
 
-  if (!category) {
-    return c.var.notFound();
+  if (deleted) {
+    cloudinaryClient.delete(deleted.imageUrl);
   }
 
-  return c.var.data(category);
-});
-
-route.post("/", (c) => {
-  return c.text("Create Category");
-});
-
-route.put("/:id", (c) => {
-  return c.text(`Update Category: ${c.req.param("id")}`);
-});
-
-route.delete("/:id", (c) => {
-  return c.text(`Delete Category: ${c.req.param("id")}`);
+  return c.var.noContent();
 });
 
 export const categoriesRoute = route;

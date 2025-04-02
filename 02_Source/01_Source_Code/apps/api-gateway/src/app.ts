@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
 
 import { consola } from "consola";
@@ -10,7 +11,6 @@ import { corsMiddleware } from "./middlewares/cors.js";
 import { iamService } from "./services/iam.js";
 import { internalService } from "./services/internal.js";
 import { propertyService } from "./services/property.js";
-import { showRoutes } from "hono/dev";
 
 const app = new Hono();
 
