@@ -50,7 +50,7 @@ export function AmenityTable() {
         {(column) => (
           <TableColumn
             key={column.key}
-            align={column.key === 'actions' ? 'end' : 'center'}
+            align={column.key === 'actions' ? 'end' : 'start'}
           >
             {column.label}
           </TableColumn>
@@ -59,20 +59,18 @@ export function AmenityTable() {
       <TableBody items={amenities} emptyContent={'No rows to display.'}>
         {(item) => (
           <TableRow key={item.id}>
-            <TableCell>{item.id}</TableCell>
-            <TableCell>
-              <div className="flex justify-center">
-                <Image
-                  alt={item.name}
-                  src={item.imagePath}
-                  height={60}
-                  width={60}
-                  className="size-[60px] object-cover"
-                />
-              </div>
+            <TableCell width={60}>{item.id}</TableCell>
+            <TableCell width={100}>
+              <Image
+                alt={item.name}
+                src={item.imageUrl}
+                height={40}
+                width={40}
+                className="size-[40px] object-cover"
+              />
             </TableCell>
-            <TableCell width={240}>{item.name}</TableCell>
-            <TableCell width={360}>{item.description}</TableCell>
+            <TableCell width={280}>{item.name}</TableCell>
+            <TableCell>{item.description}</TableCell>
             <TableCell width={40}>
               <DeleteAmenityButton
                 amenityId={item.id}

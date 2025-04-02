@@ -1,0 +1,307 @@
+[
+  {
+    "name": "A-Frames",
+    "description": "Experience the beauty of architectural A-frame homes with unique design and cozy interiors.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566655/Categories/a-frames_u1ouoy.png"
+  },
+  {
+    "name": "Adapted",
+    "description": "Find homes that have been creatively adapted from existing structures to offer something extraordinary.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/adapted_myaz9o.png"
+  },
+  {
+    "name": "Amazing Pools",
+    "description": "Relax and swim in stunning homes with breathtaking pools that offer a perfect retreat.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566659/Categories/amazing-pools_rvh6jc.png"
+  },
+  {
+    "name": "Amazing Views",
+    "description": "Enjoy stunning views from your home, whether it's a mountain vista, ocean view, or city skyline.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566661/Categories/amazing-views_s5sn3y.png"
+  },
+  {
+    "name": "Arctic",
+    "description": "Live in the cool beauty of the Arctic with properties designed to withstand extreme cold while offering comfort.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566650/Categories/arctic_vtxkwq.png"
+  },
+  {
+    "name": "Barns",
+    "description": "Rustic barns transformed into beautiful living spaces, combining countryside charm with modern design.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566648/Categories/barns_usgjiu.png"
+  },
+  {
+    "name": "Beach",
+    "description": "Find the perfect beach homes that combine sandy shores and sea breezes for a relaxing stay.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566653/Categories/beach_a4d6ip.png"
+  },
+  {
+    "name": "Beachfront",
+    "description": "Live right on the edge of the ocean with beachfront properties offering spectacular views and serene atmospheres.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566654/Categories/beachfront_pivthc.png"
+  },
+  {
+    "name": "Bed And Breakfasts",
+    "description": "Cozy bed-and-breakfasts offering warm hospitality and personalized experiences.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/bed-and-breakfasts_bx2iam.png"
+  },
+  {
+    "name": "Boats",
+    "description": "Live the unique experience of staying on boats, offering a peaceful lifestyle on water.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/boats_xbafkf.png"
+  },
+  {
+    "name": "Cabins",
+    "description": "Escape into the wilderness with charming cabins designed for relaxation and adventure.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566662/Categories/cabins_jnuajh.png"
+  },
+  {
+    "name": "Campers",
+    "description": "Enjoy the freedom of the open road with stylish campers that offer comfort on the go.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/campers_jdyqlo.png"
+  },
+  {
+    "name": "Camping",
+    "description": "Reconnect with nature by staying in unique camping accommodations that offer both comfort and adventure.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/camping_ba977e.png"
+  },
+  {
+    "name": "Casas Particulares",
+    "description": "Experience the warmth and charm of local Cuban homes, offering an authentic and intimate stay.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/casas-particulares_arxwhc.png"
+  },
+  {
+    "name": "Castles",
+    "description": "Live like royalty in magnificent castles with rich history, stunning architecture, and opulent interiors.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566655/Categories/castles_pavt5f.png"
+  },
+  {
+    "name": "Caves",
+    "description": "Explore the underground beauty of cave homes, offering a cool and natural environment.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566650/Categories/caves_dw1flp.png"
+  },
+  {
+    "name": "Chefs Kitchens",
+    "description": "Cook like a professional with kitchens designed for chefs, featuring state-of-the-art appliances and spacious layouts.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566650/Categories/chefs-kitchens_t6p2qj.png"
+  },
+  {
+    "name": "Containers",
+    "description": "Sustainable and creative homes made from shipping containers, offering modern living with a unique flair.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566654/Categories/containers_vutglq.png"
+  },
+  {
+    "name": "Countryside",
+    "description": "Enjoy the serenity and beauty of the countryside with properties that offer peace and natural surroundings.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566662/Categories/countryside_iidav3.png"
+  },
+  {
+    "name": "Creative Spaces",
+    "description": "Innovative and artistic spaces designed to spark creativity and inspiration, perfect for artists and thinkers.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566649/Categories/creative-spaces_oocylf.png"
+  },
+  {
+    "name": "Cycladic Homes",
+    "description": "Live in the stunning Cycladic homes of Greece, featuring iconic whitewashed walls and blue-domed roofs.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566644/Categories/cycladic-homes_kya62f.png"
+  },
+  {
+    "name": "Dammusi",
+    "description": "Discover traditional Sicilian homes known for their unique style and harmonious integration with the landscape.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566650/Categories/dammusi_xl7rd3.png"
+  },
+  {
+    "name": "Desert",
+    "description": "Stay in homes that embrace the beauty and solitude of the desert, offering peace and stunning sunsets.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/desert_shqbzp.png"
+  },
+  {
+    "name": "Design",
+    "description": "Explore homes with cutting-edge designs, featuring sleek lines, modern materials, and stylish interiors.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566651/Categories/design_zds4wz.png"
+  },
+  {
+    "name": "Domes",
+    "description": "Experience living in dome-shaped homes that provide unique architectural beauty and energy efficiency.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566651/Categories/domes_qsqpwx.png"
+  },
+  {
+    "name": "Earth Homes",
+    "description": "Live sustainably in earth homes that blend with nature, providing comfort and energy efficiency.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566655/Categories/earth-homes_x67nj2.png"
+  },
+  {
+    "name": "Farms",
+    "description": "Stay in cozy farmhouses surrounded by nature, offering fresh air, wide open spaces, and rustic charm.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566653/Categories/farms_ppvpom.png"
+  },
+  {
+    "name": "Golfing",
+    "description": "Live near world-class golf courses, with properties offering beautiful views and access to premium golfing.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566648/Categories/golfing_xovkwh.png"
+  },
+  {
+    "name": "Grand Pianos",
+    "description": "Indulge in homes with grand pianos, offering an elegant and luxurious ambiance for music lovers.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566656/Categories/grand-pianos_xhcw4e.png"
+  },
+  {
+    "name": "Hanoks",
+    "description": "Experience the beauty of traditional Korean hanoks, offering serene architecture and a connection to culture.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566653/Categories/hanoks_ricrcu.png"
+  },
+  {
+    "name": "Historical Homes",
+    "description": "Step back in time with historical homes that feature rich stories, classic architecture, and timeless beauty.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/historical-homes_phxumw.png"
+  },
+  {
+    "name": "Houseboats",
+    "description": "Live on the water in houseboats that combine the freedom of the ocean with the comfort of a modern home.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566644/Categories/houseboats_puxuna.png"
+  },
+  {
+    "name": "Islands",
+    "description": "Escape to private islands where you can enjoy ultimate peace, stunning landscapes, and complete isolation.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566656/Categories/islands_avm3zf.png"
+  },
+  {
+    "name": "Lake",
+    "description": "Stay in lakefront homes offering tranquil views of the water, ideal for relaxation and water-based activities.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566664/Categories/lake_skntet.png"
+  },
+  {
+    "name": "Lakefront",
+    "description": "Experience the beauty of lakefront properties that offer direct access to peaceful waters and stunning scenery.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566657/Categories/lakefront_ahe182.png"
+  },
+  {
+    "name": "Luxe",
+    "description": "Indulge in luxury with homes that offer high-end amenities, exquisite design, and ultimate comfort.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566654/Categories/luxe_iiv4i9.png"
+  },
+  {
+    "name": "Mansions",
+    "description": "Live in grand mansions offering opulence, expansive space, and unparalleled luxury.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566658/Categories/mansions_hdwx4b.png"
+  },
+  {
+    "name": "Minsus",
+    "description": "Stay in traditional Korean minsus, offering authentic experiences with simple charm and deep cultural connections.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/minsus_hinnu2.png"
+  },
+  {
+    "name": "National Parks",
+    "description": "Stay near national parks with properties offering easy access to hiking, wildlife, and natural beauty.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/national-parks_b2jtkh.png"
+  },
+  {
+    "name": "New",
+    "description": "Discover the latest, most innovative homes with modern amenities and cutting-edge designs.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/new_uelbhw.png"
+  },
+  {
+    "name": "Off The Grid",
+    "description": "Experience life off the grid with homes designed for self-sufficiency and complete detachment from city life.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566647/Categories/off-the-grid_mvhe7i.png"
+  },
+  {
+    "name": "OMG",
+    "description": "Stay in homes that will leave you in awe, featuring jaw-dropping designs, architecture, and surroundings.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566656/Categories/omg_truho1.png"
+  },
+  {
+    "name": "Play",
+    "description": "Homes designed for play and adventure, offering fun features and exciting atmospheres.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566648/Categories/play_aohera.png"
+  },
+  {
+    "name": "Riads",
+    "description": "Stay in Moroccan riads with stunning courtyards, exotic decor, and an immersive cultural experience.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566664/Categories/riads_nski0w.png"
+  },
+  {
+    "name": "Rooms",
+    "description": "Explore unique rooms designed for relaxation, creativity, and peace.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566661/Categories/rooms_jkb0cp.png"
+  },
+  {
+    "name": "Ryokans",
+    "description": "Experience the tranquil elegance of Japanese ryokans, offering serene rooms, tatami mats, and traditional hospitality.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566649/Categories/ryokans_brgihn.png"
+  },
+  {
+    "name": "Shepherds Huts",
+    "description": "Stay in quaint shepherds' huts for a cozy and rustic getaway surrounded by nature.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566653/Categories/shepherds-huts_mj38ix.png"
+  },
+  {
+    "name": "Skiing",
+    "description": "Stay in ski resorts or mountain cabins perfect for those who enjoy skiing and winter sports.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/skiing_lb6hwt.png"
+  },
+  {
+    "name": "Skin In Out",
+    "description": "Homes with luxurious outdoor living spaces that bring the outdoors inside for ultimate relaxation.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566650/Categories/skin-in-out_din4hs.png"
+  },
+  {
+    "name": "Surfing",
+    "description": "Live near some of the best surfing spots in the world, with homes offering easy access to the waves.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566662/Categories/surfing_ushgwb.png"
+  },
+  {
+    "name": "Tiny Homes",
+    "description": "Enjoy a minimalist lifestyle with tiny homes that offer everything you need in a compact and efficient design.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566663/Categories/tiny-homes_r4lyfm.png"
+  },
+  {
+    "name": "Top Cities",
+    "description": "Stay in prime city locations, offering luxury, convenience, and access to urban amenities.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/top-cities_rpykrs.png"
+  },
+  {
+    "name": "Top Of The World",
+    "description": "Live high up in the mountains, with homes offering stunning panoramic views and a sense of elevation.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/top-of-the-world_x7nrt9.png"
+  },
+  {
+    "name": "Towers",
+    "description": "Experience staying in towers with dramatic views, offering a sense of height and grandeur.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/towers_chdbb6.png"
+  },
+  {
+    "name": "Tree Houses",
+    "description": "Stay in magical tree houses, nestled high in the trees for a unique, immersive experience with nature.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566659/Categories/tree-houses_feteij.png"
+  },
+  {
+    "name": "Trending",
+    "description": "Explore the latest and most popular home trends, from design innovations to unique experiences.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566663/Categories/trending_gtoq3s.png"
+  },
+  {
+    "name": "Tropical",
+    "description": "Stay in tropical homes surrounded by lush greenery, offering warm weather and exotic beauty.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/tropical_wvw9sj.png"
+  },
+  {
+    "name": "Vineyards",
+    "description": "Stay in stunning homes located amidst beautiful vineyards, perfect for wine lovers looking for a scenic getaway.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566646/Categories/vineyards_fqzgbc.png"
+  },
+  {
+    "name": "Trulli",
+    "description": "Discover the charm of traditional Trulli houses, iconic stone dwellings from the southern regions of Italy, offering a unique stay experience.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566644/Categories/trulli_pltqk1.png"
+  },
+  {
+    "name": "Windsurfing",
+    "description": "Explore the thrilling world of windsurfing with homes located near the best beaches for windsurfing enthusiasts.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/windmills_u8bt6y.png"
+  },
+  {
+    "name": "Yurts",
+    "description": "Experience a cozy and unique stay in a traditional yurt, a portable home perfect for those seeking an off-the-grid experience.",
+    "imageUrl": "https://res.cloudinary.com/dgdpitbum/image/upload/v1743566645/Categories/yurts_ioq3qq.png"
+  }
+]

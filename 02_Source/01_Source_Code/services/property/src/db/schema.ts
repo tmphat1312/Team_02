@@ -11,14 +11,14 @@ export const categoriesTable = pgTable("categories", {
   ...baseColumns,
   name: varchar({ length: 255 }).notNull().unique(),
   description: varchar({ length: 255 }),
-  imagePath: varchar({ length: 255 }).notNull(),
+  imageUrl: varchar({ length: 255 }).notNull(),
 });
 
 export const amenitiesTable = pgTable("amenities", {
   ...baseColumns,
   name: varchar({ length: 255 }).notNull().unique(),
   description: varchar({ length: 255 }).notNull(),
-  imagePath: varchar({ length: 255 }).notNull(),
+  imageUrl: varchar({ length: 255 }).notNull(),
 });
 
 export const propertiesTable = pgTable("properties", {

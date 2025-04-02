@@ -3,7 +3,6 @@ import {
   UploadApiErrorResponse,
   UploadApiResponse,
 } from "cloudinary";
-import { calculateHashForBuffer } from "../utils/calculate-hash-for-buffer";
 
 cloudinary.config({
   secure: true,
@@ -23,10 +22,9 @@ export const cloudinaryClient = {
     const { file, folder, overwrite = false } = options;
 
     const fileArrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(fileArrayBuffer);
-    const publicId = await calculateHashForBuffer(buffer);
+    const publicId = `${normalizeFileName(file.name)}-${crypto.randomUUID()}`;
 
-    const uploadPRomise = new Promise((resolve) => {
+    const uploadPromise = new Promise((resolve) => {
       cloudinary.uploader
         .upload_stream(
           {
@@ -36,10 +34,10 @@ export const cloudinaryClient = {
           },
           (err, data) => resolve(err || data)
         )
-        .end(buffer);
+        .end(Buffer.from(fileArrayBuffer));
     }) as Promise<UploadApiResponse | UploadApiErrorResponse | undefined>;
 
-    const result = await uploadPRomise;
+    const result = await uploadPromise;
 
     if (isUploadError(result)) {
       return [null, result] as const;
@@ -51,6 +49,15 @@ export const cloudinaryClient = {
     return [null, new Error("Unknown upload error")] as const;
   },
 };
+
+function normalizeFileName(fileName: string) {
+  return fileName
+    .replaceAll(" ", "_")
+    .split(".")
+    .slice(0, -1)
+    .join(".")
+    .toLowerCase();
+}
 
 function isUploadError(result: unknown): result is UploadApiErrorResponse {
   return (result as UploadApiErrorResponse).http_code !== undefined;

@@ -10,7 +10,7 @@ const getCategoriesQuery = `
         id
         name
         description
-        imagePath
+        imageUrl
       }
       metadata {
         pagination {
@@ -28,7 +28,7 @@ type Category = {
   id: number;
   name: string;
   description: string;
-  imagePath: string;
+  imageUrl: string;
 };
 
 type Pagination = {

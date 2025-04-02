@@ -37,7 +37,7 @@ route.post(
       .values({
         name: name as string,
         description: description as string,
-        imagePath: c.var.imageUrl,
+        imageUrl: c.var.imageUrl,
       })
       .returning();
 
