@@ -25,7 +25,7 @@ const getCategoriesQuery = `
 `;
 
 type Category = {
-  id: string;
+  id: number;
   name: string;
   description: string;
   imagePath: string;

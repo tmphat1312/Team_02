@@ -74,7 +74,10 @@ export function CategoryTable() {
             <TableCell width={240}>{item.name}</TableCell>
             <TableCell width={360}>{item.description}</TableCell>
             <TableCell width={40}>
-              <DeleteCategoryButton />
+              <DeleteCategoryButton
+                categoryId={item.id}
+                categoryName={item.name}
+              />
             </TableCell>
           </TableRow>
         )}

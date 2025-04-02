@@ -5,7 +5,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NuqsAdapter>
       <HeroUIProvider>
-        <ToastProvider placement="top-center" />
+        <ToastProvider
+          placement="top-center"
+          toastProps={{
+            timeout: 3_000,
+          }}
+        />
         {children}
       </HeroUIProvider>
     </NuqsAdapter>

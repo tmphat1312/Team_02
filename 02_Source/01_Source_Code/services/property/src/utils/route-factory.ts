@@ -4,6 +4,7 @@ import { ContentfulStatusCode } from "hono/utils/http-status";
 import {
   BAD_REQUEST,
   CREATED,
+  NO_CONTENT,
   NOT_FOUND,
   OK,
   UNAUTHORIZED,
@@ -18,6 +19,7 @@ type Env = {
   Variables: {
     ok: (data: unknown, meta?: unknown) => void;
     created: (data: unknown, meta?: unknown) => void;
+    noContent: () => void;
     unauthorized: (errorMsg?: string) => void;
     notFound: (errorMsg?: string) => void;
     badRequest: (errorMsg?: string) => void;
@@ -56,6 +58,16 @@ const defineResponseFunctions = createMiddleware<Env>(async (c, next) => {
 
   c.set("ok", returnData(OK));
   c.set("created", returnData(CREATED));
+  c.set("noContent", () =>
+    c.json(
+      {
+        data: null,
+        error: null,
+        metadata: {},
+      },
+      { status: NO_CONTENT as ContentfulStatusCode }
+    )
+  );
 
   c.set("unauthorized", (errorMsg = "Unauthorized") =>
     returnError({

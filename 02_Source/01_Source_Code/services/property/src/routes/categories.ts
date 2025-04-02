@@ -45,4 +45,10 @@ route.post(
   }
 );
 
+route.delete("/:id", async (c) => {
+  const id = c.req.param("id");
+  await db.delete(categoriesTable).where(eq(categoriesTable.id, Number(id)));
+  return c.var.noContent();
+});
+
 export const categoriesRoute = route;
