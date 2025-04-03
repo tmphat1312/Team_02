@@ -1,0 +1,54 @@
+syntax = "proto3";
+package loyalty;
+import "data.proto";
+
+service LoyaltyService {
+  // ListLoyaltyCampaign
+  rpc ListLoyaltyCampaign(ListLoyaltyCampaignRequest) returns (ListLoyaltyCampaignResponse);
+  // UpsertLoyaltyCampaign
+  rpc UpsertLoyaltyCampaign(UpsertLoyaltyCampaignRequest) returns (UpsertLoyaltyCampaignResponse);
+}
+
+// ListLoyaltyCampaignRequest
+message ListLoyaltyCampaignRequest {
+  // loyaltyCampaignIds
+  repeated int64 loyalty_campaign_ids = 1;
+}
+
+// ListLoyaltyCampaignResponse
+message ListLoyaltyCampaignResponse {
+  message Data {
+    // loyaltyCampaigns
+    repeated LoyaltyCampaign loyalty_campaigns = 1;
+  }
+  // code
+  uint32 code = 1;
+  // message
+  string message = 2;
+  // data
+  Data data = 3;
+}
+
+// UpsertLoyaltyCampaignRequest
+message UpsertLoyaltyCampaignRequest {
+  // id
+  int64 id = 1;
+  // name
+  string name = 2;
+  // type
+  LoyaltyCampaignType type = 3;
+}
+
+// UpsertLoyaltyCampaignResponse
+message UpsertLoyaltyCampaignResponse {
+  message Data {
+    // id
+    int64 id = 1;
+  }
+  // code
+  uint32 code = 1;
+  // message
+  string message = 2;
+  // data
+  Data data = 3;
+}

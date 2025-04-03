@@ -1,0 +1,28 @@
+{
+  "name": "node_grpc",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "dev": "bun run --hot src/server.ts",
+    "client": "bun run src/client.ts",
+    "protoc": "bun run protoc.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.13.2",
+    "@grpc/proto-loader": "^0.7.13",
+    "buf": "bufbuild/buf",
+    "google-protobuf": "^3.21.4",
+    "grpc": "^1.24.11",
+    "grpc-tools": "^1.13.0",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "protoc-gen-validate": "^1.0.11"
+  }
+}

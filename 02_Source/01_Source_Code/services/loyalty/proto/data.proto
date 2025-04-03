@@ -1,0 +1,28 @@
+syntax = "proto3";
+package loyalty;
+
+// LoyaltyCampaign
+message LoyaltyCampaign{
+  // id
+  int64 id = 1;
+  // name
+  string name = 2;
+  // type
+  LoyaltyCampaignType type = 3;
+  // status
+  LoyaltyCampaignStatus status = 4;
+}
+
+// LoyaltyCampaignType
+enum LoyaltyCampaignType {
+  LOYALTY_CAMPAIGN_TYPE_UNSPECIFIED = 0;
+  LOYALTY_CAMPAIGN_TYPE_REWARD_POINT = 1;
+  LOYALTY_CAMPAIGN_TYPE_REDEEM_POINT = 2;
+}
+
+// LoyaltyCampaignStatus
+enum LoyaltyCampaignStatus {
+  LOYALTY_CAMPAIGN_STATUS_UNSPECIFIED = 0;
+  LOYALTY_CAMPAIGN_STATUS_ACTIVE = 1;
+  LOYALTY_CAMPAIGN_STATUS_INACTIVE = 2;
+}
