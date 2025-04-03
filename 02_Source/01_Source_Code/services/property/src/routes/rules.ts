@@ -5,6 +5,30 @@ import { routeFactory } from "../utils/route-factory";
 
 const route = routeFactory.createApp();
 
+route.get("/", async (c) => {
+  const { page, pageSize } = c.req.query();
+
+  const pageNumber = Number(page || 1);
+  const pageSizeNumber = Number(pageSize || 10);
+
+  const rules = await db
+    .select()
+    .from(rulesTable)
+    .limit(pageSizeNumber)
+    .offset((pageNumber - 1) * pageSizeNumber)
+    .orderBy(desc(rulesTable.id));
+
+  const totalItems = await db.$count(rulesTable);
+  return c.var.ok(rules, {
+    pagination: {
+      page: pageNumber,
+      pageSize: pageSizeNumber,
+      totalItems,
+      totalPages: Math.ceil(totalItems / pageSizeNumber),
+    },
+  });
+});
+
 route.get("/common", async (c) => {
   const { page, pageSize } = c.req.query();
   const pageNumber = Number(page || 1);
