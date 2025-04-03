@@ -7,8 +7,8 @@ const proxy = proxyMiddleware({
 });
 
 route.use("/graphql", proxy);
-route.use("/properties*", proxy);
 route.use("/amenities*", proxy);
+route.use("/rules*", proxy);
 route.use("/categories*", proxy);
 
 export const propertyService = route;

@@ -1,5 +1,5 @@
 import { cn } from '@heroui/theme';
-import { TagsIcon, WifiIcon } from 'lucide-react';
+import { CircleOff, TagsIcon, WifiIcon } from 'lucide-react';
 import { JSX } from 'react';
 import { NavLink } from 'react-router';
 
@@ -19,6 +19,11 @@ const NAV_ITEMS = [
     label: 'Categories',
     to: '/categories',
     icon: <TagsIcon />,
+  },
+  {
+    label: 'Common Rules',
+    to: '/common-rules',
+    icon: <CircleOff />,
   },
 ] satisfies NavItem[];
 
