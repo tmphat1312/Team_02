@@ -1,7 +1,7 @@
 import { app } from "@getcronit/pylon";
+import { cors } from "hono/cors";
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
-import { cors } from "hono/cors";
 
 import { consola } from "consola";
 
@@ -11,7 +11,7 @@ import { amenitiesRoute } from "./routes/amenities";
 import { categoriesRoute } from "./routes/categories";
 import { Mutation, Query } from "./routes/graphql";
 import { internalRoute } from "./routes/internal";
-import { propertiesRoute } from "./routes/properties";
+import { rulesRoute } from "./routes/rules";
 
 app.use(logger(consola.info));
 
@@ -22,9 +22,9 @@ app.use(
 );
 
 app.route("/", internalRoute);
-app.route("/properties", propertiesRoute);
 app.route("/categories", categoriesRoute);
 app.route("/amenities", amenitiesRoute);
+app.route("/rules", rulesRoute);
 
 app.onError(onError);
 

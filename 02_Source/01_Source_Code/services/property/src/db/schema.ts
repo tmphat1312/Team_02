@@ -1,8 +1,9 @@
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   integer,
   pgEnum,
   pgTable,
+  pgView,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -33,5 +34,5 @@ export const rulesTable = pgTable("rules", {
   ...baseColumns,
   name: varchar({ length: 255 }).notNull().unique(),
   description: varchar({ length: 255 }).notNull(),
-  type: ruleTypeEnum().default("common"),
+  type: ruleTypeEnum().default("custom"),
 });
