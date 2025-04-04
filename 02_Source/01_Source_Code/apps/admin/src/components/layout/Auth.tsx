@@ -14,7 +14,7 @@ export function AuthLayout() {
   }
 
   if (data && data.user.role === 'admin') {
-    return <Navigate to="/dashboard" replace={true} />;
+    return <Navigate to="/amenities" replace={true} />;
   }
 
   return (

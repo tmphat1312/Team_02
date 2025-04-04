@@ -50,7 +50,7 @@ export function LoginForm() {
         { email, password },
         {
           onSuccess: () => {
-            navigate('/dashboard');
+            navigate('/amenities', { replace: true });
           },
           onError: (ctx) => {
             addToast({
