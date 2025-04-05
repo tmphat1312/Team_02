@@ -18,62 +18,63 @@ type UploadOptions = {
 };
 
 export const cloudinaryClient = {
-  upload: async function (options: UploadOptions) {
-    const { file, folder, overwrite = false } = options;
-
-    const fileArrayBuffer = await file.arrayBuffer();
-    const publicId = `${normalizeFileName(file.name)}-${crypto.randomUUID()}`;
-
-    const uploadPromise = new Promise((resolve) => {
-      cloudinary.uploader
-        .upload_stream(
-          {
-            public_id: publicId,
-            folder,
-            overwrite,
-          },
-          (err, data) => resolve(err || data)
-        )
-        .end(Buffer.from(fileArrayBuffer));
-    });
-
-    const result = await uploadPromise;
-
-    if (isUploadError(result)) {
-      return [null, result] as const;
-    }
-    if (isUploadSuccess(result)) {
-      return [result, null] as const;
-    }
-
-    return [null, new Error("Unknown upload error")] as const;
-  },
-
-  delete: async function (secureUrl: string) {
-    const publicId = extractPublicId(secureUrl);
-
-    if (!publicId) {
-      return [null, new Error("Invalid secure URL")] as const;
-    }
-
-    const deletePromise = new Promise((resolve) => {
-      cloudinary.uploader.destroy(publicId, (err, data) =>
-        resolve(err || data)
-      );
-    });
-    const result = await deletePromise;
-
-    if (isUploadError(result)) {
-      return [null, result] as const;
-    }
-
-    if (isUploadSuccess(result)) {
-      return [result, null] as const;
-    }
-
-    return [null, new Error("Unknown delete error")] as const;
-  },
+  uploadImage,
+  deleteImage,
 };
+
+export async function uploadImage(
+  options: UploadOptions
+): Promise<[UploadApiResponse | null, Error | null]> {
+  const { file, folder, overwrite = false } = options;
+
+  const fileArrayBuffer = await file.arrayBuffer();
+  const public_id = `${normalizeFileName(file.name)}-${crypto.randomUUID()}`;
+
+  const uploadPromise = new Promise((resolve) => {
+    cloudinary.uploader
+      .upload_stream(
+        // prettier-ignore
+        { public_id, folder, overwrite },
+        (err, data) => resolve(err || data)
+      )
+      .end(Buffer.from(fileArrayBuffer));
+  });
+
+  const result = await uploadPromise;
+
+  if (isUploadError(result)) {
+    return [null, result] as const;
+  }
+
+  if (isUploadSuccess(result)) {
+    return [result, null] as const;
+  }
+
+  return [null, new Error("Unknown upload error")] as const;
+}
+
+export async function deleteImage(secureUrl: string) {
+  const publicId = extractPublicId(secureUrl);
+
+  if (!publicId) {
+    return [null, new Error("Invalid secure URL")] as const;
+  }
+
+  const deletePromise = new Promise((resolve) => {
+    cloudinary.uploader.destroy(publicId, (err, data) => resolve(err || data));
+  });
+  const result = await deletePromise;
+
+  if (isUploadError(result)) {
+    return [null, result] as const;
+  }
+
+  if (isUploadSuccess(result)) {
+    return [result, null] as const;
+  }
+
+  return [null, new Error("Unknown delete error")] as const;
+}
 
 function normalizeFileName(fileName: string) {
   return fileName

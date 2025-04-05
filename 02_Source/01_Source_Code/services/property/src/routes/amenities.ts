@@ -1,24 +1,62 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
+import { Hono } from "hono";
+
 import { db } from "../db";
 import { amenitiesTable } from "../db/schema";
-import { cloudinaryClient } from "../lib/cloudinary-client";
-import { uploadImageMiddleware } from "../middlewares/upload-image";
-import { routeFactory } from "../utils/route-factory";
 
-const route = routeFactory.createApp();
+import { cloudinaryClient } from "../lib/cloudinary-client";
+
+import { transformPaginationQuery } from "../middlewares/transform-pagination-query";
+import { uploadImageMiddleware } from "../middlewares/upload-image";
+
+import { badRequest, created, noContent, ok } from "../utils/json-helpers";
+
+const route = new Hono();
+
+route.get("/", transformPaginationQuery, async (c) => {
+  const { page, pageSize } = c.var.pagination;
+  const offset = (page - 1) * pageSize;
+
+  const getAmenitiesQuery = db
+    .select()
+    .from(amenitiesTable)
+    .limit(pageSize)
+    .offset(offset)
+    .orderBy(desc(amenitiesTable.id));
+  const countAmenitiesQuery = db.$count(amenitiesTable);
+
+  const [amenities, totalItems] = await Promise.all([
+    getAmenitiesQuery,
+    countAmenitiesQuery,
+  ]);
+
+  const currentPage = page;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
+  return ok(c, {
+    data: amenities,
+    meta: {
+      pagination: {
+        currentPage,
+        totalItems,
+        totalPages,
+      },
+    },
+  });
+});
 
 route.post(
   "/",
   async (c, next) => {
-    const { name } = await c.req.parseBody();
+    const { name } = await c.req.parseBody<{ name: string }>();
 
     const [existingAmenity] = await db
-      .select()
+      .select({ id: amenitiesTable.id })
       .from(amenitiesTable)
-      .where(eq(amenitiesTable.name, name as string));
+      .where(eq(amenitiesTable.name, name));
 
     if (existingAmenity) {
-      return c.var.badRequest(`Amenity with name "${name}" already exists.`);
+      return badRequest(c, `Amenity with name "${name}" already exists.`);
     }
 
     await next();
@@ -28,33 +66,39 @@ route.post(
     folder: "Amenities",
   }),
   async (c) => {
-    const { name, description } = await c.req.parseBody();
+    const { name, description } = await c.req.parseBody<{
+      name: string;
+      description: string;
+    }>();
 
-    const [res] = await db
+    const [createdAmenity] = await db
       .insert(amenitiesTable)
       .values({
-        name: name as string,
-        description: description as string,
+        name: name,
+        description: description,
         imageUrl: c.var.imageUrl,
       })
       .returning();
 
-    return c.var.created(res);
+    return created(c, {
+      data: createdAmenity,
+    });
   }
 );
 
 route.delete("/:id", async (c) => {
   const id = c.req.param("id");
-  const [deleted] = await db
+
+  const [deletedAmenity] = await db
     .delete(amenitiesTable)
     .where(eq(amenitiesTable.id, Number(id)))
     .returning();
 
-  if (deleted) {
-    await cloudinaryClient.delete(deleted.imageUrl);
+  if (deletedAmenity) {
+    await cloudinaryClient.deleteImage(deletedAmenity.imageUrl);
   }
 
-  return c.var.noContent();
+  return noContent(c);
 });
 
 export const amenitiesRoute = route;

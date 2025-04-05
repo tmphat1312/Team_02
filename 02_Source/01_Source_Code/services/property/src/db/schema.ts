@@ -1,9 +1,8 @@
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import {
   integer,
   pgEnum,
   pgTable,
-  pgView,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";

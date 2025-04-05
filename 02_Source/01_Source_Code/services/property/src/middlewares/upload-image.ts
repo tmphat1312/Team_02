@@ -1,5 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { cloudinaryClient } from "../lib/cloudinary-client";
+import { internalServerError } from "../utils/json-helpers";
 
 type Env = {
   Variables: {
@@ -19,11 +20,10 @@ export function uploadImageMiddleware(options: UploadImageMiddlewareOptions) {
     const body = await c.req.parseBody();
     const file = body[inputFieldName] as File;
 
-    const [data, err] = await cloudinaryClient.upload({ file, folder });
+    const [data, err] = await cloudinaryClient.uploadImage({ file, folder });
 
+    if (err) internalServerError(c, err.message);
     if (data) c.set("imageUrl", data.secure_url);
-    if (err) throw new Error(err.message);
-
     await next();
   });
 }

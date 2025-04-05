@@ -1,88 +1,89 @@
 import { desc, eq } from "drizzle-orm";
+import { Hono } from "hono";
+
 import { db } from "../db";
 import { rulesTable } from "../db/schema";
-import { routeFactory } from "../utils/route-factory";
 
-const route = routeFactory.createApp();
+import { transformPaginationQuery } from "../middlewares/transform-pagination-query";
 
-route.get("/", async (c) => {
-  const { page, pageSize } = c.req.query();
+import { badRequest, created, noContent, ok } from "../utils/json-helpers";
 
-  const pageNumber = Number(page || 1);
-  const pageSizeNumber = Number(pageSize || 10);
+const route = new Hono();
 
-  const rules = await db
+route.get("/", transformPaginationQuery, async (c) => {
+  const { page, pageSize } = c.var.pagination;
+  const offset = (page - 1) * pageSize;
+  const type = c.req.query("type");
+
+  const whereClause = type
+    ? eq(rulesTable.type, type as "common" | "custom")
+    : undefined;
+
+  const getRulesQuery = db
     .select()
     .from(rulesTable)
-    .limit(pageSizeNumber)
-    .offset((pageNumber - 1) * pageSizeNumber)
+    .where(whereClause)
+    .limit(pageSize)
+    .offset(offset)
     .orderBy(desc(rulesTable.id));
+  const countRulesQuery = db.$count(rulesTable, whereClause);
 
-  const totalItems = await db.$count(rulesTable);
-  return c.var.ok(rules, {
-    pagination: {
-      page: pageNumber,
-      pageSize: pageSizeNumber,
-      totalItems,
-      totalPages: Math.ceil(totalItems / pageSizeNumber),
+  const [rules, totalItems] = await Promise.all([
+    getRulesQuery,
+    countRulesQuery,
+  ]);
+
+  const currentPage = page;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
+  return ok(c, {
+    data: rules,
+    meta: {
+      pagination: {
+        currentPage,
+        totalItems,
+        totalPages,
+      },
     },
   });
 });
 
-route.get("/common", async (c) => {
-  const { page, pageSize } = c.req.query();
-  const pageNumber = Number(page || 1);
-  const pageSizeNumber = Number(pageSize || 10);
+route.post(
+  "/",
+  async (c, next) => {
+    const { name } = await c.req.json<typeof rulesTable.$inferInsert>();
 
-  const rules = await db
-    .select()
-    .from(rulesTable)
-    .where(eq(rulesTable.type, "common"))
-    .limit(pageSizeNumber)
-    .offset((pageNumber - 1) * pageSizeNumber)
-    .orderBy(desc(rulesTable.id));
-  const totalItems = await db.$count(rulesTable);
+    const [existingRule] = await db
+      .select({ id: rulesTable.id })
+      .from(rulesTable)
+      .where(eq(rulesTable.name, name));
 
-  return c.var.ok(rules, {
-    pagination: {
-      page: pageNumber,
-      pageSize: pageSizeNumber,
-      totalItems,
-      totalPages: Math.ceil(totalItems / pageSizeNumber),
-    },
-  });
-});
+    if (existingRule) {
+      return badRequest(c, "Rule already exists");
+    }
 
-route.post("/", async (c) => {
-  const { name, description, type } = await c.req.json<
-    typeof rulesTable.$inferInsert
-  >();
+    await next();
+  },
+  async (c) => {
+    const { name, description, type } = await c.req.json<
+      typeof rulesTable.$inferInsert
+    >();
 
-  const [existingRule] = await db
-    .select()
-    .from(rulesTable)
-    .where(eq(rulesTable.name, name));
+    const [createdRule] = await db
+      .insert(rulesTable)
+      .values({ name, description, type })
+      .returning();
 
-  if (existingRule) {
-    return c.var.badRequest("Rule already exists");
+    return created(c, {
+      data: createdRule,
+    });
   }
-
-  const [res] = await db
-    .insert(rulesTable)
-    .values({
-      name,
-      description,
-      type,
-    })
-    .returning();
-
-  return c.var.created(res);
-});
+);
 
 route.delete("/:id", async (c) => {
   const { id } = c.req.param();
   await db.delete(rulesTable).where(eq(rulesTable.id, Number(id)));
-  return c.var.noContent();
+  return noContent(c);
 });
 
 export const rulesRoute = route;

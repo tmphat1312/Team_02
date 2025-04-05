@@ -5,8 +5,5 @@ node_modules/
 .env
 docker.env
 
-# pylon
-.pylon
-
 # Editor
 .vscode

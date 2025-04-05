@@ -1,26 +1,37 @@
 import type { ErrorHandler } from "hono";
-import type { StatusCode } from "hono/utils/http-status";
 import { consola } from "consola";
-
-import { INTERNAL_SERVER_ERROR, OK } from "../constants/http-status-codes";
+import { StatusCodes, ReasonPhrases } from "http-status-codes";
+import {
+  DataResponse,
+  ErrorResponse,
+  MetadataResponse,
+} from "../utils/json-helpers";
 
 export const onError: ErrorHandler = (err, c) => {
-  const currentStatus =
-    "status" in err ? (err.status as StatusCode) : c.newResponse(null).status;
-  const statusCode =
-    currentStatus !== OK ? currentStatus : INTERNAL_SERVER_ERROR;
   const env = c.env?.NODE_ENV || process.env?.NODE_ENV;
+  const isProduction = env === "production";
 
-  consola.error(err);
+  if (!isProduction) consola.error(err);
 
-  c.status(statusCode as StatusCode);
+  const data: DataResponse = null;
+  const error: ErrorResponse = {
+    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    message: err.message,
+    statusText: ReasonPhrases.INTERNAL_SERVER_ERROR,
+  };
+  const metadata: MetadataResponse = !isProduction
+    ? {
+        stack: err.stack,
+        name: err.name,
+        env,
+        url: c.req.url,
+      }
+    : {};
+
+  c.status(StatusCodes.INTERNAL_SERVER_ERROR);
   return c.json({
-    status: "Not OK!",
-    data: null,
-    error: {
-      statusCode,
-      message: err.message,
-      stack: env === "production" ? undefined : err.stack,
-    },
+    data,
+    error,
+    metadata,
   });
 };

@@ -1,8 +1,7 @@
 {
-  "extends": "@getcronit/pylon/tsconfig.pylon.json",
   "compilerOptions": {
-    "types": ["bun-types"],
-    "resolveJsonModule": true
-  },
-  "include": ["pylon.d.ts", "src/**/*.ts"]
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
 }
