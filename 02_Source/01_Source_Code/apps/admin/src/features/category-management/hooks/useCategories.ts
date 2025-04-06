@@ -3,27 +3,6 @@ import useSWR, { preload } from 'swr';
 
 import { axiosClient } from '../../../lib/axios-client';
 
-const getCategoriesQuery = `
-  query GetCategories($page: Number!, $pageSize: Number!) {
-    categories(pagination: { page: $page, pageSize: $pageSize }) {
-      data {
-        id
-        name
-        description
-        imageUrl
-      }
-      metadata {
-        pagination {
-          page
-          pageSize
-          totalItems
-          totalPages
-        }
-      }
-    }
-  }
-`;
-
 type Category = {
   id: number;
   name: string;
@@ -38,26 +17,14 @@ type Pagination = {
   totalPages: number;
 };
 
-const fetcher = async (key: string) => {
-  const searchParams = new URLSearchParams(key.split('?')[1]);
-  const page = parseInt(searchParams.get('page') || '1');
-  const pageSize = 5;
+const fetcher = (url: string) =>
+  axiosClient.get(url).then(({ data: axiosData }) => ({
+    categories: axiosData.data as Category[],
+    pagination: axiosData.metadata.pagination as Pagination,
+  }));
 
-  return axiosClient
-    .post('/graphql', {
-      query: getCategoriesQuery,
-      variables: {
-        page,
-        pageSize,
-      },
-    })
-    .then(({ data: axiosData }) => ({
-      categories: axiosData.data.categories.data as Category[],
-      pagination: axiosData.data.categories.metadata.pagination as Pagination,
-    }));
-};
-
-const fetchKey = ({ page }: { page: number }) => `/categories?page=${page}`;
+const fetchKey = ({ page }: { page: number }) =>
+  `/categories?page=${page}&pageSize=5`;
 
 export function useCategories() {
   const [page] = useQueryState('page', parseAsInteger.withDefault(1));
@@ -76,16 +43,20 @@ export function useCategories() {
     }
   }
 
+  const categories = data?.categories || [];
+  const pagination = data?.pagination || {
+    page: 0,
+    pageSize: 0,
+    totalItems: 0,
+    totalPages: 0,
+  };
+  const revalidateCategories = mutate;
+
   return {
     isLoading,
     error,
-    categories: data?.categories || [],
-    pagination: data?.pagination || {
-      page: 0,
-      pageSize: 0,
-      totalItems: 0,
-      totalPages: 0,
-    },
-    revalidateCategories: mutate,
+    categories,
+    pagination,
+    revalidateCategories,
   };
 }

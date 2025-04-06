@@ -15,8 +15,3 @@ export function proxyMiddleware({ target }: { target: string }) {
     });
   });
 }
-
-export type ProxyPattern = {
-  target: string;
-  path: string;
-};

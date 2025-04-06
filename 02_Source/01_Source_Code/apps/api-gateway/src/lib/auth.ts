@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { admin } from "better-auth/plugins";
 import pg from "pg";
 
+export const ROLES = ["user", "admin"];
+
 export const auth = betterAuth({
   advanced: {
     defaultCookieAttributes: {

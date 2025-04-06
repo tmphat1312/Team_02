@@ -1,29 +1,9 @@
 import { parseAsInteger, useQueryState } from 'nuqs';
 import useSWR, { preload } from 'swr';
+
 import { axiosClient } from '../../../lib/axios-client';
 
-const getAmenitiesQuery = `
-  query GetAmenities($page: Number!, $pageSize: Number!) {
-    amenities(pagination: { page: $page, pageSize: $pageSize }) {
-      data {
-        id
-        name
-        description
-        imageUrl
-      }
-      metadata {
-        pagination {
-          page
-          pageSize
-          totalItems
-          totalPages
-        }
-      }
-    }
-  }
-`;
-
-type Category = {
+type Amenity = {
   id: number;
   name: string;
   description: string;
@@ -37,26 +17,14 @@ type Pagination = {
   totalPages: number;
 };
 
-const fetcher = async (key: string) => {
-  const searchParams = new URLSearchParams(key.split('?')[1]);
-  const page = parseInt(searchParams.get('page') || '1');
-  const pageSize = 5;
+const fetcher = (url: string) =>
+  axiosClient.get(url).then(({ data: axiosData }) => ({
+    amenities: axiosData.data as Amenity[],
+    pagination: axiosData.metadata.pagination as Pagination,
+  }));
 
-  return axiosClient
-    .post('/graphql', {
-      query: getAmenitiesQuery,
-      variables: {
-        page,
-        pageSize,
-      },
-    })
-    .then(({ data: axiosData }) => ({
-      amenities: axiosData.data.amenities.data as Category[],
-      pagination: axiosData.data.amenities.metadata.pagination as Pagination,
-    }));
-};
-
-const fetchKey = ({ page }: { page: number }) => `/amenities?page=${page}`;
+const fetchKey = ({ page }: { page: number }) =>
+  `/amenities?page=${page}&pageSize=5`;
 
 export function useAmenities() {
   const [page] = useQueryState('page', parseAsInteger.withDefault(1));
@@ -64,6 +32,8 @@ export function useAmenities() {
     fetchKey({ page }),
     fetcher
   );
+
+  console.log(data);
 
   if (data) {
     if (page - 1 > 0) {
@@ -75,16 +45,20 @@ export function useAmenities() {
     }
   }
 
+  const amenities = data?.amenities || [];
+  const pagination = data?.pagination || {
+    page: 0,
+    pageSize: 0,
+    totalItems: 0,
+    totalPages: 0,
+  };
+  const revalidateAmenities = mutate;
+
   return {
     isLoading,
     error,
-    amenities: data?.amenities || [],
-    pagination: data?.pagination || {
-      page: 0,
-      pageSize: 0,
-      totalItems: 0,
-      totalPages: 0,
-    },
-    revalidateAmenities: mutate,
+    amenities,
+    pagination,
+    revalidateAmenities,
   };
 }

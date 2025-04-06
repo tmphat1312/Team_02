@@ -43,6 +43,7 @@ route.get("/", transformPaginationQuery, async (c) => {
         currentPage,
         totalItems,
         totalPages,
+        pageSize,
       },
     },
   });

@@ -3,7 +3,7 @@ import useSWR, { preload } from 'swr';
 
 import { axiosClient } from '../../../lib/axios-client';
 
-type Category = {
+type CommonRule = {
   id: number;
   name: string;
   description: string;
@@ -16,25 +16,14 @@ type Pagination = {
   totalPages: number;
 };
 
-const fetcher = async (key: string) => {
-  const searchParams = new URLSearchParams(key.split('?')[1]);
-  const page = parseInt(searchParams.get('page') || '1');
-  const pageSize = 5;
+const fetcher = (url: string) =>
+  axiosClient.get(url).then(({ data: axiosData }) => ({
+    commonRules: axiosData.data as CommonRule[],
+    pagination: axiosData.metadata.pagination as Pagination,
+  }));
 
-  return axiosClient
-    .get('/rules/common', {
-      params: {
-        page,
-        pageSize,
-      },
-    })
-    .then(({ data: axiosData }) => ({
-      commonRules: axiosData.data as Category[],
-      pagination: axiosData.metadata.pagination as Pagination,
-    }));
-};
-
-const fetchKey = ({ page }: { page: number }) => `/rules?page=${page}`;
+const fetchKey = ({ page }: { page: number }) =>
+  `/rules?page=${page}&pageSize=5&type=common`;
 
 export function useCommonRules() {
   const [page] = useQueryState('page', parseAsInteger.withDefault(1));
@@ -53,16 +42,20 @@ export function useCommonRules() {
     }
   }
 
+  const commonRules = data?.commonRules || [];
+  const pagination = data?.pagination || {
+    page: 0,
+    pageSize: 0,
+    totalItems: 0,
+    totalPages: 0,
+  };
+  const revalidateCommonRules = mutate;
+
   return {
     isLoading,
     error,
-    commonRules: data?.commonRules || [],
-    pagination: data?.pagination || {
-      page: 0,
-      pageSize: 0,
-      totalItems: 0,
-      totalPages: 0,
-    },
-    revalidateCommonRules: mutate,
+    commonRules,
+    pagination,
+    revalidateCommonRules,
   };
 }
