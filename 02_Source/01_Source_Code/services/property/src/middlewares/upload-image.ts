@@ -1,5 +1,5 @@
 import { createMiddleware } from "hono/factory";
-import { cloudinaryClient } from "../lib/cloudinary-client";
+import { cloudinaryClient, UploadFolder } from "../lib/cloudinary-client";
 import { internalServerError } from "../utils/json-helpers";
 
 type Env = {
@@ -10,7 +10,7 @@ type Env = {
 
 type UploadImageMiddlewareOptions = {
   inputFieldName: string;
-  folder: "Categories" | "Amenities" | "Properties" | "Users";
+  folder: UploadFolder;
 };
 
 export function uploadImageMiddleware(options: UploadImageMiddlewareOptions) {
@@ -22,7 +22,7 @@ export function uploadImageMiddleware(options: UploadImageMiddlewareOptions) {
 
     const [data, err] = await cloudinaryClient.uploadImage({ file, folder });
 
-    if (err) internalServerError(c, err.message);
+    if (err) return internalServerError(c, err.message);
     if (data) c.set("imageUrl", data.secure_url);
     await next();
   });
