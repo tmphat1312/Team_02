@@ -1,7 +1,11 @@
 export function Footer() {
   return (
-    <div>
-      <div>Footer Component</div>
+    <div className="container mx-auto">
+      <footer>
+        <div>Links</div>
+        <div>Divider</div>
+        <div>Copyright</div>
+      </footer>
     </div>
   );
 }
