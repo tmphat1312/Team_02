@@ -1,3 +1,4 @@
+@import url('leaflet/dist/leaflet.css'); /* this css should be put on the top */
 @import "tailwindcss";
 @import "tw-animate-css";
 
