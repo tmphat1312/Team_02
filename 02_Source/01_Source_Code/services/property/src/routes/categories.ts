@@ -10,12 +10,16 @@ import { uploadImageMiddleware } from "../middlewares/upload-image";
 import { cloudinaryClient } from "../lib/cloudinary-client";
 
 import { badRequest, created, noContent, ok } from "../utils/json-helpers";
+import {
+  calculateOffset,
+  calculateTotalPages,
+} from "../utils/pagination-calculators";
 
 const route = new Hono();
 
 route.get("/", transformPaginationQuery, async (c) => {
   const { page, pageSize } = c.var.pagination;
-  const offset = (page - 1) * pageSize;
+  const offset = calculateOffset({ page, pageSize });
 
   const getCategoriesQuery = db
     .select()
@@ -31,7 +35,7 @@ route.get("/", transformPaginationQuery, async (c) => {
   ]);
 
   const currentPage = page;
-  const totalPages = Math.ceil(totalItems / pageSize);
+  const totalPages = calculateTotalPages({ totalItems, pageSize });
 
   return ok(c, {
     data: categories,
