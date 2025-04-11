@@ -1,16 +1,17 @@
-import { addToast, Button } from '@heroui/react';
-import { TrashIcon } from 'lucide-react';
 import {
+  addToast,
+  Button,
   Modal,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
   useDisclosure,
 } from '@heroui/react';
+import { TrashIcon } from 'lucide-react';
 
-import { useDeleteAmenity } from '../hooks/useDeleteAmenity';
 import { useAmenities } from '../hooks/useAmenities';
+import { useDeleteAmenity } from '../hooks/useDeleteAmenity';
 
 type DeleteAmenityButtonProps = {
   amenityId: number;
@@ -24,12 +25,11 @@ export function DeleteAmenityButton(props: DeleteAmenityButtonProps) {
   const { revalidateAmenities } = useAmenities();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const handleDelete = () => {
-    deleteAmenity(
+  const handleDelete = async () => {
+    await deleteAmenity(
       { id: amenityId },
       {
         onSuccess: () => {
-          revalidateAmenities();
           addToast({
             color: 'success',
             title: 'Amenity deleted successfully',
@@ -47,6 +47,10 @@ export function DeleteAmenityButton(props: DeleteAmenityButtonProps) {
         },
       }
     );
+
+    setTimeout(() => {
+      revalidateAmenities();
+    }, 500);
   };
 
   return (

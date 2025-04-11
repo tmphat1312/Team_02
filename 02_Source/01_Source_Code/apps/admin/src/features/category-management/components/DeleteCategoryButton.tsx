@@ -24,12 +24,11 @@ export function DeleteCategoryButton(props: DeleteCategoryButtonProps) {
   const { revalidateCategories } = useCategories();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const handleDelete = () => {
-    deleteCategory(
+  const handleDelete = async () => {
+    await deleteCategory(
       { id: categoryId },
       {
         onSuccess: () => {
-          revalidateCategories();
           addToast({
             color: 'success',
             title: 'Category deleted successfully',
@@ -47,6 +46,10 @@ export function DeleteCategoryButton(props: DeleteCategoryButtonProps) {
         },
       }
     );
+
+    setTimeout(() => {
+      revalidateCategories();
+    }, 500);
   };
 
   return (
