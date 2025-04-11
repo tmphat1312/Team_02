@@ -8,7 +8,10 @@ import { ProtectedLayout } from './components/layout/Protected';
 const CommonRules = lazy(() => import('./routes/CommonRules'));
 const Categories = lazy(() => import('./routes/Categories'));
 const Amenities = lazy(() => import('./routes/Amenities'));
+const Dashboard = lazy(() => import('./routes/Dashboard'));
 const Login = lazy(() => import('./routes/Login'));
+
+// TODO: add error boundary
 
 export function RoutesProvider() {
   return (
@@ -20,12 +23,13 @@ export function RoutesProvider() {
         </Route>
         <Route element={<ProtectedLayout />}>
           <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/amenities" element={<Amenities />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/common-rules" element={<CommonRules />} />
           </Route>
         </Route>
-        <Route path="*" element={<div>Not Found</div>} />
+        <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );
