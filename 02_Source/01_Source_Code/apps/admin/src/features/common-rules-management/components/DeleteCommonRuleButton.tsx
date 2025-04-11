@@ -24,12 +24,11 @@ export function DeleteCommonRuleButton(props: DeleteCommonRuleButtonProps) {
   const { revalidateCommonRules } = useCommonRules();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const handleDelete = () => {
-    deleteCommonRule(
+  const handleDelete = async () => {
+    await deleteCommonRule(
       { id: commonRuleId },
       {
         onSuccess: () => {
-          revalidateCommonRules();
           addToast({
             color: 'success',
             title: 'Common rule deleted successfully',
@@ -47,6 +46,10 @@ export function DeleteCommonRuleButton(props: DeleteCommonRuleButtonProps) {
         },
       }
     );
+
+    setTimeout(() => {
+      revalidateCommonRules();
+    }, 500);
   };
 
   return (

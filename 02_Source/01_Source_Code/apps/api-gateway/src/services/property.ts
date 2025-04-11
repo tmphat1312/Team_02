@@ -14,8 +14,8 @@ route.delete("/amenities/:id", only(["admin"]), proxy);
 
 // Rule Resource
 route.get("/rules*", proxy);
-route.post("/rules", only(["admin", "host"]), proxy);
-route.delete("/rules/:id", only(["admin", "host"]), proxy);
+route.post("/rules", only(["admin"]), proxy);
+route.delete("/rules/:id", only(["admin"]), proxy);
 
 // Category Resource
 route.get("/categories*", proxy);
