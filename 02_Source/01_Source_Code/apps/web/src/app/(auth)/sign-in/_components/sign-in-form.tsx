@@ -1,11 +1,14 @@
 "use client";
 
-import { Lock, Mail } from "lucide-react";
+import { AlertCircle, Lock, Mail } from "lucide-react";
 import Link from "next/link";
+import { useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 import { OrSeparator } from "@/components/or-separator";
 import { SocialSignIn } from "@/components/social-sign-in";
@@ -20,6 +23,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -31,6 +36,8 @@ const FormSchema = z.object({
 });
 
 export function SignInForm() {
+  const [isPending, startTransition] = useTransition();
+  const [errMsg, setErrMsg] = useState("");
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,8 +47,31 @@ export function SignInForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Form submitted:", data);
-    // Handle form submission logic here
+    startTransition(async () => {
+      setErrMsg("");
+      await authClient.signIn.email(
+        {
+          email: data.email,
+          password: data.password,
+          callbackURL: "/",
+        },
+        {
+          onSuccess: () => {
+            toast.success("Logged in successfully!", {
+              description: "Welcome back!",
+            });
+          },
+          onError: (ctx) => {
+            toast.error("Failed to log in!", {
+              description: ctx.error.message,
+              position: "top-right",
+            });
+            setErrMsg(ctx.error.message);
+            form.setValue("password", "");
+          },
+        }
+      );
+    });
   }
 
   return (
@@ -56,6 +86,14 @@ export function SignInForm() {
           className="space-y-5 px-7 py-6"
         >
           <h2 className="text-[1.375rem] font-medium">Welcome to Airbnb</h2>
+
+          {errMsg && (
+            <Alert variant="destructive" className="border-destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Login failed: {errMsg}</AlertTitle>
+            </Alert>
+          )}
+
           <FormField
             control={form.control}
             name="email"
@@ -110,8 +148,9 @@ export function SignInForm() {
           <Button
             type="submit"
             className="w-full py-6 text-base bg-airbnb hover:bg-airbnb-hover cursor-pointer"
+            disabled={isPending}
           >
-            Log in
+            {isPending ? "Logging in..." : "Log in"}
           </Button>
         </form>
       </Form>
