@@ -9,7 +9,9 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      {children}
+      <main className="mt-16 mb-8 max-w-xl mx-auto rounded-xl border">
+        {children}
+      </main>
       <Footer />
     </>
   );

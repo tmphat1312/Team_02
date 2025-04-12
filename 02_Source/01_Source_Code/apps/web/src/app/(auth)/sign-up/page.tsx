@@ -1,3 +1,5 @@
+import SignUpForm from "./_components/sign-up-form";
+
 export default function SignUpPage() {
-  return <main className="p-12">Hello from sign-up</main>;
+  return <SignUpForm />;
 }
