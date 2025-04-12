@@ -3,6 +3,6 @@ import { adminClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: env.NEXT_PUBLIC_AUTH_URL,
+  baseURL: env.NEXT_PUBLIC_API_GATEWAY_URL,
   plugins: [adminClient()],
 });
