@@ -16,6 +16,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SignedOut } from "@/app/(auth)/_components/signed-out";
+import { SignedIn } from "@/app/(auth)/_components/signed-in";
+import { SignOutButton } from "@/app/(auth)/_components/sign-out-button";
 
 export function Header() {
   return (
@@ -62,47 +65,119 @@ export function Header() {
                 align="end"
                 className="w-56 border shadow-xl border-gray-200"
               >
-                <DropdownMenuGroup className="py-1.5">
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/sign-in"
-                      className="w-full py-2.5 cursor-pointer"
-                    >
-                      Log in
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/sign-up"
-                      className="w-full py-2.5 cursor-pointer"
-                    >
-                      Sign up
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup className="py-2">
-                  <DropdownMenuItem asChild>
-                    <Link href="#" className="w-full py-2.5 cursor-pointer">
-                      Gift cards
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="#" className="w-full py-2.5 cursor-pointer">
-                      Host an experience
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/host" className="w-full py-2.5 cursor-pointer">
-                      Airbnb your home
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="#" className="w-full py-2.5 cursor-pointer">
-                      Help Center
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
+                <SignedOut>
+                  <DropdownMenuGroup className="py-1.5">
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/sign-in"
+                        className="w-full py-2.5 cursor-pointer"
+                      >
+                        Log in
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/sign-up"
+                        className="w-full py-2.5 cursor-pointer"
+                      >
+                        Sign up
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className="py-2">
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Gift cards
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Host an experience
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/host"
+                        className="w-full py-2.5 cursor-pointer"
+                      >
+                        Airbnb your home
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Help Center
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </SignedOut>
+                <SignedIn>
+                  <DropdownMenuGroup className="py-1.5">
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="#"
+                        className="w-full py-2.5 font-medium cursor-pointer"
+                      >
+                        Messages
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="#"
+                        className="w-full py-2.5 font-medium cursor-pointer"
+                      >
+                        Trips
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="#"
+                        className="w-full py-2.5 font-medium cursor-pointer"
+                      >
+                        Wishlists
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className="py-2">
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Manage listings
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Host an experience
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Refer a Host
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Account
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className="py-2">
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Gift cards
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                        Help Center
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="p-0">
+                      <SignOutButton className="w-full py-2.5 px-2 cursor-pointer" />
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </SignedIn>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

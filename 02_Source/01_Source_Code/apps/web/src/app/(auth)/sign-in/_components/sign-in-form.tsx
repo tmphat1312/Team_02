@@ -2,6 +2,8 @@
 
 import { AlertCircle, Lock, Mail } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +26,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -38,6 +39,7 @@ const FormSchema = z.object({
 export function SignInForm() {
   const [isPending, startTransition] = useTransition();
   const [errMsg, setErrMsg] = useState("");
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -53,13 +55,14 @@ export function SignInForm() {
         {
           email: data.email,
           password: data.password,
-          callbackURL: "/",
         },
         {
           onSuccess: () => {
             toast.success("Logged in successfully!", {
               description: "Welcome back!",
             });
+
+            router.replace("/");
           },
           onError: (ctx) => {
             toast.error("Failed to log in!", {

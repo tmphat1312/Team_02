@@ -1,7 +1,10 @@
 "use client";
 
-import { Lock, Mail, User } from "lucide-react";
+import { AlertCircle, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,6 +12,7 @@ import { z } from "zod";
 
 import { OrSeparator } from "@/components/or-separator";
 import { SocialSignIn } from "@/components/social-sign-in";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 const FormSchema = z
   .object({
@@ -44,6 +49,9 @@ const FormSchema = z
   });
 
 export default function SignUpForm() {
+  const [errMsg, setErrMsg] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -55,6 +63,38 @@ export default function SignUpForm() {
     },
   });
 
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    const fullName = `${data.firstName} ${data.lastName}`;
+    startTransition(async () => {
+      setErrMsg("");
+      await authClient.signUp.email(
+        {
+          email: data.email,
+          password: data.password,
+          name: fullName,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Account created successfully!", {
+              description: "Welcome aboard!",
+            });
+            form.reset();
+            router.replace("/");
+          },
+          onError: (ctx) => {
+            setErrMsg(ctx.error.message);
+            form.setValue("password", "");
+            form.setValue("confirmPassword", "");
+            toast.error("Failed to sign up!", {
+              description: ctx.error.message,
+              position: "top-right",
+            });
+          },
+        }
+      );
+    });
+  }
+
   return (
     <section>
       <header className="text-center border-b p-5">
@@ -63,12 +103,20 @@ export default function SignUpForm() {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit((data) => console.log(data))}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4 px-7 py-6"
         >
           <h2 className="text-[1.375rem] mb-5 font-medium">
             Create an Airbnb account
           </h2>
+
+          {errMsg && (
+            <Alert variant="destructive" className="border-destructive">
+              <AlertCircle className="size-4" />
+              <AlertTitle>Sign up failed: {errMsg}</AlertTitle>
+            </Alert>
+          )}
+
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -210,8 +258,9 @@ export default function SignUpForm() {
           <Button
             type="submit"
             className="w-full py-6 bg-airbnb hover:bg-airbnb-hover cursor-pointer"
+            disabled={isPending}
           >
-            Sign up
+            {isPending ? "Creating account..." : "Create account"}
           </Button>
         </form>
       </Form>
