@@ -19,6 +19,8 @@ import {
 import { SignedOut } from "@/app/(auth)/_components/signed-out";
 import { SignedIn } from "@/app/(auth)/_components/signed-in";
 import { SignOutButton } from "@/app/(auth)/_components/sign-out-button";
+import { HostSignedIn } from "@/app/(auth)/_components/host-signed-in";
+import { TenantSignedIn } from "@/app/(auth)/_components/tenant-signed-in";
 
 export function Header() {
   return (
@@ -115,7 +117,7 @@ export function Header() {
                   <DropdownMenuGroup className="py-1.5">
                     <DropdownMenuItem asChild>
                       <Link
-                        href="#"
+                        href="/messages"
                         className="w-full py-2.5 font-medium cursor-pointer"
                       >
                         Messages
@@ -123,7 +125,7 @@ export function Header() {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="#"
+                        href="/trips"
                         className="w-full py-2.5 font-medium cursor-pointer"
                       >
                         Trips
@@ -131,7 +133,7 @@ export function Header() {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="#"
+                        href="wishlists"
                         className="w-full py-2.5 font-medium cursor-pointer"
                       >
                         Wishlists
@@ -140,23 +142,35 @@ export function Header() {
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup className="py-2">
+                    <HostSignedIn>
+                      <DropdownMenuItem asChild>
+                        <Link href="#" className="w-full py-2.5 cursor-pointer">
+                          Manage listings
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="#" className="w-full py-2.5 cursor-pointer">
+                          Host an experience
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="#" className="w-full py-2.5 cursor-pointer">
+                          Refer a Host
+                        </Link>
+                      </DropdownMenuItem>
+                    </HostSignedIn>
+                    <TenantSignedIn>
+                      <DropdownMenuItem asChild>
+                        <Link href="#" className="w-full py-2.5 cursor-pointer">
+                          Airbnb your home
+                        </Link>
+                      </DropdownMenuItem>
+                    </TenantSignedIn>
                     <DropdownMenuItem asChild>
-                      <Link href="#" className="w-full py-2.5 cursor-pointer">
-                        Manage listings
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="#" className="w-full py-2.5 cursor-pointer">
-                        Host an experience
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="#" className="w-full py-2.5 cursor-pointer">
-                        Refer a Host
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="#" className="w-full py-2.5 cursor-pointer">
+                      <Link
+                        href="/account"
+                        className="w-full py-2.5 cursor-pointer"
+                      >
                         Account
                       </Link>
                     </DropdownMenuItem>
