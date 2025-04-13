@@ -119,12 +119,9 @@ route.post("/verify-otp", async (c) => {
     if (!emailVerified) {
       return badRequest(c, "Email verification failed!");
     }
-    const [deleteVerification] = await db
-      .delete(verificationTable)
-      .where(eq(verificationTable.identifier, email))
-      .returning();
     return ok(c, "Account has been verified");
   }
 });
+
 
 export const verificationRoute = route;
