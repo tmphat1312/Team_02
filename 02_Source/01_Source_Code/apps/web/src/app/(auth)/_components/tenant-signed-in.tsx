@@ -1,10 +1,15 @@
 import { useUser } from "../_hooks/use-user";
 
-export function TenantSignedIn({ children }: { children: React.ReactNode }) {
+type Props = {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+};
+
+export function TenantSignedIn({ children, fallback }: Props) {
   const { isLoading, isTenant } = useUser();
 
   if (isLoading) {
-    return null; // or a loading spinner
+    return fallback || null;
   }
 
   if (!isTenant) {

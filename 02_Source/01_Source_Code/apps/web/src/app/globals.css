@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
@@ -90,6 +88,9 @@
   }
 }
 
-@utility container {
-  margin-inline: auto;
+@layer components {
+  .width-container {
+    max-width: min(100%, 1720px);
+    margin-inline: 5rem;
+  }
 }

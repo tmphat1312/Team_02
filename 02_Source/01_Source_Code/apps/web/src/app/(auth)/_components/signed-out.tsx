@@ -1,10 +1,15 @@
 import { useUser } from "../_hooks/use-user";
 
-export function SignedOut({ children }: { children: React.ReactNode }) {
+type Props = {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+};
+
+export function SignedOut({ children, fallback }: Props) {
   const { isLoading, isLoggedIn } = useUser();
 
   if (isLoading) {
-    return null; // or a loading spinner
+    return fallback || null;
   }
 
   if (isLoggedIn) {
