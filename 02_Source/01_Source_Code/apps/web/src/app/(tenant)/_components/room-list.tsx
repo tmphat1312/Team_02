@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { ShowMapButton } from "./show-map-button";
 
 type Room = {
   id: number;
@@ -136,21 +137,11 @@ const rooms: Room[] = [
     rating: 4.7,
     available: "April 10 - 20",
   },
-  {
-    id: 13,
-    name: "Lakeside Cottage",
-    imageUrl: "/placeholder.svg",
-    location: "Minneapolis, Minnesota",
-    distance: "180 miles away",
-    price: 190,
-    rating: 4.6,
-    available: "April 10 - 20",
-  },
 ];
 
 export function RoomList() {
   return (
-    <div className="width-container py-6">
+    <div className="width-container pt-6 space-y-12">
       <div className="grid grid-cols-4 gap-x-6 gap-y-10">
         {rooms.map((room, i) => (
           <Link
@@ -189,6 +180,15 @@ export function RoomList() {
           </Link>
         ))}
       </div>
+
+      <div className="flex flex-col gap-3 items-center">
+        <span className="text-lg font-medium">Continue exploring</span>
+        <Button className="text-base h-12 px-6 py-3.5 bg-black/80 hover:bg-black/90">
+          Show more
+        </Button>
+      </div>
+
+      <ShowMapButton />
     </div>
   );
 }

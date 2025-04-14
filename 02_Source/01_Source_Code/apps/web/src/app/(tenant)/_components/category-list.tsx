@@ -167,7 +167,7 @@ const categories: Category[] = [
 
 export function CategoryList() {
   return (
-    <div className="width-container h-[4.875rem]">
+    <div className="width-container h-[4.875rem] sticky top-[81px] z-50 bg-white">
       <div className="flex items-center h-full mx-auto overflow-x-clip gap-4">
         <Carousel
           className="grow overflow-hidden"
