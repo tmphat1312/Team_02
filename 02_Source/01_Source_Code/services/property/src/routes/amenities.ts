@@ -1,6 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 
+import { ErrorCode } from "../constants/error-codes";
+
 import { db } from "../db";
 import { amenitiesTable } from "../db/schema";
 
@@ -57,7 +59,11 @@ route.post(
       .where(eq(amenitiesTable.name, name));
 
     if (existingAmenity) {
-      return badRequest(c, `Amenity with name "${name}" already exists.`);
+      return badRequest(
+        c,
+        `Amenity with name "${name}" already exists.`,
+        ErrorCode.AMENITY_ALREADY_EXISTS
+      );
     }
 
     await next();

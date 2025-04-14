@@ -1,6 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 
+import { ErrorCode } from "../constants/error-codes";
+
 import { db } from "../db";
 import { rulesTable } from "../db/schema";
 
@@ -60,7 +62,11 @@ route.post(
       .where(eq(rulesTable.name, name));
 
     if (existingRule) {
-      return badRequest(c, "Rule already exists");
+      return badRequest(
+        c,
+        "Rule already exists",
+        ErrorCode.RULE_ALREADY_EXISTS
+      );
     }
 
     await next();

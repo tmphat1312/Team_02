@@ -1,6 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 
+import { ErrorCode } from "../constants/error-codes";
+
 import { db } from "../db";
 import { categoriesTable } from "../db/schema";
 
@@ -57,7 +59,11 @@ route.post(
       .where(eq(categoriesTable.name, name));
 
     if (existingCategory) {
-      return badRequest(c, `Category with name "${name}" already exists.`);
+      return badRequest(
+        c,
+        `Category with name "${name}" already exists.`,
+        ErrorCode.CATEGORY_ALREADY_EXISTS
+      );
     }
 
     await next();

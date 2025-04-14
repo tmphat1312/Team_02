@@ -23,6 +23,9 @@ export function only(roles: Role[]) {
       return forbidden(c, "You don't have permission to access this resource");
     }
 
+    // 3. Set the user in the context
+    c.set("user", session.user);
+
     return next();
   });
 }
