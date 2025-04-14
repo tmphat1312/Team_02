@@ -33,8 +33,6 @@ export function useAmenities() {
     fetcher
   );
 
-  console.log(data);
-
   if (data) {
     if (page - 1 > 0) {
       preload(fetchKey({ page: page - 1 }), fetcher);

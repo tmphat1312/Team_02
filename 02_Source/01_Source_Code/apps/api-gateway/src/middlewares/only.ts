@@ -7,10 +7,7 @@ type Role = (typeof ROLES)[number];
 export function only(roles: Role[]) {
   return createMiddleware(async (c, next) => {
     // 1. Check if the request is authenticated
-    const session = await auth.api.getSession({
-      // @ts-ignore
-      headers: { ...c.req.header() },
-    });
+    const session = await auth.api.getSession(c.req.raw);
 
     if (!session) {
       return unauthorized(c);
