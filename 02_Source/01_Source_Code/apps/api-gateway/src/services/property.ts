@@ -22,4 +22,7 @@ route.get("/categories*", proxy);
 route.post("/categories", only(["admin"]), proxy);
 route.delete("/categories/:id", only(["admin"]), proxy);
 
+// Property Resource
+route.post("/properties", only(["host"]), proxy);
+
 export const propertyService = route;
