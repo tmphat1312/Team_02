@@ -5,11 +5,18 @@ import { FacebookBlack } from "../icons/facebook-black";
 import { InstagramBlack } from "../icons/instagram-black";
 import { PrivacyChoice } from "../icons/privacy-choice";
 import { XBlack } from "../icons/x-black";
+import { cn } from "@/lib/utils";
 
-export default function Footer() {
+type Props = {
+  containerStyle?: "wide" | "narrow";
+};
+
+export default function Footer({ containerStyle = "wide" }: Props) {
+  const containerClass =
+    containerStyle == "wide" ? "width-container" : "details-container";
   return (
     <footer className="bg-gray-50 border-t border-gray-200 pt-12 pb-6">
-      <div className="width-container px-4">
+      <div className={cn(containerClass, "px-4")}>
         {/* Main footer sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Support column */}

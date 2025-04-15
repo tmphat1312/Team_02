@@ -93,4 +93,9 @@
     max-width: min(100%, 1720px);
     margin-inline: 5rem;
   }
+
+  .details-container {
+    max-width: min(100%, 1120px);
+    margin-inline: auto;
+  }
 }
