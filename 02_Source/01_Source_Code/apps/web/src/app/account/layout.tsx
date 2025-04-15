@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <>
       <Header />
-      <main className="p-12">{children}</main>
+      <main className="width-container">{children}</main>
       <Footer />
     </>
   );
