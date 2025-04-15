@@ -1,21 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Globe,
-  Menu,
-  Calendar,
-  MapPin,
-  ChevronRight,
-  MessageSquare,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
+import { BookX, Calendar, Coins, MapPin, MessageSquare } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
-// Mock data for trips
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+
 const mockTrips = [
   {
     id: "trip1",
@@ -63,7 +57,7 @@ const mockTrips = [
   },
   {
     id: "trip3",
-    status: "past",
+    status: "completed",
     property: {
       id: "prop3",
       name: "Luxury Apartment in City Center",
@@ -85,7 +79,7 @@ const mockTrips = [
   },
   {
     id: "trip4",
-    status: "past",
+    status: "completed",
     property: {
       id: "prop4",
       name: "Cozy Cottage by the Lake",
@@ -131,395 +125,164 @@ const mockTrips = [
 ];
 
 export default function TripsPage() {
-  const [activeTab, setActiveTab] = useState("upcoming");
+  const [activeTab, setActiveTab] = useState<
+    "all" | "upcoming" | "completed" | "cancelled"
+  >("all");
 
-  const filteredTrips = mockTrips.filter((trip) => trip.status === activeTab);
-  const hasUpcomingTrips = mockTrips.some((trip) => trip.status === "upcoming");
-  const hasPastTrips = mockTrips.some((trip) => trip.status === "past");
-  const hasCancelledTrips = mockTrips.some(
-    (trip) => trip.status === "cancelled"
-  );
+  const filteredTrips =
+    activeTab == "all"
+      ? mockTrips
+      : mockTrips.filter((trip) => trip.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold mb-8">Trips</h1>
+    <section className="pt-8 pb-16">
+      <h1 className="text-3xl font-medium mb-8">Trips</h1>
 
-        <Tabs
-          defaultValue="upcoming"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
-          <TabsList className="mb-8 border-b w-full justify-start rounded-none bg-transparent h-auto p-0 space-x-8">
-            <TabsTrigger
-              value="upcoming"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-black data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2"
-            >
-              Upcoming
-              {hasUpcomingTrips && (
-                <Badge className="ml-2 bg-[#ff385c] hover:bg-[#ff385c]">
-                  {
-                    mockTrips.filter((trip) => trip.status === "upcoming")
-                      .length
-                  }
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="past"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-black data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2"
-            >
-              Past
-              {hasPastTrips && (
-                <Badge className="ml-2 bg-gray-500 hover:bg-gray-500">
-                  {mockTrips.filter((trip) => trip.status === "past").length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="cancelled"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-black data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2"
-            >
-              Cancelled
-              {hasCancelledTrips && (
-                <Badge className="ml-2 bg-gray-500 hover:bg-gray-500">
-                  {
-                    mockTrips.filter((trip) => trip.status === "cancelled")
-                      .length
-                  }
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="upcoming" className="mt-0">
-            {filteredTrips.length > 0 ? (
-              <div className="space-y-6">
-                {filteredTrips.map((trip) => (
-                  <div
-                    key={trip.id}
-                    className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="md:flex">
-                      <div className="md:w-1/3 h-48 md:h-auto relative">
-                        <img
-                          src={trip.property.image || "/placeholder.svg"}
-                          alt={trip.property.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-6 md:w-2/3">
-                        <div className="flex flex-col h-full">
-                          <div>
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h2 className="text-xl font-semibold">
-                                  {trip.property.name}
-                                </h2>
-                                <p className="text-gray-600 flex items-center mt-1">
-                                  <MapPin className="h-4 w-4 mr-1" />
-                                  {trip.property.location}
-                                </p>
-                              </div>
-                              <div className="flex-shrink-0">
-                                <Avatar className="h-10 w-10">
-                                  <img
-                                    src={trip.host.image || "/placeholder.svg"}
-                                    alt={trip.host.name}
-                                  />
-                                </Avatar>
-                              </div>
-                            </div>
-
-                            <div className="mt-4 flex flex-wrap gap-y-2">
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-in
-                                </p>
-                                <p className="font-medium flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkIn}
-                                </p>
-                              </div>
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-out
-                                </p>
-                                <p className="font-medium flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkOut}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="mt-4">
-                              <p className="text-sm text-gray-500">Guests</p>
-                              <p className="font-medium">
-                                {trip.guests}{" "}
-                                {trip.guests === 1 ? "guest" : "guests"}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="mt-6 flex items-center justify-between pt-4 border-t border-gray-100">
-                            <div>
-                              <p className="text-sm text-gray-500">Total</p>
-                              <p className="font-semibold">{trip.totalPrice}</p>
-                            </div>
-                            <div className="flex space-x-2">
-                              {trip.hasUnreadMessages && (
-                                <Badge className="bg-[#ff385c]">
-                                  New message
-                                </Badge>
-                              )}
-                              <Button variant="outline" className="rounded-lg">
-                                <MessageSquare className="h-4 w-4 mr-2" />
-                                Message host
-                              </Button>
-                              <Button className="rounded-lg bg-[#ff385c] hover:bg-[#ff385c]/90">
-                                View reservation
-                                <ChevronRight className="h-4 w-4 ml-1" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 border border-gray-200 rounded-xl">
-                <h3 className="text-xl font-medium">No upcoming trips</h3>
-                <p className="text-gray-500 mt-2 mb-6">
-                  Time to dust off your bags and start planning your next
-                  adventure.
-                </p>
-                <Button className="bg-[#ff385c] hover:bg-[#ff385c]/90 rounded-lg">
-                  Start searching
-                </Button>
-              </div>
+      <div>
+        <div className="flex gap-3 mb-4">
+          <Button
+            variant="outline"
+            size="lg"
+            className={cn(
+              "rounded-full border-border/50 font-normal border-2",
+              {
+                "border-black": activeTab === "all",
+              }
             )}
-          </TabsContent>
-
-          <TabsContent value="past" className="mt-0">
-            {filteredTrips.length > 0 ? (
-              <div className="space-y-6">
-                {filteredTrips.map((trip) => (
-                  <div
-                    key={trip.id}
-                    className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="md:flex">
-                      <div className="md:w-1/3 h-48 md:h-auto relative">
-                        <img
-                          src={trip.property.image || "/placeholder.svg"}
-                          alt={trip.property.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-6 md:w-2/3">
-                        <div className="flex flex-col h-full">
-                          <div>
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h2 className="text-xl font-semibold">
-                                  {trip.property.name}
-                                </h2>
-                                <p className="text-gray-600 flex items-center mt-1">
-                                  <MapPin className="h-4 w-4 mr-1" />
-                                  {trip.property.location}
-                                </p>
-                              </div>
-                              <div className="flex-shrink-0">
-                                <Avatar className="h-10 w-10">
-                                  <img
-                                    src={trip.host.image || "/placeholder.svg"}
-                                    alt={trip.host.name}
-                                  />
-                                </Avatar>
-                              </div>
-                            </div>
-
-                            <div className="mt-4 flex flex-wrap gap-y-2">
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-in
-                                </p>
-                                <p className="font-medium flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkIn}
-                                </p>
-                              </div>
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-out
-                                </p>
-                                <p className="font-medium flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkOut}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="mt-4">
-                              <p className="text-sm text-gray-500">Guests</p>
-                              <p className="font-medium">
-                                {trip.guests}{" "}
-                                {trip.guests === 1 ? "guest" : "guests"}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="mt-6 flex items-center justify-between pt-4 border-t border-gray-100">
-                            <div>
-                              <p className="text-sm text-gray-500">Total</p>
-                              <p className="font-semibold">{trip.totalPrice}</p>
-                            </div>
-                            <div className="flex space-x-2">
-                              <Button variant="outline" className="rounded-lg">
-                                <MessageSquare className="h-4 w-4 mr-2" />
-                                Message host
-                              </Button>
-                              <Button className="rounded-lg bg-black hover:bg-black/90">
-                                Book again
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 border border-gray-200 rounded-xl">
-                <h3 className="text-xl font-medium">No past trips</h3>
-                <p className="text-gray-500 mt-2 mb-6">
-                  You haven't completed any trips yet.
-                </p>
-                <Button className="bg-[#ff385c] hover:bg-[#ff385c]/90 rounded-lg">
-                  Start searching
-                </Button>
-              </div>
+            onClick={() => setActiveTab("all")}
+          >
+            All
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className={cn(
+              "rounded-full border-border/50 font-normal border-2",
+              {
+                "border-black": activeTab === "upcoming",
+              }
             )}
-          </TabsContent>
-
-          <TabsContent value="cancelled" className="mt-0">
-            {filteredTrips.length > 0 ? (
-              <div className="space-y-6">
-                {filteredTrips.map((trip) => (
-                  <div
-                    key={trip.id}
-                    className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="md:flex">
-                      <div className="md:w-1/3 h-48 md:h-auto relative">
-                        <img
-                          src={trip.property.image || "/placeholder.svg"}
-                          alt={trip.property.name}
-                          className="w-full h-full object-cover opacity-70"
-                        />
-                        <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-medium">
-                          Cancelled on {trip.cancellationDate}
-                        </div>
-                      </div>
-                      <div className="p-6 md:w-2/3">
-                        <div className="flex flex-col h-full">
-                          <div>
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h2 className="text-xl font-semibold">
-                                  {trip.property.name}
-                                </h2>
-                                <p className="text-gray-600 flex items-center mt-1">
-                                  <MapPin className="h-4 w-4 mr-1" />
-                                  {trip.property.location}
-                                </p>
-                              </div>
-                              <div className="flex-shrink-0">
-                                <Avatar className="h-10 w-10">
-                                  <img
-                                    src={trip.host.image || "/placeholder.svg"}
-                                    alt={trip.host.name}
-                                  />
-                                </Avatar>
-                              </div>
-                            </div>
-
-                            <div className="mt-4 flex flex-wrap gap-y-2">
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-in (cancelled)
-                                </p>
-                                <p className="font-medium flex items-center text-gray-500 line-through">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkIn}
-                                </p>
-                              </div>
-                              <div className="w-full sm:w-1/2">
-                                <p className="text-sm text-gray-500">
-                                  Check-out (cancelled)
-                                </p>
-                                <p className="font-medium flex items-center text-gray-500 line-through">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {trip.dates.checkOut}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="mt-4">
-                              <p className="text-sm text-gray-500">Guests</p>
-                              <p className="font-medium text-gray-500">
-                                {trip.guests}{" "}
-                                {trip.guests === 1 ? "guest" : "guests"}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="mt-6 flex items-center justify-between pt-4 border-t border-gray-100">
-                            <div>
-                              <p className="text-sm text-gray-500">
-                                Total (refunded)
-                              </p>
-                              <p className="font-semibold text-gray-500 line-through">
-                                {trip.totalPrice}
-                              </p>
-                            </div>
-                            <div className="flex space-x-2">
-                              <Button className="rounded-lg bg-[#ff385c] hover:bg-[#ff385c]/90">
-                                Book similar
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 border border-gray-200 rounded-xl">
-                <h3 className="text-xl font-medium">No cancelled trips</h3>
-                <p className="text-gray-500 mt-2">
-                  You don't have any cancelled reservations.
-                </p>
-              </div>
+            onClick={() => setActiveTab("upcoming")}
+          >
+            Upcoming
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className={cn(
+              "rounded-full border-border/50 font-normal border-2",
+              {
+                "border-black": activeTab === "completed",
+              }
             )}
-          </TabsContent>
-        </Tabs>
-
-        <div className="mt-8 text-center border-t border-gray-200 pt-8">
-          <p className="text-gray-600">
-            Can't find your reservation here?{" "}
-            <Link href="/help" className="text-[#ff385c] underline">
-              Visit the Help Center
-            </Link>
-          </p>
+            onClick={() => setActiveTab("completed")}
+          >
+            Completed
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className={cn(
+              "rounded-full border-border/50 font-normal border-2",
+              {
+                "border-black": activeTab === "cancelled",
+              }
+            )}
+            onClick={() => setActiveTab("cancelled")}
+          >
+            Cancelled
+          </Button>
         </div>
-      </main>
-    </div>
+        <div className="grid grid-cols-2 gap-6">
+          {filteredTrips.map((trip) => (
+            <div key={trip.id} className="border rounded-xl overflow-clip">
+              <div className="flex">
+                <Image
+                  src={"/placeholder.svg"}
+                  alt={trip.property.name}
+                  width={256}
+                  height={256}
+                  className="object-cover size-64"
+                />
+                <div className="p-4 grow space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h2 className="text-xl font-semibold">
+                        {trip.property.name}
+                      </h2>
+                      <p className="text-gray-600 flex items-center mt-1 gap-1">
+                        <MapPin className="size-4" />
+                        {trip.property.location}
+                      </p>
+                    </div>
+                    <Avatar className="size-10">
+                      <AvatarImage src={trip.host.image} alt={trip.host.name} />
+                      <AvatarFallback>
+                        {trip.host.name.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Check-in</p>
+                      <p className="font-medium flex items-center gap-1">
+                        <Calendar className="size-4" />
+                        {trip.dates.checkIn}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-500">Check-out</p>
+                      <p className="font-medium flex items-center gap-1">
+                        <Calendar className="size-4" />
+                        {trip.dates.checkOut}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-500">Guests</p>
+                      <p className="font-medium">
+                        {trip.guests} {trip.guests === 1 ? "guest" : "guests"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Separator />
+              <div className="flex items-center p-4 justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Total</p>
+                  <p className="font-semibold">{trip.totalPrice}</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="rounded-lg gap-2">
+                    <MessageSquare className="size-4" />
+                    Message host
+                  </Button>
+                  <Button variant="outline" className="rounded-lg gap-2">
+                    <Coins className="size-4" />
+                    Pay now
+                  </Button>
+                  <Button variant="outline" className="rounded-lg gap-2">
+                    <BookX className="size-4" />
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 border-t pt-8">
+        <p>
+          Can&apos;t find your reservation here?{" "}
+          <Link href="#" className="underline">
+            Visit the Help Center
+          </Link>
+        </p>
+      </div>
+    </section>
   );
 }
