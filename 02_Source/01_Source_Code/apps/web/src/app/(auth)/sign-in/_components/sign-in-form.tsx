@@ -2,18 +2,17 @@
 
 import { AlertCircle, Lock, Mail } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
-
-import { Alert, AlertTitle } from "@/components/ui/alert";
 
 import { OrSeparator } from "@/app/(auth)/_components/or-separator";
 import { SocialSignIn } from "@/app/(auth)/_components/social-sign-in";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
 import { authClient } from "@/lib/auth-client";
 
 const FormSchema = z.object({

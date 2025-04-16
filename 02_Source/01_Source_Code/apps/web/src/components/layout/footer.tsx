@@ -12,7 +12,7 @@ type Props = {
   containerStyle?: "wide" | "narrow";
 };
 
-export default function Footer({ containerStyle = "wide" }: Props) {
+export function Footer({ containerStyle = "wide" }: Props) {
   return (
     <footer className="bg-gray-50 border-t border-gray-200 pt-12 pb-6">
       <div

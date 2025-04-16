@@ -1,10 +1,12 @@
-import Footer from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function RootLayout({
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
+
+import { authClient } from "@/lib/auth-client";
+
+export default async function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import Footer from "@/components/layout/footer";
+import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { authClient } from "@/lib/auth-client";
 
