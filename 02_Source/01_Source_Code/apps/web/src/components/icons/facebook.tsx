@@ -1,7 +1,4 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-
-export function Facebook(props: SVGProps<SVGSVGElement>) {
+export function Facebook(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,4 @@
-import { cn } from "@/lib/utils";
-
 export function Communication(props: React.SVGProps<SVGSVGElement>) {
-  const { className, ...rest } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,8 +6,12 @@ export function Communication(props: React.SVGProps<SVGSVGElement>) {
       aria-hidden="true"
       role="presentation"
       focusable="false"
-      className={cn(className, "stroke-current stroke-2")}
-      {...rest}
+      style={{
+        display: "block",
+        fill: "currentcolor",
+        strokeWidth: "2",
+      }}
+      {...props}
     >
       <path
         fill="none"

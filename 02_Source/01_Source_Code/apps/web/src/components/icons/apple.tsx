@@ -1,7 +1,4 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-
-export function Apple(props: SVGProps<SVGSVGElement>) {
+export function Apple(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

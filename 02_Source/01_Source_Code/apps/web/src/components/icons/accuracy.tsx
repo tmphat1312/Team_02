@@ -1,7 +1,4 @@
-import { cn } from "@/lib/utils";
-
 export function Accuracy(props: React.SVGProps<SVGSVGElement>) {
-  const { className, ...rest } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,8 +6,7 @@ export function Accuracy(props: React.SVGProps<SVGSVGElement>) {
       aria-hidden="true"
       role="presentation"
       focusable="false"
-      className={cn(className)}
-      {...rest}
+      {...props}
     >
       <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm7 7.59L24.41 12 13.5 22.91 7.59 17 9 15.59l4.5 4.5z" />
     </svg>

@@ -1,16 +1,6 @@
-import { cn } from "@/lib/utils";
-
 export function PrivacyChoice(props: React.SVGProps<SVGSVGElement>) {
-  const { className, ...rest } = props;
   return (
-    <svg
-      width={26}
-      height={12}
-      fill="none"
-      viewBox="0 0 26 12"
-      className={cn(className)}
-      {...rest}
-    >
+    <svg width={26} height={12} fill="none" viewBox="0 0 26 12" {...props}>
       <rect x="0.5" y="0.5" width={25} height={11} rx="5.5" fill="#fff" />
       <path d="M14 1h7a5 5 0 010 10H11l3-10z" fill="#06F" />
       <path
