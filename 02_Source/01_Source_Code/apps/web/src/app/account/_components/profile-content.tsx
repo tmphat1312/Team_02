@@ -23,7 +23,6 @@ export default function ProfileContent() {
     email: "jane.doe@example.com",
     phone: "+1 (555) 123-4567",
     address: "123 Main St, San Francisco, CA 94105",
-    dob: "1990-01-01",
     profileImage: "/placeholder.svg?height=100&width=100",
   });
 
@@ -122,30 +121,23 @@ export default function ProfileContent() {
 
               <div>
                 <h3 className="text-lg font-medium mb-4">Address</h3>
-                <div className="space-y-4">
+                <div className="grid grid-cols-[1fr_auto] gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="address">Street address</Label>
                     <Input id="address" defaultValue={user.address} />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="city">City</Label>
-                      <Input id="city" defaultValue="San Francisco" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="state">State</Label>
-                      <Input id="state" defaultValue="CA" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="zip">ZIP code</Label>
-                      <Input id="zip" defaultValue="94105" />
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="zip">ZIP code</Label>
+                    <Input id="zip" defaultValue="94105" />
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end">
-                <Button>Save Changes</Button>
+              <div className="flex justify-end gap-4">
+                <Button size="lg" variant="outline">
+                  Discard Changes
+                </Button>
+                <Button size="lg">Save Changes</Button>
               </div>
             </TabsContent>
 

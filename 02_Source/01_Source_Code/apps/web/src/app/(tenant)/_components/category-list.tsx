@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { DisplayPriceAfterTaxes } from "./display-price-after-taxes";
 import { FiltersDialog } from "./filter-dialog";
 
 type Category = {
@@ -168,7 +167,7 @@ const categories: Category[] = [
 export function CategoryList() {
   return (
     <div className="width-container h-[4.875rem] sticky top-[81px] z-50 bg-white">
-      <div className="flex items-center h-full mx-auto overflow-x-clip gap-4">
+      <div className="flex items-center gap-4">
         <Carousel
           className="grow overflow-hidden"
           opts={{
@@ -207,7 +206,6 @@ export function CategoryList() {
 
         <div className="flex gap-4 shrink-0">
           <FiltersDialog />
-          <DisplayPriceAfterTaxes />
         </div>
       </div>
     </div>
