@@ -1,3 +1,6 @@
+import Footer from "@/components/layout/footer";
+import { HostHeader } from "@/components/layout/host-header";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -7,5 +10,11 @@ export default function RootLayout({
   // This layout is for host only
   // It is not used for tenant apps
 
-  return children;
+  return (
+    <>
+      <HostHeader />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
 }
