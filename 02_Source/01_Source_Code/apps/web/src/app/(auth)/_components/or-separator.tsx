@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 
 export function OrSeparator() {
   return (
@@ -7,7 +7,7 @@ export function OrSeparator() {
       <Separator />
       <span
         className={cn(
-          "absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2",
+          "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
           "bg-white px-3 text-sm -mt-[2px]"
         )}
       >

@@ -3,12 +3,13 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 
+import { useUser } from "@/app/(auth)/_hooks/use-user";
+
 import { HostSignedIn } from "@/app/(auth)/_components/host-signed-in";
 import { SignOutButton } from "@/app/(auth)/_components/sign-out-button";
 import { SignedIn } from "@/app/(auth)/_components/signed-in";
 import { SignedOut } from "@/app/(auth)/_components/signed-out";
 import { TenantSignedIn } from "@/app/(auth)/_components/tenant-signed-in";
-import { useUser } from "@/app/(auth)/_hooks/use-user";
 import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +26,7 @@ export function UserButton() {
   const { isLoading } = useUser();
 
   if (isLoading) {
-    return <Skeleton className="h-[2.875rem] w-[5.5rem] rounded-full" />;
+    return <Skeleton className="h-[2.875rem] w-[5.25rem] rounded-full" />;
   }
 
   return (

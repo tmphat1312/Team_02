@@ -1,22 +1,26 @@
 import { Globe } from "lucide-react";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
+
 import { FacebookBlack } from "../icons/facebook-black";
 import { InstagramBlack } from "../icons/instagram-black";
 import { PrivacyChoice } from "../icons/privacy-choice";
 import { XBlack } from "../icons/x-black";
-import { cn } from "@/lib/utils";
 
 type Props = {
   containerStyle?: "wide" | "narrow";
 };
 
 export default function Footer({ containerStyle = "wide" }: Props) {
-  const containerClass =
-    containerStyle == "wide" ? "width-container" : "details-container";
   return (
     <footer className="bg-gray-50 border-t border-gray-200 pt-12 pb-6">
-      <div className={cn(containerClass, "px-4")}>
+      <div
+        className={cn(
+          containerStyle == "wide" ? "width-container" : "details-container",
+          "px-4"
+        )}
+      >
         {/* Main footer sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Support column */}
@@ -180,7 +184,7 @@ export default function Footer({ containerStyle = "wide" }: Props) {
 
             <div className="flex items-center space-x-4 font-medium">
               <button className="flex items-center text-sm text-gray-700 gap-1.5">
-                <Globe className="size-4" />
+                <Globe className="size-4 mt-1" />
                 English (US)
               </button>
               <button className="flex items-center text-sm text-gray-700 gap-1.5">
@@ -191,7 +195,7 @@ export default function Footer({ containerStyle = "wide" }: Props) {
                 <Link href="#" aria-label="Facebook">
                   <FacebookBlack />
                 </Link>
-                <Link href="#" aria-label="Twitter">
+                <Link href="#" aria-label="X">
                   <XBlack />
                 </Link>
                 <Link href="#" aria-label="Instagram">

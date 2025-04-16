@@ -12,8 +12,8 @@ import { z } from "zod";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
-import { OrSeparator } from "@/components/or-separator";
-import { SocialSignIn } from "@/components/social-sign-in";
+import { OrSeparator } from "@/app/(auth)/_components/or-separator";
+import { SocialSignIn } from "@/app/(auth)/_components/social-sign-in";
 import { Button } from "@/components/ui/button";
 import {
   Form,

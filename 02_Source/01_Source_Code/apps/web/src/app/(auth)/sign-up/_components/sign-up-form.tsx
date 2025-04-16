@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { OrSeparator } from "@/components/or-separator";
-import { SocialSignIn } from "@/components/social-sign-in";
+import { OrSeparator } from "@/app/(auth)/_components/or-separator";
+import { SocialSignIn } from "@/app/(auth)/_components/social-sign-in";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
