@@ -1,8 +1,9 @@
-import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function HostLayout({
+import { authClient } from "@/lib/auth-client";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
