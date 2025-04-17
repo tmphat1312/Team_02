@@ -71,12 +71,12 @@ function SignedOutItems() {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Gift cards
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Host an experience
           </Link>
@@ -86,7 +86,7 @@ function SignedOutItems() {
             Airbnb your home
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Help Center
           </Link>
@@ -137,12 +137,12 @@ function SignedInItems() {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Gift cards
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Help Center
           </Link>
@@ -159,16 +159,16 @@ function HostSignedInItems() {
   return (
     <HostSignedIn>
       <DropdownMenuItem asChild>
-        <Link href="#" className="w-full py-2.5 cursor-pointer">
+        <Link href="/hosts/listings" className="w-full py-2.5 cursor-pointer">
           Manage listings
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem asChild>
+      <DropdownMenuItem asChild disabled>
         <Link href="#" className="w-full py-2.5 cursor-pointer">
           Host an experience
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem asChild>
+      <DropdownMenuItem asChild disabled>
         <Link href="#" className="w-full py-2.5 cursor-pointer">
           Refer a Host
         </Link>
@@ -181,7 +181,7 @@ function TenantSignedInItems() {
   return (
     <TenantSignedIn>
       <DropdownMenuItem asChild>
-        <Link href="#" className="w-full py-2.5 cursor-pointer">
+        <Link href="/host" className="w-full py-2.5 cursor-pointer">
           Airbnb your home
         </Link>
       </DropdownMenuItem>

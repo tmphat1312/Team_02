@@ -7,6 +7,7 @@ export function GlobeButton() {
       variant="ghost"
       size="icon"
       className="rounded-full w-[2.875rem] h-[2.625rem] me-1"
+      disabled
     >
       <Globe size={16} />
     </Button>
