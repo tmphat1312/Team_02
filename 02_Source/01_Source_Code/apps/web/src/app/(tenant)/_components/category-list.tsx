@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
+import { parseAsInteger, useQueryState } from "nuqs";
+
 import {
   Carousel,
   CarouselContent,
@@ -12,6 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { FiltersDialog } from "./filter-dialog";
 import { DisplayPriceAfterTaxes } from "./display-price-after-taxes";
+import { cn } from "@/lib/utils";
 
 type Category = {
   id: number;
@@ -168,6 +171,10 @@ const categories: Category[] = [
   },
 ];
 
+type CategoryListProps = {
+  items: Category[];
+};
+
 export function CategoryList() {
   const categoryListRef = useRef<HTMLDivElement>(null);
   const observerElRef = useRef<HTMLDivElement>(null);
@@ -231,18 +238,34 @@ type CategoryItemProps = {
 };
 
 function CategoryItem({ item }: CategoryItemProps) {
+  const [categoryId, setCategoryId] = useQueryState(
+    "categoryId",
+    parseAsInteger
+  );
+
+  const handleClick = () => {
+    setCategoryId(item.id);
+  };
+
   return (
-    <figure className="text-center space-y-1">
+    <figure
+      className={cn(
+        "text-center space-y-1 text-muted-foreground py-2",
+        "cursor-pointer border-current hover:border-b-3 font-medium",
+        {
+          "border-b-3 text-black": categoryId === item.id,
+        }
+      )}
+      onClick={handleClick}
+    >
       <Image
         src={item.imageUrl}
         alt={`Photo by ${item.name}`}
-        className="aspect-1 size-[40px] object-cover rounded-md mx-auto"
-        width={40}
-        height={40}
+        className="aspect-1 size-[24px] object-cover mx-auto mb-1"
+        width={24}
+        height={24}
       />
-      <figcaption className="text-xs text-muted-foreground">
-        {item.name}
-      </figcaption>
+      <figcaption className="text-xs">{item.name}</figcaption>
     </figure>
   );
 }
