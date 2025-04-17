@@ -123,5 +123,49 @@ route.post("/verify-otp", async (c) => {
   }
 });
 
+route.post("/send-otp-email", async (c) => {
+  const { email, otp } = await c.req.parseBody<{
+    email: string;
+    otp: string;
+  }>();
+  if (!email) {
+    return badRequest(c, "Email is required!");
+  }
+  if (!otp) {
+    return badRequest(c, "OTP is required!");
+  }
+
+  const [existingEmail] = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.email, email));
+
+  if (!existingEmail) {
+    return badRequest(c, "Email is not exist!");
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+      user: Bun.env.GMAIL_APP_USER,
+      pass: Bun.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: Bun.env.GMAIL_APP_USER,
+    to: email,
+    subject: "Verify your email from Rento",
+    html: `<p>Your verification code is <strong>${otp}</strong>.</p><p>This code will expire in 5 minutes.</p>`,
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  if (!info) {
+    return badRequest(c, "Send email failed!");
+  }
+  return ok(c, "Send email successfully!");
+});
 
 export const verificationRoute = route;
