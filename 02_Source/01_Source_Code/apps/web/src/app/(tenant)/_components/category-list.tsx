@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 import {
   Carousel,
@@ -8,6 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { FiltersDialog } from "./filter-dialog";
+import { DisplayPriceAfterTaxes } from "./display-price-after-taxes";
 
 type Category = {
   id: number;
@@ -61,7 +65,7 @@ const categories: Category[] = [
     name: "Tiny homes",
     imageUrl: "./placeholder.svg",
   },
-  // 20 more items
+
   {
     id: 10,
     name: "Amazing views",
@@ -165,49 +169,80 @@ const categories: Category[] = [
 ];
 
 export function CategoryList() {
-  return (
-    <div className="width-container h-[4.875rem] sticky top-[81px] z-50 bg-white">
-      <div className="flex items-center gap-4">
-        <Carousel
-          className="grow overflow-hidden"
-          opts={{
-            align: "start",
-            dragFree: true,
-            slidesToScroll: 10,
-            containScroll: "keepSnaps",
-          }}
-        >
-          <CarouselContent className="my-4">
-            {categories.map((artwork, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-[max-content] shrink-0 grow-0"
-              >
-                <figure key={artwork.name + index} className="shrink-0">
-                  <div className="flex flex-col items-center">
-                    <Image
-                      src={artwork.imageUrl}
-                      alt={`Photo by ${artwork.name}`}
-                      className="aspect-1 size-[40px] object-cover rounded-md"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <figcaption className="mt-1 text-xs text-muted-foreground text-center">
-                    {artwork.name}
-                  </figcaption>
-                </figure>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-0 disabled:hidden" />
-          <CarouselNext className="right-0 disabled:hidden  " />
-        </Carousel>
+  const categoryListRef = useRef<HTMLDivElement>(null);
+  const observerElRef = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 shrink-0">
-          <FiltersDialog />
+  useEffect(() => {
+    if (!categoryListRef.current || !observerElRef.current) return;
+
+    const categoryListEl = categoryListRef.current;
+    const observerEl = observerElRef.current;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      categoryListEl.classList.toggle("shadow", !entry.isIntersecting);
+    });
+
+    observer.observe(observerEl);
+    return () => observer.unobserve(observerEl);
+  }, []);
+
+  return (
+    <>
+      <div ref={observerElRef} />
+      <div ref={categoryListRef} className=" sticky top-[81px] z-50 bg-white">
+        <div className="width-container h-[4.875rem]">
+          <div className="flex items-center gap-6">
+            <Carousel
+              className="grow overflow-hidden"
+              opts={{
+                align: "start",
+                dragFree: true,
+                slidesToScroll: 10,
+                containScroll: "keepSnaps",
+              }}
+            >
+              <CarouselContent className="my-2.5">
+                {categories.map((category, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="basis-[max-content] shrink-0 grow-0"
+                  >
+                    <CategoryItem item={category} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-0 disabled:hidden" />
+              <CarouselNext className="right-0 disabled:hidden  " />
+            </Carousel>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <FiltersDialog />
+              <DisplayPriceAfterTaxes />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
+  );
+}
+
+type CategoryItemProps = {
+  item: Category;
+};
+
+function CategoryItem({ item }: CategoryItemProps) {
+  return (
+    <figure className="text-center space-y-1">
+      <Image
+        src={item.imageUrl}
+        alt={`Photo by ${item.name}`}
+        className="aspect-1 size-[40px] object-cover rounded-md mx-auto"
+        width={40}
+        height={40}
+      />
+      <figcaption className="text-xs text-muted-foreground">
+        {item.name}
+      </figcaption>
+    </figure>
   );
 }
