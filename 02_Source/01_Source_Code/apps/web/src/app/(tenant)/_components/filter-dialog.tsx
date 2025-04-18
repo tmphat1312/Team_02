@@ -16,9 +16,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import { AmenityInput } from "./amenity-input";
-import { NumberInput } from "./number-input";
 import { PriceChart } from "./price-chart";
 import { PriceInput } from "./price-input";
+import { NumberInput } from "@/components/number-input";
 
 export function FiltersDialog() {
   return (
