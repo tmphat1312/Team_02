@@ -16,6 +16,6 @@ showRoutes(app);
 
 export default {
   fetch: app.fetch,
-  port: Bun.env.PORT || 3003,
+  port: Bun.env.PORT || 5001,
 };
 
