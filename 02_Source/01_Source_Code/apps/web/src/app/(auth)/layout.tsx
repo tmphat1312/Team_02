@@ -23,7 +23,7 @@ export default async function AuthLayout({
   return (
     <>
       <Header />
-      <main className="mt-16 mb-8 max-w-xl mx-auto rounded-xl border">
+      <main className="my-16 max-w-xl mx-auto rounded-xl border">
         {children}
       </main>
       <Footer />
