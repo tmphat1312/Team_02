@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { ShowMapButton } from "./show-map-button";
 
 type Room = {
   id: number;
@@ -187,8 +186,10 @@ export function RoomList() {
           Show more
         </Button>
       </div>
-
-      <ShowMapButton />
     </div>
   );
+}
+
+export function RoomListFallback() {
+  return <div>Loading..</div>;
 }

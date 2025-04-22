@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
