@@ -1,6 +1,5 @@
 import { Star } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const mockData = {
@@ -14,9 +13,9 @@ const mockData = {
   noReviews: 40,
 };
 
-export function PropertyInfo() {
+export function PropertyInfo(props: React.ComponentProps<"div">) {
   return (
-    <div>
+    <div {...props}>
       <section className="mb-6">
         <h2 className="text-xl font-semibold">
           <span>{mockData.rentalType}</span>
@@ -217,10 +216,6 @@ export function PropertyInfo() {
             <span>Carbon monoxide alarm</span>
           </div>
         </div>
-
-        <Button variant="outline" className="mt-6">
-          Show all 29 amenities
-        </Button>
       </section>
     </div>
   );

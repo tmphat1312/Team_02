@@ -3,15 +3,7 @@
 import { useId } from "react";
 
 import { Slider } from "@/components/ui/slider";
-
-const formatPrice = (value: number) => {
-  const formatter = new Intl.NumberFormat("vi-VN", {
-    style: "decimal",
-    currencyDisplay: "narrowSymbol",
-    minimumFractionDigits: 0,
-  });
-  return `₫${formatter.format(value)}`;
-};
+import { formatPrice } from "@/lib/utils";
 
 type PriceInputProps = {
   min: number;

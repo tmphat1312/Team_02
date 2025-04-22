@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+
 import { PhotoGallery } from "./_components/photo-gallery";
 import { PropertyInfo } from "./_components/property-info";
 import { PropertyReservation } from "./_components/property-reservation";
@@ -49,16 +50,23 @@ const mockData = {
   bookingLink: "https://example.com/book/1", // Added booking link
 };
 
+const imageUrls = [
+  "./placeholder.svg",
+  "./placeholder.svg",
+  "./placeholder.svg",
+  "./placeholder.svg",
+  "./placeholder.svg",
+  "./placeholder.svg",
+  "./placeholder.svg",
+];
+
 export default function AirbnbRoomDetails() {
   return (
     <div className="details-container py-6 space-y-8">
       <PropertyTitle title={mockData.name} propertyId={mockData.id} />
-      <PhotoGallery />
-
+      <PhotoGallery imageUrls={imageUrls} propertyName={mockData.name} />
       <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2">
-          <PropertyInfo />
-        </div>
+        <PropertyInfo className="col-span-2" />
         <PropertyReservation />
       </div>
       <Separator />

@@ -1,22 +1,18 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
-import { authClient } from "@/lib/auth-client";
+import { getServerSession } from "./_data/get-server-session";
 
 export default async function AuthLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const headersList = await headers();
-  const { data } = await authClient.getSession(undefined, {
-    headers: headersList,
-  });
+}) {
+  const session = await getServerSession();
 
-  if (data && data.user) {
+  if (session && session.user) {
     return redirect("/");
   }
 
