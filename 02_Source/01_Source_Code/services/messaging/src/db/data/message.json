@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "conversationId": "1",
+      "senderId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "receiverId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "content": "Xin chào, tôi muốn hỏi về căn hộ này.",
+      "readBy": false,
+      "isReadByReceiver": false,
+      "sendAt": "2025-04-22T10:01:00.000Z"
+    },
+    {
+      "id": 2,
+      "conversationId": "1",
+      "senderId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "receiverId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "content": "Chào bạn, bạn cần hỏi thông tin gì?",
+      "readBy": false,
+      "isReadByReceiver": false,
+      "sendAt": "2025-04-22T10:02:00.000Z"
+    }
+]
