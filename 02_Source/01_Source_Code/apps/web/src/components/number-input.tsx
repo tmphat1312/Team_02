@@ -21,7 +21,7 @@ export function NumberInput({ label, onValueChange, value }: Props) {
     onValueChange(newValue);
   };
 
-  const semanticValue = value == 0 ? "Any" : value;
+  const semanticValue = value == 0 ? "Any" : `${value}+`;
 
   return (
     <div className="flex items-center justify-between mb-4">

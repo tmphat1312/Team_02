@@ -1,12 +1,12 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 
 import { Amenity } from "@/app/typings/models";
 
 import { NumberInput } from "@/components/number-input";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 
 import { AmenityInput } from "./amenity-input";
@@ -25,14 +25,27 @@ type FilterDialogContentProps = {
 export function FilterDialogContent({
   amenitiesPromise,
 }: FilterDialogContentProps) {
-  const [priceMax, setPriceMax] = useState(PRICE_MAX);
-  const [priceMin, setPriceMin] = useState(PRICE_MIN);
-  const [noBeds, setNoBeds] = useState(0);
-  const [noBedrooms, setNoBedrooms] = useState(0);
-  const [noBathrooms, setNoBathrooms] = useState(0);
-  const [amenities, setAmenities] = useState<number[]>([]);
+  const [
+    {
+      priceMin: initialPriceMin,
+      priceMax: initialPriceMax,
+      noBeds: initialNoBeds,
+      noBedrooms: initialNoBedrooms,
+      noBathrooms: initialNoBathrooms,
+      amenityIds: initialAmenities,
+    },
+    setFilterValues,
+  ] = useFilterValues();
+  const [priceMax, setPriceMax] = useState(initialPriceMin || PRICE_MAX);
+  const [priceMin, setPriceMin] = useState(initialPriceMax || PRICE_MIN);
+  const [noBeds, setNoBeds] = useState(initialNoBeds || 0);
+  const [noBedrooms, setNoBedrooms] = useState(initialNoBedrooms || 0);
+  const [noBathrooms, setNoBathrooms] = useState(initialNoBathrooms || 0);
+  const [amenityIds, setAmenityIds] = useState<number[]>(
+    initialAmenities || []
+  );
 
-  const [, setFilterValues] = useFilterValues();
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const handlePriceMinChange = (value: number) => {
     if (value > priceMax) {
@@ -63,22 +76,39 @@ export function FilterDialogContent({
   };
 
   const handleAmenitiesChange = (value: number[]) => {
-    setAmenities(value);
+    setAmenityIds(value);
   };
 
   const handleApplyFilters = () => {
     setFilterValues({
-      priceMin,
-      priceMax,
-      amenities,
-      noBathrooms,
-      noBedrooms,
-      noBeds,
+      priceMin: priceMin == PRICE_MIN ? null : priceMin,
+      priceMax: priceMax == PRICE_MAX ? null : priceMax,
+      amenityIds: amenityIds.length === 0 ? null : amenityIds,
+      noBathrooms: noBathrooms == 0 ? null : noBathrooms,
+      noBedrooms: noBedrooms == 0 ? null : noBedrooms,
+      noBeds: noBeds == 0 ? null : noBeds,
     });
+
+    const closeButtonEl = closeButtonRef.current;
+    closeButtonEl?.click();
   };
   const handleClearFilters = () => {
+    setPriceMin(PRICE_MIN);
+    setPriceMax(PRICE_MAX);
+    setNoBeds(0);
+    setNoBedrooms(0);
+    setNoBathrooms(0);
+    setAmenityIds([]);
     setFilterValues(null);
   };
+
+  const isDirty =
+    priceMin !== PRICE_MIN ||
+    priceMax !== PRICE_MAX ||
+    noBeds !== 0 ||
+    noBedrooms !== 0 ||
+    noBathrooms !== 0 ||
+    amenityIds.length > 0;
 
   return (
     <>
@@ -101,11 +131,17 @@ export function FilterDialogContent({
           <h3 className="text-lg font-medium mb-2">Rooms and Beds</h3>
           <NumberInput
             label="Bedrooms"
+            value={noBedrooms}
             onValueChange={handleNoBedroomsChange}
           />
-          <NumberInput label="Beds" onValueChange={handleNoBedsChange} />
+          <NumberInput
+            label="Beds"
+            value={noBeds}
+            onValueChange={handleNoBedsChange}
+          />
           <NumberInput
             label="Bathrooms"
+            value={noBathrooms}
             onValueChange={handleNoBathroomsChange}
           />
         </section>
@@ -115,6 +151,7 @@ export function FilterDialogContent({
           <Suspense fallback={null}>
             <AmenityInput
               amenitiesPromise={amenitiesPromise}
+              value={amenityIds}
               onValueChange={handleAmenitiesChange}
             />
           </Suspense>
@@ -132,9 +169,12 @@ export function FilterDialogContent({
         <Button
           className="h-12 text-base text-white bg-black/80 hover:bg-black/90 px-6 py-3.5"
           onClick={handleApplyFilters}
+          disabled={!isDirty}
         >
           Show matched places
         </Button>
+
+        <DialogClose ref={closeButtonRef} />
       </DialogFooter>
     </>
   );

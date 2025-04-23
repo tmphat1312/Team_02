@@ -137,10 +137,9 @@ export default function MessagesPage() {
 
   return (
     <div className="width-container grid grid-cols-[22.5rem_1fr] h-full">
-      <div className="border-r border-border/50 flex flex-col py-6">
+      <div className="border-r flex flex-col py-6">
         <section>
           <h1 className="text-2xl font-bold mb-6">Messages</h1>
-
           <div className="flex gap-2 mb-6">
             <Button
               variant={activeFilter === "all" ? "default" : "outline"}
@@ -184,7 +183,7 @@ export default function MessagesPage() {
                 <Avatar className="size-10">
                   <AvatarImage
                     src={`https://avatar.iran.liara.run/public`}
-                    alt="@shadcn"
+                    alt={message.host.name}
                   />
                   <AvatarFallback>{message.host.name.at(0)}</AvatarFallback>
                 </Avatar>
@@ -294,7 +293,7 @@ export default function MessagesPage() {
                       <Avatar className="size-8 ml-2">
                         <AvatarImage
                           src={`https://avatar.iran.liara.run/public`}
-                          alt="@shadcn"
+                          alt={msg.sender}
                         />
                         <AvatarFallback>U</AvatarFallback>
                       </Avatar>

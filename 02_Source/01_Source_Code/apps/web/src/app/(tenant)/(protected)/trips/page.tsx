@@ -3,12 +3,14 @@
 import { BookX, Calendar, Coins, MapPin, MessageSquare } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+
 import { cn } from "@/lib/utils";
+
+import { useActiveTab } from "./_hooks/use-active-tab";
 
 const mockTrips = [
   {
@@ -125,12 +127,10 @@ const mockTrips = [
 ];
 
 export default function TripsPage() {
-  const [activeTab, setActiveTab] = useState<
-    "all" | "upcoming" | "completed" | "cancelled"
-  >("all");
+  const [activeTab] = useActiveTab();
 
   const filteredTrips =
-    activeTab == "all"
+    activeTab == null
       ? mockTrips
       : mockTrips.filter((trip) => trip.status === activeTab);
 
@@ -140,59 +140,12 @@ export default function TripsPage() {
 
       <div>
         <div className="flex gap-3 mb-4">
-          <Button
-            variant="outline"
-            size="lg"
-            className={cn(
-              "rounded-full border-border/50 font-normal border-2",
-              {
-                "border-black": activeTab === "all",
-              }
-            )}
-            onClick={() => setActiveTab("all")}
-          >
-            All
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className={cn(
-              "rounded-full border-border/50 font-normal border-2",
-              {
-                "border-black": activeTab === "upcoming",
-              }
-            )}
-            onClick={() => setActiveTab("upcoming")}
-          >
-            Upcoming
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className={cn(
-              "rounded-full border-border/50 font-normal border-2",
-              {
-                "border-black": activeTab === "completed",
-              }
-            )}
-            onClick={() => setActiveTab("completed")}
-          >
-            Completed
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className={cn(
-              "rounded-full border-border/50 font-normal border-2",
-              {
-                "border-black": activeTab === "cancelled",
-              }
-            )}
-            onClick={() => setActiveTab("cancelled")}
-          >
-            Cancelled
-          </Button>
+          <FilterButton tabValue={null}>All</FilterButton>
+          <FilterButton tabValue={"upcoming"}>Upcoming</FilterButton>
+          <FilterButton tabValue={"completed"}>Completed</FilterButton>
+          <FilterButton tabValue={"cancelled"}>Cancelled</FilterButton>
         </div>
+
         <div className="grid grid-cols-2 gap-6">
           {filteredTrips.map((trip) => (
             <div key={trip.id} className="border rounded-xl overflow-clip">
@@ -275,7 +228,9 @@ export default function TripsPage() {
         </div>
       </div>
 
-      <div className="mt-8 border-t pt-8">
+      <Separator />
+
+      <div className="mt-8 pt-8">
         <p>
           Can&apos;t find your reservation here?{" "}
           <Link href="#" className="underline">
@@ -284,5 +239,27 @@ export default function TripsPage() {
         </p>
       </div>
     </section>
+  );
+}
+
+type FilterButtonProps = {
+  tabValue: string | null;
+} & React.ComponentProps<"button">;
+
+function FilterButton({ tabValue, className, ...props }: FilterButtonProps) {
+  const [activeTab, setActiveTab] = useActiveTab();
+
+  return (
+    <Button
+      variant="outline"
+      size="lg"
+      className={cn(
+        "rounded-full border-border/50 font-normal border-2",
+        { "border-black": activeTab === tabValue },
+        className
+      )}
+      onClick={() => setActiveTab(tabValue)}
+      {...props}
+    />
   );
 }

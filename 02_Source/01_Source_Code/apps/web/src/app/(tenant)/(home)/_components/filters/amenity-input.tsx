@@ -1,7 +1,7 @@
 "use client";
 
-import { use, useState } from "react";
 import Image from "next/image";
+import { use } from "react";
 
 import { Amenity } from "@/app/typings/models";
 
@@ -10,29 +10,27 @@ import { cn } from "@/lib/utils";
 
 type AmenityInputProps = {
   amenitiesPromise: Promise<Amenity[]>;
-  onValueChange?: (value: number[]) => void;
+  value: number[];
+  onValueChange: (value: number[]) => void;
 };
 
 export function AmenityInput({
   amenitiesPromise,
-  onValueChange = () => {},
+  value,
+  onValueChange,
 }: AmenityInputProps) {
   const amenities = use(amenitiesPromise);
-  const [selectedAmenities, setSelectedAmenities] = useState<Set<number>>(
-    new Set()
-  );
 
   const toggleAmenity = (id: number) => {
-    setSelectedAmenities((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      onValueChange(Array.from(newSet));
-      return newSet;
-    });
+    const newSet = new Set(value);
+
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+
+    onValueChange(Array.from(newSet));
   };
 
   return (
@@ -42,7 +40,7 @@ export function AmenityInput({
           key={amenity.id}
           variant="outline"
           className={cn("rounded-full py-2.5 px-4  font-normal", {
-            "bg-airbnb/10 text-black": selectedAmenities.has(amenity.id),
+            "bg-airbnb/10 text-black": value.includes(amenity.id),
           })}
           onClick={() => toggleAmenity(amenity.id)}
         >

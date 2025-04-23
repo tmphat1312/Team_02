@@ -8,7 +8,7 @@ export function useFilterValues() {
     noBedrooms: parseAsInteger,
     noBeds: parseAsInteger,
     noBathrooms: parseAsInteger,
-    amenities: parseAsArrayOf({
+    amenityIds: parseAsArrayOf({
       parse: (value) => Number(value),
     }),
   });
