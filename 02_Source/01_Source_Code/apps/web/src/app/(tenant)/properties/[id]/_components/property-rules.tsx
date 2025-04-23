@@ -85,8 +85,6 @@ export function PropertyRules() {
           </span>
         ))}
       </div>
-
-      <button className="underline flex mx-auto">show more</button>
     </div>
   );
 }

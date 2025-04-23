@@ -16,9 +16,9 @@ export function PhotoGallery({ imageUrls, propertyName }: PhotoGalleryProps) {
         height={400}
         className="object-cover w-full h-full col-span-2 row-span-2"
       />
-      {featuredImageUrls.map((url) => (
+      {featuredImageUrls.map((url, i) => (
         <Image
-          key={url}
+          key={url + i}
           src={url}
           alt={`Featured image of ${propertyName}`}
           width={300}

@@ -2,16 +2,17 @@ export type Category = {
   id: number;
   name: string;
   imageUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Amenity = {
   id: number;
   name: string;
+  description: string;
   imageUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Property = {
@@ -28,7 +29,21 @@ export type Property = {
   numberOfBeds: number;
   numberOfBedrooms: number;
   numberOfBathrooms: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   rating: number;
+};
+
+export type Review = {
+  id: number;
+  tenantId: string;
+  propertyId: number;
+  cleanliness: number;
+  communication: number;
+  accuracy: number;
+  location: number;
+  content: string;
+  reviewAt: string;
+  createdAt: string;
+  updatedAt: string;
 };

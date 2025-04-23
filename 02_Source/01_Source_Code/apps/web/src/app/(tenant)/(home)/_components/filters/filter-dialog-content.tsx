@@ -129,21 +129,23 @@ export function FilterDialogContent({
         <Separator className="border-gray-200/50 my-7" />
         <section>
           <h3 className="text-lg font-medium mb-2">Rooms and Beds</h3>
-          <NumberInput
-            label="Bedrooms"
-            value={noBedrooms}
-            onValueChange={handleNoBedroomsChange}
-          />
-          <NumberInput
-            label="Beds"
-            value={noBeds}
-            onValueChange={handleNoBedsChange}
-          />
-          <NumberInput
-            label="Bathrooms"
-            value={noBathrooms}
-            onValueChange={handleNoBathroomsChange}
-          />
+          <div className="space-y-4">
+            <NumberInput
+              label="Bedrooms"
+              value={noBedrooms}
+              onValueChange={handleNoBedroomsChange}
+            />
+            <NumberInput
+              label="Beds"
+              value={noBeds}
+              onValueChange={handleNoBedsChange}
+            />
+            <NumberInput
+              label="Bathrooms"
+              value={noBathrooms}
+              onValueChange={handleNoBathroomsChange}
+            />
+          </div>
         </section>
         <Separator className="border-gray-200/50 my-7" />
         <section>

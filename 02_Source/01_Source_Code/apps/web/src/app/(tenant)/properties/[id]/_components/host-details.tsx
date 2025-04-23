@@ -30,7 +30,7 @@ export function HostDetails() {
         <section>
           <h4 className="text-xl font-medium mb-4">Host details</h4>
           <div className="mb-6">
-            <div>Response rate: 100%</div>
+            <div>Response rate: N/A</div>
             <div>Response within few hours</div>
           </div>
           <Button size="lg" className="text-white bg-black/90 text-base">

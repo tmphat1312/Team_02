@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "random-image-pepebigotes.vercel.app",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

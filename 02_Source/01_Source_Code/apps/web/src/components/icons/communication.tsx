@@ -8,7 +8,7 @@ export function Communication(props: React.SVGProps<SVGSVGElement>) {
       focusable="false"
       style={{
         display: "block",
-        fill: "currentcolor",
+        stroke: "currentcolor",
         strokeWidth: "2",
       }}
       {...props}
