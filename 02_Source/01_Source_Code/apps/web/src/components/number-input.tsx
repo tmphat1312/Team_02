@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -8,20 +7,17 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   label: string;
-  onValueChange?: (value: number) => void;
+  value: number;
+  onValueChange: (value: number) => void;
 };
 
-export function NumberInput({ label, onValueChange = () => {} }: Props) {
-  const [value, setValue] = useState(0);
-
+export function NumberInput({ label, onValueChange, value }: Props) {
   const increment = () => {
     const newValue = value + 1;
-    setValue(newValue);
     onValueChange(newValue);
   };
   const decrement = () => {
     const newValue = Math.max(0, value - 1);
-    setValue(newValue);
     onValueChange(newValue);
   };
 
