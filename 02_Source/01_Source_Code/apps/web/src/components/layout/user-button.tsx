@@ -118,7 +118,7 @@ function SignedInItems() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
-            href="wishlists"
+            href="/wishlists"
             className="w-full py-2.5 font-medium cursor-pointer"
           >
             Wishlists
