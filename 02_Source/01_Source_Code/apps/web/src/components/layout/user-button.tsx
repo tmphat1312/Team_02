@@ -159,7 +159,7 @@ function HostSignedInItems() {
   return (
     <HostSignedIn>
       <DropdownMenuItem asChild>
-        <Link href="/hosts/listings" className="w-full py-2.5 cursor-pointer">
+        <Link href="/host/listings" className="w-full py-2.5 cursor-pointer">
           Manage listings
         </Link>
       </DropdownMenuItem>
