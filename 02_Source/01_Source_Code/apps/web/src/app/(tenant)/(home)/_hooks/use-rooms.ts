@@ -14,9 +14,9 @@ const fetchKey = ({
   amenityIds,
   priceMax,
   priceMin,
-  noBathrooms,
-  noBedrooms,
-  noBeds,
+  noBathroomsMin,
+  noBedroomsMin,
+  noBedsMin,
   page,
   pageSize,
 }: {
@@ -24,9 +24,9 @@ const fetchKey = ({
   amenityIds: number[] | null;
   priceMax: number | null;
   priceMin: number | null;
-  noBathrooms: number | null;
-  noBedrooms: number | null;
-  noBeds: number | null;
+  noBathroomsMin: number | null;
+  noBedroomsMin: number | null;
+  noBedsMin: number | null;
   page: number;
   pageSize: number;
 }) => {
@@ -36,9 +36,11 @@ const fetchKey = ({
     searchParams.append("amenityIds", amenityIds.join(","));
   if (priceMax) searchParams.append("priceMax", priceMax.toString());
   if (priceMin) searchParams.append("priceMin", priceMin.toString());
-  if (noBathrooms) searchParams.append("noBathrooms", noBathrooms.toString());
-  if (noBedrooms) searchParams.append("noBedrooms", noBedrooms.toString());
-  if (noBeds) searchParams.append("noBeds", noBeds.toString());
+  if (noBathroomsMin)
+    searchParams.append("noBathrooms", noBathroomsMin.toString());
+  if (noBedroomsMin)
+    searchParams.append("noBedrooms", noBedroomsMin.toString());
+  if (noBedsMin) searchParams.append("noBeds", noBedsMin.toString());
 
   searchParams.append("_page", page.toString());
   searchParams.append("_per_page", pageSize.toString());
@@ -53,9 +55,9 @@ export function useRooms() {
       amenityIds,
       priceMax,
       priceMin,
-      noBathrooms,
-      noBedrooms,
-      noBeds,
+      noBathroomsMin,
+      noBedroomsMin,
+      noBedsMin,
     },
   ] = useFilterValues();
   const { data, mutate, size, setSize, isValidating, isLoading } =
@@ -66,9 +68,9 @@ export function useRooms() {
           amenityIds,
           priceMax,
           priceMin,
-          noBathrooms,
-          noBedrooms,
-          noBeds,
+          noBathroomsMin,
+          noBedroomsMin,
+          noBedsMin,
           page: index + 1,
           pageSize: PAGE_SIZE,
         }),

@@ -12,11 +12,9 @@ import { Separator } from "@/components/ui/separator";
 import { AmenityInput } from "./amenity-input";
 import { PriceInput } from "./price-input";
 
-import { useFilterValues } from "../../_hooks/use-filter-values";
+import { PRICE_MAX, PRICE_MIN, PRICE_STEP } from "../../_config/settings";
 
-const PRICE_MAX = 20_000_000;
-const PRICE_MIN = 100_000;
-const PRICE_STEP = 10_000;
+import { useFilterValues } from "../../_hooks/use-filter-values";
 
 type FilterDialogContentProps = {
   amenitiesPromise: Promise<Amenity[]>;
@@ -29,9 +27,9 @@ export function FilterDialogContent({
     {
       priceMin: initialPriceMin,
       priceMax: initialPriceMax,
-      noBeds: initialNoBeds,
-      noBedrooms: initialNoBedrooms,
-      noBathrooms: initialNoBathrooms,
+      noBedsMin: initialNoBeds,
+      noBedroomsMin: initialNoBedrooms,
+      noBathroomsMin: initialNoBathrooms,
       amenityIds: initialAmenities,
     },
     setFilterValues,
@@ -84,9 +82,9 @@ export function FilterDialogContent({
       priceMin: priceMin == PRICE_MIN ? null : priceMin,
       priceMax: priceMax == PRICE_MAX ? null : priceMax,
       amenityIds: amenityIds.length === 0 ? null : amenityIds,
-      noBathrooms: noBathrooms == 0 ? null : noBathrooms,
-      noBedrooms: noBedrooms == 0 ? null : noBedrooms,
-      noBeds: noBeds == 0 ? null : noBeds,
+      noBathroomsMin: noBathrooms == 0 ? null : noBathrooms,
+      noBedroomsMin: noBedrooms == 0 ? null : noBedrooms,
+      noBedsMin: noBeds == 0 ? null : noBeds,
     });
 
     const closeButtonEl = closeButtonRef.current;
@@ -134,16 +132,19 @@ export function FilterDialogContent({
               label="Bedrooms"
               value={noBedrooms}
               onValueChange={handleNoBedroomsChange}
+              greaterInput
             />
             <NumberInput
               label="Beds"
               value={noBeds}
               onValueChange={handleNoBedsChange}
+              greaterInput
             />
             <NumberInput
               label="Bathrooms"
               value={noBathrooms}
               onValueChange={handleNoBathroomsChange}
+              greaterInput
             />
           </div>
         </section>

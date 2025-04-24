@@ -5,9 +5,9 @@ export function useFilterValues() {
     priceMin: parseAsInteger,
     priceMax: parseAsInteger,
     categoryId: parseAsInteger,
-    noBedrooms: parseAsInteger,
-    noBeds: parseAsInteger,
-    noBathrooms: parseAsInteger,
+    noBedroomsMin: parseAsInteger,
+    noBedsMin: parseAsInteger,
+    noBathroomsMin: parseAsInteger,
     amenityIds: parseAsArrayOf({
       parse: (value) => Number(value),
     }),
