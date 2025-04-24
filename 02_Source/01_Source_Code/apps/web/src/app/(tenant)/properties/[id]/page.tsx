@@ -1,7 +1,8 @@
+import { Suspense } from "react";
+
 import { Separator } from "@/components/ui/separator";
 
-import { fetchPropertyDetails } from "./_data/fetch-property-details";
-
+import { AddToRecentlyViewedList } from "./_components/add-to-recently-viewed-list";
 import { HostDetails } from "./_components/host-details";
 import { PhotoGallery } from "./_components/photo-gallery";
 import { PropertyInfo } from "./_components/property-info";
@@ -10,7 +11,7 @@ import { PropertyReservation } from "./_components/property-reservation";
 import { PropertyReviews } from "./_components/property-reviews";
 import { PropertyRules } from "./_components/property-rules";
 import { PropertyTitle } from "./_components/property-title";
-import { Suspense } from "react";
+import { fetchPropertyDetails } from "./_data/fetch-property-details";
 
 const mockAmenities = [
   {
@@ -150,6 +151,7 @@ export default async function AirbnbRoomDetails({
       <HostDetails />
       <Separator />
       <PropertyRules />
+      <AddToRecentlyViewedList item={details} />
     </div>
   );
 }

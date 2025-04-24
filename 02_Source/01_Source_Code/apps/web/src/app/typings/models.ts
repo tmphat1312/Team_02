@@ -47,3 +47,12 @@ export type Review = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type RecentlyViewed = {
+  id: string;
+  propertyId: number;
+  name: string;
+  imageUrl: string;
+  rating: number;
+  viewedAt: string;
+};

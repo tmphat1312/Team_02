@@ -9,7 +9,7 @@ export default function WishlistsLayout({
   return (
     <div>
       <Header />
-      <main className="width-container">{children}</main>
+      <main className="width-container pb-16 pt-4">{children}</main>
       <Footer />
     </div>
   );
