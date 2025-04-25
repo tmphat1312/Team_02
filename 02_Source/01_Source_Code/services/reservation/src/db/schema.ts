@@ -14,7 +14,20 @@ export const reservationTable = pgTable("reservations", {
     numberOfInfants: integer(),
     totalPrice: decimal('totalPrice',{ precision: 10, scale: 2 }).notNull(),
     status: statusReservation().notNull().default('Pending'),
-    note: text(),
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp().notNull().defaultNow(),
 });
+
+export const reviewTable = pgTable("reviews", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    reservationId: integer().notNull(),
+    propertyId: integer().notNull(),
+    tenantId: text().notNull(),
+    cleanliness: integer().notNull(),
+    accuracy: integer().notNull(),
+    communication: integer().notNull(),
+    location: integer().notNull(),
+    createdAt: timestamp().notNull().defaultNow(),
+    updatedAt: timestamp().notNull().defaultNow(),
+})
+

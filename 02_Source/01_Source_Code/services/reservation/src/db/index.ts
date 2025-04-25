@@ -8,3 +8,4 @@ const db = drizzle(sql);
 export default db;
 
 export type NewReservation = typeof schema.reservationTable.$inferInsert;
+export type NewReview = typeof schema.reviewTable.$inferInsert;

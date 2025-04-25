@@ -59,8 +59,8 @@ export const unauthorized = (
 ) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
-    code: errorCode || ErrorCode.UNAUTHORIZED,
-    message: errorMsg || ReasonPhrases.UNAUTHORIZED,
+    code: errorCode ?? ErrorCode.UNAUTHORIZED,
+    message: errorMsg ?? ReasonPhrases.UNAUTHORIZED,
     status: StatusCodes.UNAUTHORIZED,
     statusText: ReasonPhrases.UNAUTHORIZED,
   };
@@ -71,8 +71,8 @@ export const unauthorized = (
 export const notFound = (c: Context, errorMsg?: string, errorCode?: string) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
-    code: errorCode || ErrorCode.NOT_FOUND,
-    message: errorMsg || ReasonPhrases.NOT_FOUND,
+    code: errorCode ?? ErrorCode.NOT_FOUND,
+    message: errorMsg ?? ReasonPhrases.NOT_FOUND,
     status: StatusCodes.NOT_FOUND,
     statusText: ReasonPhrases.NOT_FOUND,
   };
@@ -87,8 +87,8 @@ export const badRequest = (
 ) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
-    code: errorCode || ErrorCode.BAD_REQUEST,
-    message: errorMsg || ReasonPhrases.BAD_REQUEST,
+    code: errorCode ?? ErrorCode.BAD_REQUEST,
+    message: errorMsg ?? ReasonPhrases.BAD_REQUEST,
     status: StatusCodes.BAD_REQUEST,
     statusText: ReasonPhrases.BAD_REQUEST,
   };
@@ -103,8 +103,8 @@ export const internalServerError = (
 ) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
-    code: errorCode || ErrorCode.INTERNAL_SERVER_ERROR,
-    message: errorMsg || ReasonPhrases.INTERNAL_SERVER_ERROR,
+    code: errorCode ?? ErrorCode.INTERNAL_SERVER_ERROR,
+    message: errorMsg ?? ReasonPhrases.INTERNAL_SERVER_ERROR,
     status: StatusCodes.INTERNAL_SERVER_ERROR,
     statusText: ReasonPhrases.INTERNAL_SERVER_ERROR,
   };

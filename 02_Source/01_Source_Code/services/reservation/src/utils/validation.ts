@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const reservationSchema = z.object({
-    propertyId: z.number().int().positive('Property ID is required'),
-    checkInDate: z.string().nonempty('check in date is required').transform((str) => new Date(str)),
+    propertyId: z.number().int(),
+    checkInDate: z.string().transform((str) => new Date(str)),
     checkOutDate: z.string().transform((str) => new Date(str)),
     numberOfAdults: z.number().int().positive('Adult count must be positive'),
     numberOfChildren: z.number().int().positive().optional(),
@@ -16,10 +16,10 @@ export const reservationSchema = z.object({
     path: ['Check-in date']
 })
 
-export const updateReservationSchema = z.object({
-    id: z.number().int().positive('reservation id is required'),
-    status: z.enum(['Pending', 'Confirmed', 'Paid'])
-}).refine(data => data.status == 'Pending' || data.status == 'Confirmed' || data.status == 'Paid', {
-    message: '[**status must be Pending, Confirmed or Paid value**]',
-    path: ['status']
-} )
+export const reviewSchema = z.object({
+    reservationId: z.number().int(),
+    cleanliness: z.number().int(),
+    accuracy: z.number().int(),
+    communication: z.number().int(),
+    location: z.number().int(),
+})
