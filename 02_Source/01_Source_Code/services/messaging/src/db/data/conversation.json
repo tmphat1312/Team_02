@@ -1,9 +1,15 @@
 [
     {
-      "id": 1,
       "tenantId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
       "hostId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
       "propertyId": 101,
+      "createdAt": "2025-04-22T10:00:00.000Z",
+      "updatedAt": "2025-04-22T10:00:00.000Z"
+    },
+    {
+      "hostId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "tenantId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "propertyId": 103,
       "createdAt": "2025-04-22T10:00:00.000Z",
       "updatedAt": "2025-04-22T10:00:00.000Z"
     }

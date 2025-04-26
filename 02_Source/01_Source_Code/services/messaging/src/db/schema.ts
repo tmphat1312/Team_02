@@ -9,13 +9,12 @@ import {
 import { sql } from 'drizzle-orm'
 
 const baseColumns = {
-  id: integer().primaryKey(),//.generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').$onUpdateFn(() => sql`current_timestamp`),
 } as const
 
 
-// 💬 Conversation Table
 export const conversationTable = pgTable('conversations', {
   ...baseColumns,
   tenantId: varchar('tenantId', { length: 255 }).notNull(),
@@ -23,14 +22,13 @@ export const conversationTable = pgTable('conversations', {
   propertyId: integer('propertyId').notNull(),
 })
 
-// 📨 Message Table
+
 export const messageTable = pgTable('messages', {
-  id: integer().primaryKey(), //.generatedAlwaysAsIdentity(),
-  conversationId: varchar('conversationId', { length: 255 }).notNull(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  conversationId: integer('conversationId').notNull(),
   senderId: varchar('senderId', { length: 255 }).notNull(),
   receiverId: varchar('receiverId', { length: 255 }).notNull(),
-  content: text('text'),
-  readBy: boolean('readByHost').default(false),
+  content: text('content'),
   sendAt: timestamp('sendAt').notNull().defaultNow(),
   isReadByReceiver: boolean('isReadByReceiver').default(false),
 })
