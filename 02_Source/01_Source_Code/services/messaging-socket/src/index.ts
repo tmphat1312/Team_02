@@ -14,11 +14,12 @@ showRoutes(app);
 
 const httpServer = serve({
     fetch: app.fetch,
-    port: 3010,
+    port: Number(process.env.PORT_WEB_SOCKET) || 3010,
 });
 
 // Tạo Socket.IO server
 const io = new Server(httpServer as HTTPServer, {
+    path: '/',
     cors: {
         origin: "*",
         methods: ["GET", "POST"],
