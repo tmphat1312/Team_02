@@ -56,3 +56,13 @@ export type RecentlyViewed = {
   rating: number;
   viewedAt: string;
 };
+
+export type Wishlist = {
+  id: string;
+  propertyId: number;
+  name: string;
+  imageUrl: string;
+  rating: number;
+  createdAt: string;
+  updatedAt: string;
+};

@@ -119,7 +119,7 @@ export default async function AirbnbRoomDetails({
 
   return (
     <div className="details-container py-6 space-y-8">
-      <PropertyTitle title={details.title} propertyId={details.id} />
+      <PropertyTitle item={details} />
       <PhotoGallery
         imageUrls={details.imageUrls}
         propertyName={details.title}

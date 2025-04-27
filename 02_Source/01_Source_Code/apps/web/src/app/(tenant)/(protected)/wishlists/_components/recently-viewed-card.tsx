@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 import { deleteRecentlyViewed } from "../_data/crud";
 import { useIsEditingQueryState } from "../_hooks/use-is-editing-query-state";
+import Link from "next/link";
 
 type RecentlyViewedCardProps = {
   item: RecentlyViewed;
@@ -24,21 +25,23 @@ export function RecentlyViewedCard({ item }: RecentlyViewedCardProps) {
 
   return (
     <article key={item.id} className="relative max-w-70">
-      <Image
-        src={item.imageUrl}
-        alt={item.name}
-        width={280}
-        height={280}
-        className="w-full aspect-square rounded-2xl mb-2.5"
-      />
-      <div className="flex justify-between items-center">
-        <h3 className="font-semibold">{item.name}</h3>
-        <span className="inline-flex items-center gap-1 opacity-70">
-          <Star className="fill-current mt-0.5" size={12} />
-          {item.rating}
-        </span>
-      </div>
-      <p>{format(new Date(item.viewedAt), "eeee, MMMM d")}</p>
+      <Link href={`/properties/${item.propertyId}`}>
+        <Image
+          src={item.imageUrl}
+          alt={item.name}
+          width={280}
+          height={280}
+          className="w-full aspect-square rounded-2xl mb-2.5"
+        />
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold">{item.name}</h3>
+          <span className="inline-flex items-center gap-1 opacity-70">
+            <Star className="fill-current mt-0.5" size={12} />
+            {item.rating}
+          </span>
+        </div>
+        <p>{format(new Date(item.viewedAt), "eeee, MMMM d")}</p>
+      </Link>
       <Button
         className={cn(
           "rounded-full absolute top-3 right-3 bg-white shadow size-7 hidden",

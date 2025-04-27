@@ -1,7 +1,6 @@
-import { Suspense } from "react";
-
 import { RecentlyViewed } from "./_components/recently-viewed";
 import { ToggleEditingButton } from "./_components/toggle-editing-button";
+import { Wishlist } from "./_components/wishlist";
 
 export default function WishlistsPage() {
   return (
@@ -10,9 +9,10 @@ export default function WishlistsPage() {
         <ToggleEditingButton />
       </div>
       <h1 className="sr-only">Wishlists</h1>
-      <Suspense>
+      <div className="space-y-8">
+        <Wishlist />
         <RecentlyViewed />
-      </Suspense>
+      </div>
     </section>
   );
 }

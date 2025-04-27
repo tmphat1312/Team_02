@@ -1,11 +1,9 @@
-import { Heart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Property } from "@/app/typings/models";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import { formatPrice } from "@/lib/utils";
 
 type RoomProps = {
@@ -19,7 +17,7 @@ export function Room({ item: room }: RoomProps) {
       href={`/properties/${room.id}`}
       className="group space-y-2"
     >
-      <div className="relative aspect-square overflow-hidden rounded-xl">
+      <div className="aspect-square overflow-hidden rounded-xl">
         <Image
           src={room.imageUrls[0] ?? "/placeholder.svg"}
           alt={room.title}
@@ -27,9 +25,6 @@ export function Room({ item: room }: RoomProps) {
           width={300}
           height={300}
         />
-        <Button variant="ghost" className="absolute top-2 right-2 rounded-full">
-          <Heart size={32} />
-        </Button>
       </div>
 
       <article>

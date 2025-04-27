@@ -1,40 +1,45 @@
 "use client";
 
+import { useLiveQuery } from "dexie-react-hooks";
 import { HeartIcon } from "lucide-react";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
+import { useTransition } from "react";
 
+import {
+  addWishlist,
+  checkIfWishlistExists,
+  deleteWishlistByPropertyId,
+} from "@/app/(tenant)/(protected)/wishlists/_data/crud";
+import { Property } from "@/app/typings/models";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { delay } from "@/lib/utils";
 
-export function SaveButton({ propertyId }: { propertyId: number }) {
-  const isLoading = false; // TODO: check if property is loading
-  const [isInWishlist, setIsInWishlist] = useState(false);
+type SaveButtonProps = {
+  item: Property;
+};
 
+export function SaveButton({ item }: SaveButtonProps) {
+  const isInWishlist = useLiveQuery(
+    async () => await checkIfWishlistExists(item.id)
+  );
   const [isPending, startTransition] = useTransition();
 
   const handleSave = () => {
     startTransition(async () => {
-      await delay(2_000);
-      setIsInWishlist(true);
-      console.log(propertyId);
-      toast.success("Property saved!");
+      await addWishlist({
+        name: item.title,
+        imageUrl: item.imageUrls[0],
+        rating: item.rating,
+        propertyId: item.id,
+      });
     });
   };
   const handleUnsave = () => {
     startTransition(async () => {
-      await delay(2_000);
-      setIsInWishlist(false);
-      console.log(propertyId);
-      toast.success("Property removed from wishlist!");
+      await deleteWishlistByPropertyId(item.id);
     });
   };
 
-  if (isLoading) {
-    return <Skeleton className="w-[78px] h-9" />;
-  }
-
+  const isLoading = isInWishlist == undefined;
   const clickAction = isInWishlist ? handleUnsave : handleSave;
   const clickText = isInWishlist
     ? isPending
@@ -49,6 +54,10 @@ export function SaveButton({ propertyId }: { propertyId: number }) {
     <HeartIcon size={16} />
   );
   const clickDisabled = isPending;
+
+  if (isLoading) {
+    return <Skeleton className="w-[78px] h-9" />;
+  }
 
   return (
     <Button

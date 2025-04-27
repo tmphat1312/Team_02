@@ -3,16 +3,19 @@
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { getRecentlyViewed } from "../_data/crud";
+import { ListFallback } from "./list-fallback";
 import { PageSection } from "./page-section";
 import { RecentlyViewedCard } from "./recently-viewed-card";
 
 export function RecentlyViewed() {
   const recentlyViewedList = useLiveQuery(getRecentlyViewed);
 
-  if (!recentlyViewedList) {
+  const isLoading = recentlyViewedList == undefined;
+
+  if (isLoading) {
     return (
       <PageSection heading="Recently Viewed">
-        <p className="text-muted-foreground">Loading...</p>
+        <ListFallback />
       </PageSection>
     );
   }
