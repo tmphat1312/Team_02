@@ -26,7 +26,6 @@ export function messageEvent(io: Server, socket: Socket) {
     socket.to(conversationId).emit("message", {
       data: newMessage,
     });
-
   });
 }
 

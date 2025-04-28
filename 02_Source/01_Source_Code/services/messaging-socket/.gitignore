@@ -1,7 +1,7 @@
 # prod
 dist/
 lambda.zip
-Dockerfile
+
 # dev
 .yarn/
 !.yarn/releases

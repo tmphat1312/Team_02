@@ -3,13 +3,18 @@
 To install dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 To run:
 
 ```bash
-bun run index.ts
+npm run dev
 ```
 
-This project was created using `bun init` in bun v1.2.8. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+# event
+
+```bash
+- Trong phần read và subscribe có thông báo về khi xử lý thành công đến tất cả room trong phòng.
+- Trong phần message khi gửi một message đến server thì server lưu lại message và trả data về cho toàn bộ room trừ room gửi.
+```
