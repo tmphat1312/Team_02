@@ -18,8 +18,8 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(70.7% 0.022 261.325);
-  --input: oklch(70.7% 0.022 261.325);
+  --border: oklch(90.7% 0.022 261.325);
+  --input: oklch(85.7% 0.022 261.325);
   --ring: oklch(0.623 0.214 259.815);
   --airbnb: #ff385c;
   --airbnb-hover: #e31c5f;
@@ -61,6 +61,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
 

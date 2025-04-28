@@ -66,3 +66,41 @@ export type Wishlist = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  image?: string | null;
+  role?: string | null | undefined;
+  phoneNumber?: string | null;
+  address?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type UserWallet = {
+  id: number;
+  userId: string;
+  balance: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type DepositHistory = {
+  id: number;
+  userId: string;
+  amount: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type PaymentHistory = {
+  id: number;
+  userId: string;
+  amount: number;
+  date: Date;
+  createdAt: Date;
+  updatedAt: Date;
+};
