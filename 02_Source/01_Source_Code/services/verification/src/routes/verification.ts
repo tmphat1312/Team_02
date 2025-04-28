@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import nodemailer from "nodemailer";
 import { db } from "../db";
 import { badRequest, ok } from "../utils/json-helpers";
+import { ErrorCode } from "../constants/error-codes";
 import { eq } from "drizzle-orm";
 import { userTable, verificationTable } from "../db/schema";
 import { createId } from "@paralleldrive/cuid2";
@@ -11,7 +12,11 @@ route.post("/send-otp", async (c) => {
   const { email } = await c.req.parseBody<{ email: string }>();
 
   if (!email) {
-    return badRequest(c, "Email is required!");
+    return badRequest(
+      c,
+      `Email ${email} is required!`,
+      ErrorCode.EMAIL_REQUIRED
+    );
   }
 
   const [existingEmail] = await db
@@ -20,7 +25,11 @@ route.post("/send-otp", async (c) => {
     .where(eq(userTable.email, email));
 
   if (!existingEmail) {
-    return badRequest(c, "Email is not exist!");
+    return badRequest(
+      c,
+      `Email is not exist! Please register an account first.`,
+      ErrorCode.EMAIL_NOT_EXIST
+    );
   }
 
   const transporter = nodemailer.createTransport({
@@ -47,7 +56,7 @@ route.post("/send-otp", async (c) => {
 
   const info = await transporter.sendMail(mailOptions);
   if (!info) {
-    return badRequest(c, "Send email failed!");
+    return badRequest(c, "Send email failed!", ErrorCode.SEND_EMAIL_FAILED);
   }
 
   const [insertVerify] = await db
@@ -61,7 +70,11 @@ route.post("/send-otp", async (c) => {
     })
     .returning();
   if (!insertVerify) {
-    return badRequest(c, "Insert verification code failed!");
+    return badRequest(
+      c,
+      "Insert verification code failed!",
+      ErrorCode.SEND_EMAIL_FAILED
+    );
   }
   return ok(c, "Send email successfully!");
 });
@@ -73,10 +86,10 @@ route.post("/verify-otp", async (c) => {
   }>();
 
   if (!email) {
-    return badRequest(c, "Email is required!");
+    return badRequest(c, "Email is required!", ErrorCode.EMAIL_REQUIRED);
   }
   if (!otp) {
-    return badRequest(c, "OTP is required!");
+    return badRequest(c, "OTP is required!", ErrorCode.OTP_REQUIRED);
   }
 
   const [existingEmail] = await db
@@ -85,7 +98,7 @@ route.post("/verify-otp", async (c) => {
     .where(eq(userTable.email, email));
 
   if (!existingEmail) {
-    return badRequest(c, "Email is not exist!");
+    return badRequest(c, "Email is not exist!", ErrorCode.EMAIL_NOT_EXIST);
   }
 
   const verificationList = await db
@@ -107,9 +120,9 @@ route.post("/verify-otp", async (c) => {
   });
 
   if (state === 0) {
-    return badRequest(c, "OTP is not valid");
+    return badRequest(c, "OTP is not valid", ErrorCode.OTP_NOT_VALID);
   } else if (state === 1) {
-    return badRequest(c, "OTP expired");
+    return badRequest(c, "OTP expired", ErrorCode.OTP_EXPIRED);
   } else {
     const [emailVerified] = await db
       .update(userTable)
@@ -117,7 +130,11 @@ route.post("/verify-otp", async (c) => {
       .where(eq(userTable.email, email))
       .returning();
     if (!emailVerified) {
-      return badRequest(c, "Email verification failed!");
+      return badRequest(
+        c,
+        "Email verification failed!",
+        ErrorCode.INTERNAL_SERVER_ERROR
+      );
     }
     return ok(c, "Account has been verified");
   }
@@ -129,10 +146,10 @@ route.post("/send-otp-email", async (c) => {
     otp: string;
   }>();
   if (!email) {
-    return badRequest(c, "Email is required!");
+    return badRequest(c, "Email is required!", ErrorCode.EMAIL_REQUIRED);
   }
   if (!otp) {
-    return badRequest(c, "OTP is required!");
+    return badRequest(c, "OTP is required!", ErrorCode.OTP_REQUIRED);
   }
 
   const [existingEmail] = await db
@@ -141,7 +158,7 @@ route.post("/send-otp-email", async (c) => {
     .where(eq(userTable.email, email));
 
   if (!existingEmail) {
-    return badRequest(c, "Email is not exist!");
+    return badRequest(c, "Email is not exist!", ErrorCode.EMAIL_NOT_EXIST);
   }
 
   const transporter = nodemailer.createTransport({
@@ -163,7 +180,7 @@ route.post("/send-otp-email", async (c) => {
 
   const info = await transporter.sendMail(mailOptions);
   if (!info) {
-    return badRequest(c, "Send email failed!");
+    return badRequest(c, "Send email failed!", ErrorCode.SEND_EMAIL_FAILED);
   }
   return ok(c, "Send email successfully!");
 });
