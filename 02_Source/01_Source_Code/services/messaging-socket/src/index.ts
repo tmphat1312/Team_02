@@ -22,7 +22,6 @@ const io = new Server(httpServer as HTTPServer, {
     path: '/',
     cors: {
         origin: "*",
-        methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
     },
