@@ -1,6 +1,7 @@
 import { Review } from "@/app/typings/models";
 import { clsx, type ClassValue } from "clsx";
 import { formatDistance } from "date-fns/formatDistance";
+import pluralize from "pluralize";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -56,4 +57,8 @@ export function calculateAvgRating(review: Review) {
       review.location) /
     4
   );
+}
+
+export function makePluralNoun(word: string, count: number) {
+  return pluralize(word, count, true);
 }

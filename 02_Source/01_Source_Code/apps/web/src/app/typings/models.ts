@@ -104,3 +104,23 @@ export type PaymentHistory = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type Trip = {
+  id: number;
+  propertyId: number;
+  status: "upcoming" | "completed" | "cancelled";
+  totalPrice: number;
+  property: {
+    name: string;
+    address: string;
+    hostId: string;
+    imageUrls: string[];
+    host: {
+      name: string;
+      image: string;
+    };
+  };
+  checkInDate: string;
+  checkOutDate: string;
+  numberOfGuests: number;
+};
