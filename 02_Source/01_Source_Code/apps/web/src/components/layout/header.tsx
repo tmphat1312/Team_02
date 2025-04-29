@@ -1,5 +1,4 @@
 import { AppLogo } from "./app-logo";
-import { GlobeButton } from "./globe-button";
 import { ToHostButton } from "./to-host-button";
 import { UserButton } from "./user-button";
 
@@ -17,9 +16,8 @@ export function Header({ containerType = "wide" }: Props) {
         <div className="flex items-center justify-between h-20">
           <AppLogo />
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <ToHostButton />
-            <GlobeButton />
             <UserButton />
           </div>
         </div>

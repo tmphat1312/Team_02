@@ -2,9 +2,8 @@ import useSWRInfinite from "swr/infinite";
 
 import { mockHttpClient } from "@/lib/http-client";
 
-import { useFilterValues } from "./use-filter-values";
-
 import { PAGE_SIZE } from "../_config/settings";
+import { useFilterValues } from "./use-filter-values";
 
 const fetcher = (path: string) =>
   mockHttpClient.get(path).then((res) => res.data);

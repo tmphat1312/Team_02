@@ -71,7 +71,7 @@ function SignedOutItems() {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        <DropdownMenuItem asChild disabled>
+        {/* <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Gift cards
           </Link>
@@ -80,17 +80,17 @@ function SignedOutItems() {
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Host an experience
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link href="/host" className="w-full py-2.5 cursor-pointer">
             Airbnb your home
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild disabled>
+        {/* <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Help Center
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuGroup>
     </SignedOut>
   );
@@ -137,7 +137,7 @@ function SignedInItems() {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        <DropdownMenuItem asChild disabled>
+        {/* <DropdownMenuItem asChild disabled>
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Gift cards
           </Link>
@@ -146,7 +146,7 @@ function SignedInItems() {
           <Link href="#" className="w-full py-2.5 cursor-pointer">
             Help Center
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem className="p-0">
           <SignOutButton className="w-full py-2.5 px-2 cursor-pointer" />
         </DropdownMenuItem>

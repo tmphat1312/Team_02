@@ -9,18 +9,18 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.623 0.214 259.815);
+  --primary: oklch(0.66 0.2309 17.07);
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.35 0 0);
   --secondary-foreground: oklch(0.95 0 0);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
+  --accent: oklch(0.92 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(90.7% 0.022 261.325);
   --input: oklch(85.7% 0.022 261.325);
-  --ring: oklch(0.623 0.214 259.815);
+  --ring: oklch(0.66 0.2309 17.07);
   --airbnb: #ff385c;
   --airbnb-hover: #e31c5f;
 }

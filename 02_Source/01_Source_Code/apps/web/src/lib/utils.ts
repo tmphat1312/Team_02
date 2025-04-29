@@ -1,8 +1,9 @@
-import { Review } from "@/app/typings/models";
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { formatDistance } from "date-fns/formatDistance";
 import pluralize from "pluralize";
 import { twMerge } from "tailwind-merge";
+
+import { Review } from "@/app/typings/models";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

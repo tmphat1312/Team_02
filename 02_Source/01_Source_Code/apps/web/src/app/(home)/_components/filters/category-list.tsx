@@ -57,7 +57,7 @@ function CategoryItem({ item }: CategoryItemProps) {
   const [{ categoryId }, setValues] = useFilterValues();
 
   const handleClick = () => {
-    setValues({ categoryId: item.id });
+    setValues({ categoryId: item.id }, { scroll: true });
   };
 
   return (

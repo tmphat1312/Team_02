@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 type Props = {
   label: string;
   value: number;
-  onValueChange: (value: number) => void;
-  greaterInput?: boolean;
   maxValue?: number;
   minValue?: number;
   disabled?: boolean;
+  greaterInput?: boolean;
+  onValueChange: (value: number) => void;
 };
 
 export function NumberInput({

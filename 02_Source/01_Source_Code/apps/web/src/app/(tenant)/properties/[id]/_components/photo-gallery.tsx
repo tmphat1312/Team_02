@@ -14,7 +14,7 @@ export function PhotoGallery({ imageUrls, propertyName }: PhotoGalleryProps) {
         alt={`Spotlight image of ${propertyName}`}
         width={560}
         height={400}
-        className="object-cover w-full h-full col-span-2 row-span-2"
+        className="object-cover w-full h-full col-span-2 row-span-2 bg-accent"
       />
       {featuredImageUrls.map((url, i) => (
         <Image
@@ -23,7 +23,7 @@ export function PhotoGallery({ imageUrls, propertyName }: PhotoGalleryProps) {
           alt={`Featured image of ${propertyName}`}
           width={300}
           height={300}
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full bg-accent"
         />
       ))}
     </div>

@@ -42,9 +42,9 @@ function LoadMoreButton() {
         onClick={loadMore}
         disabled={isReachingEnd}
         size="lg"
+        variant={"secondary"}
         className={cn(
           "disabled:hidden",
-          "bg-black/80 hover:bg-black/90",
           isLoading || isLoadingMore ? "opacity-50" : ""
         )}
       >
