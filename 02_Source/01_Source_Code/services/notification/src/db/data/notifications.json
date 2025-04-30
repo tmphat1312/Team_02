@@ -1,0 +1,52 @@
+[
+    {
+      "userId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "title": "Chào mừng bạn!",
+      "message": "Cảm ơn bạn đã tham gia vào hệ thống của chúng tôi.",
+      "type": "in-app",
+      "isRead": false
+    },
+    {
+      "userId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "title": "Thông báo quan trọng",
+      "message": "Vui lòng kiểm tra email của bạn để xác nhận tài khoản.",
+      "type": "email",
+      "isRead": false
+    },
+    {
+      "userId": "nhMKlopAvQhVoAWbQ8ZZP8JVT9lopmnh",
+      "title": "Chúc mừng!",
+      "message": "Bạn đã nhận được phần thưởng cho hành động gần đây.",
+      "type": "in-app",
+      "isRead": false
+    },
+    {
+      "userId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "title": "Chào mừng bạn đến với dịch vụ của chúng tôi",
+      "message": "Cảm ơn bạn đã đăng ký tài khoản tại website của chúng tôi.",
+      "type": "email",
+      "isRead": false
+    },
+    {
+      "userId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "title": "Xác nhận email",
+      "message": "Vui lòng xác nhận địa chỉ email để hoàn tất đăng ký.",
+      "type": "email",
+      "isRead": false
+    },
+    {
+      "userId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "title": "Thông báo về tài khoản",
+      "message": "Tài khoản của bạn đã được kích hoạt thành công.",
+      "type": "in-app",
+      "isRead": false
+    },
+    {
+      "userId": "ttHNmoiGTahVoAWbQ8ZZP8oonhSSVopu",
+      "title": "Cập nhật mới",
+      "message": "Có những tính năng mới vừa được cập nhật cho tài khoản của bạn.",
+      "type": "in-app",
+      "isRead": false
+    }
+  ]
+  
