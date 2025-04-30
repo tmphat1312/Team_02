@@ -21,10 +21,10 @@ export default async function ProtectedHostLayout({
   }
 
   return (
-    <>
+    <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
       <HostHeader />
-      <main>{children}</main>
+      <main className="width-container">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }
