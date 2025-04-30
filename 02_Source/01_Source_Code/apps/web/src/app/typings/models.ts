@@ -144,4 +144,10 @@ export type Reservation = {
   checkInDate: string;
   checkOutDate: string;
   numberOfGuests: number;
+  review?: {
+    rating: number;
+  } | null;
+  payment?: {
+    status: "deposit-paid" | "full-paid" | "refunded";
+  };
 };
