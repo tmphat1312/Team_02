@@ -210,6 +210,19 @@ conversationRoute.delete('/:id',
         ErrorCode.INVALID_CONVERSATION_ID
       );
     }
+
+    const deletedMessages = await db
+      .delete(messageTable)
+      .where(eq(messageTable.conversationId, conversationId))
+      .returning();
+    if (!deletedMessages) {
+      return badRequest(
+        c,
+        'Delete messages failed',
+        ErrorCode.INTERNAL_SERVER_ERROR
+      );
+    }
+    
     const [deletedConversation] = await db
       .delete(conversationTable)
       .where(eq(conversationTable.id, conversationId))
@@ -221,7 +234,10 @@ conversationRoute.delete('/:id',
         ErrorCode.CONVERSATION_NOT_FOUND
       );
     }
-    return noContent(c);
+    return ok(c, {
+      id: deletedConversation.id,
+      deletedAt: new Date(),
+    });
   }
 );
 
