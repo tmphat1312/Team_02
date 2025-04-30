@@ -16,7 +16,8 @@ export const notificationTable = pgTable('notifications', {
   userId: varchar('userId', { length: 255 }).notNull(),
   title: text('title'),
   message: text('message'),
+  isRead: boolean('isRead').default(false),
   type: notificationTypeEnum('type').notNull(),
   sendAt: timestamp('sendAt').notNull().defaultNow(),
-  isRead: boolean('isRead').default(false),
+  readAt: timestamp('readAt').default(null as any),
 });
