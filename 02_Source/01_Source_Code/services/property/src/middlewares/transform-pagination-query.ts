@@ -1,5 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { badRequest } from "../utils/json-helpers";
+import { ErrorCode } from "../constants/error-codes";
 
 type Env = {
   Variables: {
@@ -19,8 +20,16 @@ export const transformPaginationQuery = createMiddleware<Env>(
     const page = Number(c.req.query("page") || DEFAULT_PAGE);
     const pageSize = Number(c.req.query("pageSize") || DEFAULT_PAGE_SIZE);
 
-    if (isNaN(page) || isNaN(pageSize)) {
-      return badRequest(c, "Page and pageSize must be numbers");
+    if (isNaN(page)) {
+      return badRequest(c, "page must be a number.", ErrorCode.INVALID_PAGE);
+    }
+
+    if (isNaN(pageSize)) {
+      return badRequest(
+        c,
+        "pageSize must be a number.",
+        ErrorCode.INVALID_PAGE_SIZE
+      );
     }
 
     c.set("pagination", {

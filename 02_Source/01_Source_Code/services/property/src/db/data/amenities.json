@@ -37,7 +37,7 @@
   {
     "name": "Ceiling Fans",
     "description": "Fans installed on the ceiling to circulate air and keep the space cool.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688076/ceiling-fans_gkgbrt.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039797/ceiling-fans_mve0wd.svg"
   },
   {
     "name": "Cleaning Products",
@@ -92,7 +92,7 @@
   {
     "name": "Free Parking on Premises",
     "description": "Convenient parking available on the property for guests.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688201/free-parking-on-premises_spe2id.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039798/free-parking-on-premises_fv2icn.svg"
   },
   {
     "name": "Hair Dryer",
@@ -102,7 +102,7 @@
   {
     "name": "Hammock",
     "description": "A relaxing hammock for outdoor lounging or napping.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688233/hammock_k0vyqc.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039798/hammock_uz6uvo.svg"
   },
   {
     "name": "Hangers",
@@ -152,27 +152,17 @@
   {
     "name": "Patio or Balcony",
     "description": "A private outdoor area for relaxing or enjoying the view.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688295/patio-or-balcony_eoc6p8.svg"
-  },
-  {
-    "name": "Pet Allowed",
-    "description": "Pets are welcome, making your stay pet-friendly.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688297/pet-allowed_grnn64.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039797/patio-or-balcony_ugo68m.svg"
   },
   {
     "name": "Portable Fans",
     "description": "Portable fans to help cool down the room or outdoor areas.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688298/portable-fans_zxrpby.svg"
-  },
-  {
-    "name": "Private Backyard Fully Fenced",
-    "description": "A private backyard with a full fence for added privacy and security.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688299/private-backyard-fully-fenced_r23jcg.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039797/portable-fans_v0mxyz.svg"
   },
   {
     "name": "Private Entrance",
     "description": "A private entrance for guests, offering more privacy and convenience.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688300/private-entrance_tpqz8l.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039797/private-entrance_iuf79n.svg"
   },
   {
     "name": "Rice Maker",
@@ -202,7 +192,7 @@
   {
     "name": "Sun Loungers",
     "description": "Comfortable loungers for soaking up the sun and relaxing outdoors.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745688305/sun-loungers_ofwu5p.svg"
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1746039797/sun-loungers_ifsxlf.svg"
   },
   {
     "name": "TV",

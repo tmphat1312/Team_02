@@ -1,9 +1,11 @@
+import { desc, eq, and, gte, lte, inArray, count } from "drizzle-orm";
 import { Hono } from "hono";
 
 import { ErrorCode } from "../constants/error-codes";
+import { CATEGORY_NEW_ID } from "../constants/categories";
 
 import { db } from "../db";
-import { getInvalidIds } from "../db/query";
+import { isValidId, getInvalidIds } from "../db/query";
 import {
   categoriesTable,
   amenitiesTable,
@@ -13,8 +15,10 @@ import {
   propertyCategoriesTable,
   propertyAmenitiesTable,
   propertyRulesTable,
+  propertiesWithImagesView,
 } from "../db/schema";
 
+import { transformPaginationQuery } from "../middlewares/transform-pagination-query";
 import { uploadImagesMiddleware } from "../middlewares/upload-images";
 
 import {
@@ -22,15 +26,184 @@ import {
   createPropertySchema,
 } from "../schemas/properties";
 
-import { badRequest, created } from "../utils/json-helpers";
+import { badRequest, created, ok } from "../utils/json-helpers";
 import { getFirstZodError } from "../utils/zod-helpers";
 import { getImageUrlsFromContext } from "../utils/image-helpers";
+import {
+  calculateOffset,
+  calculateTotalPages,
+} from "../utils/pagination-calculators";
 
 const route = new Hono<{
   Variables: {
     validatedProperty: CreatePropertyInput;
   };
 }>();
+
+route.get("/", transformPaginationQuery, async (c) => {
+  const { page, pageSize } = c.var.pagination;
+  const offset = calculateOffset({ page, pageSize });
+
+  // Input processing
+  const priceMin = c.req.query("priceMin");
+  const priceMax = c.req.query("priceMax");
+  const noBedroomsMin = parseInt(c.req.query("noBedroomsMin") ?? "");
+  const noBedsMin = parseInt(c.req.query("noBedsMin") ?? "");
+  const noBathroomsMin = parseInt(c.req.query("noBathroomsMin") ?? "");
+
+  const categoryIdStr = c.req.query("categoryId");
+  const categoryId = categoryIdStr ? parseInt(categoryIdStr) : 0;
+
+  const amenityIdsStr = c.req.query("amenityIds");
+  const amenityIds = amenityIdsStr
+    ? amenityIdsStr.split(",").map((id) => parseInt(id))
+    : undefined;
+
+  if (categoryIdStr) {
+    const isValidCategory = await isValidId(
+      categoriesTable,
+      categoriesTable.id,
+      categoryId
+    );
+
+    if (!isValidCategory) {
+      return badRequest(
+        c,
+        `Invalid category ID: ${categoryId}.`,
+        ErrorCode.INVALID_CATEGORY_ID
+      );
+    }
+  }
+
+  if (amenityIdsStr) {
+    const invalidAmenities = await getInvalidIds(
+      amenitiesTable,
+      amenitiesTable.id,
+      amenityIds!
+    );
+
+    if (invalidAmenities.length > 0) {
+      return badRequest(
+        c,
+        `Invalid amenity ID: ${invalidAmenities.join(", ")}.`,
+        ErrorCode.INVALID_AMENITY_ID
+      );
+    }
+  }
+
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+  // Filter
+  const buildPropertyFilter = () => {
+    const filters = [];
+
+    filters.push(eq(propertiesWithImagesView.isAvailable, true));
+
+    if (priceMin) {
+      filters.push(gte(propertiesWithImagesView.pricePerNight, priceMin));
+    }
+
+    if (priceMax) {
+      filters.push(lte(propertiesWithImagesView.pricePerNight, priceMax));
+    }
+
+    if (!isNaN(noBedroomsMin)) {
+      filters.push(
+        gte(propertiesWithImagesView.numberOfBedrooms, noBedroomsMin)
+      );
+    }
+
+    if (!isNaN(noBedsMin)) {
+      filters.push(gte(propertiesWithImagesView.numberOfBeds, noBedsMin));
+    }
+
+    if (!isNaN(noBathroomsMin)) {
+      filters.push(
+        gte(propertiesWithImagesView.numberOfBathrooms, noBathroomsMin)
+      );
+    }
+
+    if (categoryIdStr) {
+      if (categoryId === CATEGORY_NEW_ID) {
+        filters.push(gte(propertiesWithImagesView.createdAt, threeMonthsAgo));
+      } else {
+        filters.push(
+          inArray(
+            propertiesWithImagesView.id,
+            db
+              .select({ propertyId: propertyCategoriesTable.propertyId })
+              .from(propertyCategoriesTable)
+              .where(eq(propertyCategoriesTable.categoryId, categoryId))
+          )
+        );
+      }
+    }
+
+    if (amenityIdsStr) {
+      filters.push(
+        inArray(
+          propertiesWithImagesView.id,
+          db
+            .select({ propertyId: propertyAmenitiesTable.propertyId })
+            .from(propertyAmenitiesTable)
+            .where(inArray(propertyAmenitiesTable.amenityId, amenityIds!))
+            .groupBy(propertyAmenitiesTable.propertyId)
+            .having(
+              eq(count(propertyAmenitiesTable.amenityId), amenityIds!.length)
+            )
+        )
+      );
+    }
+
+    return and(...filters);
+  };
+
+  // Query
+  const [properties, totalItems] = await Promise.all([
+    db
+      .select()
+      .from(propertiesWithImagesView)
+      .where(buildPropertyFilter())
+      .orderBy(desc(propertiesWithImagesView.id))
+      .limit(pageSize)
+      .offset(offset),
+
+    db
+      .select({ count: count(propertiesWithImagesView.id) })
+      .from(propertiesWithImagesView)
+      .where(buildPropertyFilter())
+      .then((res) => Number(res[0]?.count ?? 0)),
+  ]);
+
+  // Modify result
+  const propertiesWithParsedPrices = properties.map(
+    ({ isAvailable, ...property }) => ({
+      ...property,
+      pricePerNight: parseFloat(property.pricePerNight),
+    })
+  );
+
+  // Pagination
+  const currentPage = page;
+  const totalPages = calculateTotalPages({
+    totalItems,
+    pageSize,
+  });
+
+  // Result
+  return ok(c, {
+    data: propertiesWithParsedPrices,
+    meta: {
+      pagination: {
+        currentPage,
+        totalItems,
+        totalPages,
+        pageSize,
+      },
+    },
+  });
+});
 
 route.post(
   "/",

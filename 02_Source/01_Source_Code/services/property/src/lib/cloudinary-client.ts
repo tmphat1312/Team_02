@@ -13,7 +13,7 @@ cloudinary.config({
   cloud_name: Bun.env.CLOUDINARY_CLOUD_NAME,
 });
 
-const UPLOAD_FOLDERS = ["Categories", "Amenities", "Properties", "Users"];
+const UPLOAD_FOLDERS = ["Categories", "Amenities", "Properties"];
 export type UploadFolder = (typeof UPLOAD_FOLDERS)[number];
 
 export const cloudinaryClient = {
@@ -133,7 +133,7 @@ export async function deleteImages(secureUrls: string[]) {
 
 function normalizeFileName(fileName: string) {
   return fileName
-    .replaceAll(" ", "_")
+    .replace(/ /g, "_")
     .split(".")
     .slice(0, -1)
     .join(".")

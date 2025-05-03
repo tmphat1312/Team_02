@@ -1,13 +1,13 @@
 [
   {
+    "name": "New",
+    "description": "Discover the latest, most innovative homes with modern amenities and cutting-edge designs.",
+    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687818/new_mkzavr.png"
+  },
+  {
     "name": "A-Frames",
     "description": "Experience the beauty of architectural A-frame homes with unique design and cozy interiors.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687755/a-frames_ldcvqj.png"
-  },
-  {
-    "name": "Adapted",
-    "description": "Find homes that have been creatively adapted from existing structures to offer something extraordinary.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687755/adapted_wajwsu.png"
   },
   {
     "name": "Amazing Pools",
@@ -25,39 +25,14 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687756/arctic_elwq2k.png"
   },
   {
-    "name": "Barns",
-    "description": "Rustic barns transformed into beautiful living spaces, combining countryside charm with modern design.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687755/barns_mk8nzn.png"
-  },
-  {
     "name": "Beach",
     "description": "Find the perfect beach homes that combine sandy shores and sea breezes for a relaxing stay.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687755/beach_cenae4.png"
   },
   {
-    "name": "Beachfront",
-    "description": "Live right on the edge of the ocean with beachfront properties offering spectacular views and serene atmospheres.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687756/beachfront_wn8fr2.png"
-  },
-  {
-    "name": "Bed And Breakfasts",
-    "description": "Cozy bed-and-breakfasts offering warm hospitality and personalized experiences.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687756/bed-and-breakfasts_yzezyu.png"
-  },
-  {
-    "name": "Boats",
-    "description": "Live the unique experience of staying on boats, offering a peaceful lifestyle on water.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687756/boats_u1mxxn.png"
-  },
-  {
     "name": "Cabins",
     "description": "Escape into the wilderness with charming cabins designed for relaxation and adventure.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687758/cabins_r71rgx.png"
-  },
-  {
-    "name": "Campers",
-    "description": "Enjoy the freedom of the open road with stylish campers that offer comfort on the go.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687759/campers_ag6r3i.png"
   },
   {
     "name": "Camping",
@@ -78,11 +53,6 @@
     "name": "Caves",
     "description": "Explore the underground beauty of cave homes, offering a cool and natural environment.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687760/caves_rsbryn.png"
-  },
-  {
-    "name": "Chefs Kitchens",
-    "description": "Cook like a professional with kitchens designed for chefs, featuring state-of-the-art appliances and spacious layouts.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687760/chefs-kitchens_qtyyq4.png"
   },
   {
     "name": "Containers",
@@ -115,29 +85,14 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687765/desert_aucanx.png"
   },
   {
-    "name": "Design",
-    "description": "Explore homes with cutting-edge designs, featuring sleek lines, modern materials, and stylish interiors.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687765/design_jso9zr.png"
-  },
-  {
     "name": "Domes",
     "description": "Experience living in dome-shaped homes that provide unique architectural beauty and energy efficiency.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687765/domes_ogjjgo.png"
   },
   {
-    "name": "Earth Homes",
-    "description": "Live sustainably in earth homes that blend with nature, providing comfort and energy efficiency.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687766/earth-homes_kbblf4.png"
-  },
-  {
     "name": "Farms",
     "description": "Stay in cozy farmhouses surrounded by nature, offering fresh air, wide open spaces, and rustic charm.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687767/farms_ln0own.png"
-  },
-  {
-    "name": "Golfing",
-    "description": "Live near world-class golf courses, with properties offering beautiful views and access to premium golfing.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687768/golfing_jx2xdd.png"
   },
   {
     "name": "Grand Pianos",
@@ -170,11 +125,6 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687771/lake_br0rhy.png"
   },
   {
-    "name": "Lakefront",
-    "description": "Experience the beauty of lakefront properties that offer direct access to peaceful waters and stunning scenery.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687772/lakefront_g964d4.png"
-  },
-  {
     "name": "Luxe",
     "description": "Indulge in luxury with homes that offer high-end amenities, exquisite design, and ultimate comfort.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687773/luxe_ftw3no.png"
@@ -190,39 +140,14 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687774/minsus_hftw2t.png"
   },
   {
-    "name": "National Parks",
-    "description": "Stay near national parks with properties offering easy access to hiking, wildlife, and natural beauty.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687797/national-parks_bnb8mp.png"
-  },
-  {
-    "name": "New",
-    "description": "Discover the latest, most innovative homes with modern amenities and cutting-edge designs.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687818/new_mkzavr.png"
-  },
-  {
     "name": "Off The Grid",
     "description": "Experience life off the grid with homes designed for self-sufficiency and complete detachment from city life.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687841/off-the-grid_nykufc.png"
   },
   {
-    "name": "OMG",
-    "description": "Stay in homes that will leave you in awe, featuring jaw-dropping designs, architecture, and surroundings.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687841/omg_vh0rqk.png"
-  },
-  {
-    "name": "Play",
-    "description": "Homes designed for play and adventure, offering fun features and exciting atmospheres.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687861/play_gl4iwz.png"
-  },
-  {
     "name": "Riads",
     "description": "Stay in Moroccan riads with stunning courtyards, exotic decor, and an immersive cultural experience.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687862/riads_zodjar.png"
-  },
-  {
-    "name": "Rooms",
-    "description": "Explore unique rooms designed for relaxation, creativity, and peace.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687862/rooms_tz7bkm.png"
   },
   {
     "name": "Ryokans",
@@ -240,24 +165,9 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687862/skiing_iiki13.png"
   },
   {
-    "name": "Skin In Out",
-    "description": "Homes with luxurious outdoor living spaces that bring the outdoors inside for ultimate relaxation.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687862/skin-in-out_w77mpx.png"
-  },
-  {
-    "name": "Surfing",
-    "description": "Live near some of the best surfing spots in the world, with homes offering easy access to the waves.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687863/surfing_glgjjd.png"
-  },
-  {
     "name": "Tiny Homes",
     "description": "Enjoy a minimalist lifestyle with tiny homes that offer everything you need in a compact and efficient design.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687890/tiny-homes_b2ccos.png"
-  },
-  {
-    "name": "Top Cities",
-    "description": "Stay in prime city locations, offering luxury, convenience, and access to urban amenities.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687915/top-cities_vbayml.png"
   },
   {
     "name": "Top Of The World",
@@ -275,19 +185,9 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687916/tree-houses_ogjix2.png"
   },
   {
-    "name": "Trending",
-    "description": "Explore the latest and most popular home trends, from design innovations to unique experiences.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687927/trending_tjdesk.png"
-  },
-  {
     "name": "Tropical",
     "description": "Stay in tropical homes surrounded by lush greenery, offering warm weather and exotic beauty.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687927/tropical_wyne3g.png"
-  },
-  {
-    "name": "Vineyards",
-    "description": "Stay in stunning homes located amidst beautiful vineyards, perfect for wine lovers looking for a scenic getaway.",
-    "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687928/vineyards_adv0f5.png"
   },
   {
     "name": "Trulli",
@@ -295,8 +195,8 @@
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687927/trulli_xw2psr.png"
   },
   {
-    "name": "Windsurfing",
-    "description": "Explore the thrilling world of windsurfing with homes located near the best beaches for windsurfing enthusiasts.",
+    "name": "Windmills",
+    "description": "Stay in charming windmills, where history meets tranquility. Enjoy unique circular spaces and scenic countryside views.",
     "imageUrl": "https://res.cloudinary.com/dyyqbqre2/image/upload/v1745687928/windmills_eyfuhn.png"
   },
   {
