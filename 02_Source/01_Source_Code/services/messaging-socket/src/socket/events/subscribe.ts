@@ -6,11 +6,9 @@ export function subscribeEvent(io: Server, socket: Socket) {
     //socket.leave(socket.id);
     socket.join(conversationId); // Đăng ký vào phòng với conversationId của người dùng
     io.to(conversationId).emit("subscribe", {
-      data: {
-        roomId: conversationId,
-        userId: userId,
-        message: `User ${userId} join this room`,
-      },
+      roomId: conversationId,
+      userId: userId,
+      message: `User ${userId} join this room`,
     });
   });
 }

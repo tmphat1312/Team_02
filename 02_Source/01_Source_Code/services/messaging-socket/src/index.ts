@@ -17,7 +17,7 @@ const httpServer = serve({
     port: Number(process.env.PORT_WEB_SOCKET) || 3010,
 });
 
-// Tạo Socket.IO server
+
 const io = new Server(httpServer as HTTPServer, {
     path: '/',
     cors: {

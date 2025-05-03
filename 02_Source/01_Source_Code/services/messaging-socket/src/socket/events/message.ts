@@ -11,7 +11,7 @@ export function messageEvent(io: Server, socket: Socket) {
       .from(conversationTable)
       .where(eq(conversationTable.id, conversationId));
 
-    const newMessage = await db
+    const [newMessage] = await db
       .insert(messageTable)
       .values({
         conversationId: Number(conversationId),
@@ -24,7 +24,7 @@ export function messageEvent(io: Server, socket: Socket) {
       .returning();
     console.log(socket.rooms)
     socket.to(conversationId).emit("message", {
-      data: newMessage,
+      ...newMessage
     });
   });
 }
