@@ -128,7 +128,7 @@ export default function TripsPage() {
       <h1 className="text-3xl font-semibold mb-8">Trips</h1>
       <div className="space-y-8 mb-12">
         <FilterButtons />
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredTrips.map((trip) => (
             <ReservationCard key={trip.id} item={trip} />
           ))}

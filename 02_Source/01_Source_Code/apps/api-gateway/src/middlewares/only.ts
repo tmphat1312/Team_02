@@ -1,11 +1,15 @@
 import { createMiddleware } from "hono/factory";
 import { auth, ROLES } from "../lib/auth.js";
 import { forbidden, unauthorized } from "../utils/json-helpers.js";
+import type { User } from "better-auth";
 
 type Role = (typeof ROLES)[number];
+type Variables = {
+  user: User;
+};
 
 export function only(roles: Role[]) {
-  return createMiddleware(async (c, next) => {
+  return createMiddleware<{ Variables: Variables }>(async (c, next) => {
     // 1. Check if the request is authenticated
     const session = await auth.api.getSession(c.req.raw);
 

@@ -5,8 +5,8 @@ export function HostDetails() {
   return (
     <section>
       <h3 className="text-2xl font-semibold mb-6">Meet your host</h3>
-      <div className="flex gap-16">
-        <div className="shadow-xl border border-border/20 rounded-lg p-8 flex items-center">
+      <div className="flex gap-16 flex-wrap">
+        <div className="shadow-xl border border-border/20 rounded-lg p-8 flex items-center mx-auto">
           <section className="flex flex-col items-center px-12">
             <div className="size-24 bg-gray-200 rounded-full mb-2" />
             <h4 className="text-3xl font-bold">Fred</h4>

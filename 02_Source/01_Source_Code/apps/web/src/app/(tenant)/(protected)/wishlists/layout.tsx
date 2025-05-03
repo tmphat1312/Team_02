@@ -7,7 +7,7 @@ export default function WishlistsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
       <Header />
       <main className="width-container pb-16 pt-4">{children}</main>
       <Footer />

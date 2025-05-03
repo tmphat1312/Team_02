@@ -78,7 +78,7 @@ export function PropertyRules() {
     <div>
       <h3 className="text-2xl font-semibold mb-6">Things to know</h3>
 
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6">
         {mockRules.map((rule) => (
           <span key={rule.id} className="">
             {rule.name}

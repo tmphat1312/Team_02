@@ -22,7 +22,7 @@ export function RoomList() {
 
   return (
     <div className="width-container py-6 space-y-8">
-      <div className="grid grid-cols-4 gap-x-6 gap-y-10">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-6 gap-y-10">
         {properties.map((room, i) => (
           <Room key={i} item={room} />
         ))}
@@ -60,11 +60,7 @@ function LoadMoreButton() {
 }
 
 export function RoomListFallback() {
-  return (
-    <>
-      {Array.from({ length: PAGE_SIZE }).map((_, i) => (
-        <RoomFallback key={i} />
-      ))}
-    </>
-  );
+  return Array.from({ length: PAGE_SIZE }).map((_, i) => (
+    <RoomFallback key={i} />
+  ));
 }

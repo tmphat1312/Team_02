@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { LayoutGrid, Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import Image from "next/image";
+
+import { Button } from "@/components/ui/button";
 
 // Sample listing data
 const listings = [
@@ -8,7 +9,7 @@ const listings = [
     id: "listing_1",
     title: "Minh Phat House",
     location: "Phước Vân, Long An",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/placeholder.svg",
     actionRequired: true,
     price: 85,
     rating: 4.92,
@@ -21,7 +22,7 @@ const listings = [
     id: "listing_2",
     title: "Test property",
     location: "tt. Bến Lức, Long An",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/placeholder.svg",
     actionRequired: true,
     price: 120,
     rating: 4.85,
@@ -34,7 +35,7 @@ const listings = [
     id: "listing_3",
     title: "Beachfront Villa",
     location: "Vũng Tàu, Bà Rịa - Vũng Tàu",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/placeholder.svg",
     actionRequired: false,
     price: 250,
     rating: 4.98,
@@ -47,7 +48,7 @@ const listings = [
     id: "listing_4",
     title: "City Center Apartment",
     location: "District 1, Ho Chi Minh City",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/placeholder.svg",
     actionRequired: false,
     price: 75,
     rating: 4.78,
@@ -60,7 +61,7 @@ const listings = [
 
 export default function ListingsPage() {
   return (
-    <div className="width-container py-8">
+    <div className="py-12">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-semibold">Your listings</h1>
         <Button variant="outline" size="icon" className="rounded-full">
@@ -68,7 +69,7 @@ export default function ListingsPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
         {listings.map((listing) => (
           <div
             key={listing.id}

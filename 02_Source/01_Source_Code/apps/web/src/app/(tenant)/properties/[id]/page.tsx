@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { DetailsContainer } from "@/components/details-container";
 import { Separator } from "@/components/ui/separator";
 
 import { AddToRecentlyViewedList } from "./_components/add-to-recently-viewed-list";
@@ -118,13 +119,13 @@ export default async function AirbnbRoomDetails({
   const details = await fetchPropertyDetails(id);
 
   return (
-    <div className="details-container py-6 space-y-8">
+    <DetailsContainer className="py-6 space-y-8">
       <PropertyTitle item={details} />
       <PhotoGallery
         imageUrls={details.imageUrls}
         propertyName={details.title}
       />
-      <div className="grid grid-cols-3 gap-8 items-start">
+      <div className="lg:grid grid-cols-3 gap-16 lg:gap-8 items-start">
         <PropertyInfo
           item={details}
           rating={{
@@ -139,6 +140,7 @@ export default async function AirbnbRoomDetails({
           amenities={mockAmenities}
           className="col-span-2"
         />
+        <Separator className="my-6 lg:hidden" />
         <PropertyReservation item={details} />
       </div>
       <Separator />
@@ -152,6 +154,6 @@ export default async function AirbnbRoomDetails({
       <Separator />
       <PropertyRules />
       <AddToRecentlyViewedList item={details} />
-    </div>
+    </DetailsContainer>
   );
 }

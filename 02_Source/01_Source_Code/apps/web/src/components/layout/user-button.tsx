@@ -163,7 +163,7 @@ function HostSignedInItems() {
           Manage listings
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem asChild disabled>
+      {/* <DropdownMenuItem asChild disabled>
         <Link href="#" className="w-full py-2.5 cursor-pointer">
           Host an experience
         </Link>
@@ -172,7 +172,7 @@ function HostSignedInItems() {
         <Link href="#" className="w-full py-2.5 cursor-pointer">
           Refer a Host
         </Link>
-      </DropdownMenuItem>
+      </DropdownMenuItem> */}
     </HostSignedIn>
   );
 }

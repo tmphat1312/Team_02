@@ -24,7 +24,7 @@ export function WishlistCard({ item }: WishlistCardProps) {
   };
 
   return (
-    <article key={item.id} className="relative max-w-70">
+    <article key={item.id} className="relative">
       <Link href={`/properties/${item.propertyId}`}>
         <Image
           src={item.imageUrl}

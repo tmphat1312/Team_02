@@ -1,7 +1,3 @@
-"use client";
-
-import Link from "next/link";
-
 import {
   Card,
   CardContent,
@@ -9,15 +5,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
-export function VerifyEmailForm() {
+export function UpdatePersonalInformation() {
   return (
     <Card className="w-lg gap-3">
       <CardHeader className="mb-3">
-        <CardTitle className="text-3xl mb-2">Verify your email</CardTitle>
+        <CardTitle className="text-3xl mb-2">
+          Update your personal information
+        </CardTitle>
         <CardDescription>
-          Your email address is not verified, which prevents you from becoming a
-          host. Please verify your email address to proceed.
+          You must update your personal information to become a host. Please
+          update your personal information to proceed.
         </CardDescription>
       </CardHeader>
 
@@ -26,7 +25,7 @@ export function VerifyEmailForm() {
           href="/account"
           className="w-full bg-secondary text-secondary-foreground px-4 py-2 rounded text-lg"
         >
-          Go to Account Page to verify your email
+          Update your personal information
         </Link>
       </CardContent>
     </Card>

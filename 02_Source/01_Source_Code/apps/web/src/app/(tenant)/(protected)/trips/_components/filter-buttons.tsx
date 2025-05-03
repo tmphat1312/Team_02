@@ -5,7 +5,7 @@ import { useActiveTab } from "../_hooks/use-active-tab";
 
 export function FilterButtons() {
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 overflow-x-auto">
       <FilterButton tabValue={null}>All</FilterButton>
       <FilterButton tabValue={"upcoming"}>Upcoming</FilterButton>
       <FilterButton tabValue={"completed"}>Completed</FilterButton>

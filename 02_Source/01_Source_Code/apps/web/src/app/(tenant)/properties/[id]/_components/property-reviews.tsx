@@ -58,17 +58,19 @@ export async function PropertyReviews({ propertyId }: PropertyReviewsProps) {
     );
 
   return (
-    <div id="reviews">
+    <div id="reviews" className="@container">
       <section className="mb-5">
         <h3 className="text-2xl font-semibold flex items-center gap-2">
           <Star className="fill-current" size={24} />
-          <span>{avgRatingValue.toFixed(1)}</span>
+          <span>
+            {Number.isNaN(avgRatingValue) ? "__" : avgRatingValue.toFixed(1)}
+          </span>
           <span>·</span>
           <span>{numberOfReviewsInText}</span>
         </h3>
       </section>
 
-      <div className="grid grid-cols-5 gap-8 divide-x-2 divide-black/10">
+      <div className="@lg:flex gap-8 @lg:divide-x-2">
         <RatingChart
           numberOfReviews={numberOfReviews}
           oneStar={oneStar}
@@ -77,29 +79,40 @@ export async function PropertyReviews({ propertyId }: PropertyReviewsProps) {
           fourStar={fourStar}
           fiveStar={fiveStar}
         />
-        <SpecificRatingValue
-          label="Cleanliness"
-          value={avgCleanlinessRatingValue}
-          icon={<Cleanliness className="size-8" />}
-        />
-        <SpecificRatingValue
-          label="Accuracy"
-          value={avgAccuracyRatingValue}
-          icon={<Accuracy className="size-8" />}
-        />
-        <SpecificRatingValue
-          label="Communication"
-          value={avgCommunicationRatingValue}
-          icon={<Communication className="size-8" />}
-        />
-        <SpecificRatingValue
-          label="Location"
-          value={avgLocationRatingValue}
-          icon={<Location className="size-8" />}
-        />
+        <div className="w-full flex flex-wrap justify-start gap-12 mt-6 @lg:mt-0 lg:grid lg:grid-cols-4">
+          <SpecificRatingValue
+            label="Cleanliness"
+            value={avgCleanlinessRatingValue}
+            icon={<Cleanliness className="size-8" />}
+          />
+          <SpecificRatingValue
+            label="Accuracy"
+            value={avgAccuracyRatingValue}
+            icon={<Accuracy className="size-8" />}
+          />
+          <SpecificRatingValue
+            label="Communication"
+            value={avgCommunicationRatingValue}
+            icon={<Communication className="size-8" />}
+          />
+          <SpecificRatingValue
+            label="Location"
+            value={avgLocationRatingValue}
+            icon={<Location className="size-8" />}
+          />
+        </div>
       </div>
 
       <Separator className="my-8" />
+
+      {reviews.length === 0 && (
+        <div className="text-center">
+          <h4 className="text-lg font-semibold mb-2">No reviews yet</h4>
+          <p className="text-sm text-muted-foreground">
+            Be the first to leave a review if you are a tenant!
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-12">
         {reviews.map((review) => (
@@ -129,7 +142,7 @@ function RatingChart({
     (star) => (star / numberOfReviews) * 100
   );
   return (
-    <section className="pe-8">
+    <section className="pe-8 min-w-xs">
       <h4 className="mb-2 font-medium">Overall rating</h4>
       <div className="text-xs">
         {Array.from({ length: 5 }, (_, i) => (

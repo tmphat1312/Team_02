@@ -1,5 +1,5 @@
-import { Greeting } from "./_components/greeting";
-import { ReservationList } from "./_components/reservation-list";
+import { Greeting } from "../_components/greeting";
+import { ReservationList } from "../_components/reservation-list";
 
 export default function HostHomePage() {
   return (

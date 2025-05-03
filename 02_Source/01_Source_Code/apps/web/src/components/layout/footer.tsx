@@ -21,22 +21,22 @@ export function Footer({ containerStyle = "wide" }: FooterProps) {
           "px-4"
         )}
       >
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4 font-medium text-gray-700 text-sm">
+        <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center flex-wrap gap-6">
+          <div className="flex items-center flex-col md:flex-row gap-4 font-medium text-gray-700 text-sm">
             <p className="text-sm text-gray-700">© 2025 Airbnb, Inc.</p>
-            <Dot />
+            <Dot className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Terms
             </Link>
-            <Dot />
+            <Dot className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Sitemap
             </Link>
-            <Dot />
+            <Dot className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Privacy
             </Link>
-            <Dot />
+            <Dot className="hidden md:block" />
             <Link href="#" className="hover:underline flex items-center gap-2">
               Your Privacy Choices
               <PrivacyChoice className="translate-y-1/6" />

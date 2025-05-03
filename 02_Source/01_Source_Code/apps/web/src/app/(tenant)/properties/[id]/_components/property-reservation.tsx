@@ -68,7 +68,7 @@ export function PropertyReservation({ item }: PropertyReservationProps) {
   const isReserveDisabled = isPending || !date?.from || !date?.to;
 
   return (
-    <div className="border rounded-xl p-6 shadow-lg">
+    <div className="border rounded-xl p-6 shadow-lg max-w-sm mx-auto">
       <div className="mb-4">
         <span className="text-2xl font-bold">{formatPrice(totalPrice)}</span>
         <span> for {pluralize("night", numberOfNights, true)}</span>

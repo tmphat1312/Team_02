@@ -19,14 +19,14 @@ type ReservationCardProps = {
 
 export function ReservationCard({ item }: ReservationCardProps) {
   return (
-    <Card className="p-0 overflow-clip block">
-      <div className="flex">
+    <Card className="p-0 overflow-clip block @container">
+      <div className="@lg:flex">
         <Image
           src={item.property.imageUrls[0]}
           alt={item.property.name}
           width={240}
           height={240}
-          className="object-cover size-60"
+          className="object-cover w-full max-h-60 @lg:size-60"
         />
 
         <div className="p-4 grow space-y-4">
@@ -36,14 +36,16 @@ export function ReservationCard({ item }: ReservationCardProps) {
                 href={`/properties/${item.propertyId}`}
                 className="hover:underline"
               >
-                <h2 className="text-xl font-semibold">{item.property.name}</h2>
+                <h2 className="@lg:text-xl font-semibold text-pretty">
+                  {item.property.name}
+                </h2>
               </Link>
               <p className="text-gray-600 flex items-center mt-1 gap-1">
                 <MapPin className="size-4" />
                 {item.property.address}
               </p>
             </div>
-            <Avatar className="size-10">
+            <Avatar className="size-10 hidden @lg:block">
               <AvatarImage
                 src={item.property.host.image}
                 alt={item.property.host.name}
@@ -54,7 +56,7 @@ export function ReservationCard({ item }: ReservationCardProps) {
             </Avatar>
           </section>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 @lg:grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-500">Check-in</p>
               <p className="font-medium flex items-center gap-1">

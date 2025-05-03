@@ -20,9 +20,17 @@ export function RecentlyViewed() {
     );
   }
 
+  if (recentlyViewedList.length === 0) {
+    return (
+      <PageSection heading="Recently Viewed">
+        <p className="text-lg text-gray-500">No recently viewed items.</p>
+      </PageSection>
+    );
+  }
+
   return (
     <PageSection heading="Recently Viewed">
-      <div className="flex flex-wrap gap-8">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8">
         {recentlyViewedList.map((item) => (
           <RecentlyViewedCard key={item.id} item={item} />
         ))}

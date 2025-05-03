@@ -8,8 +8,8 @@ type PropertyTitleProps = {
 
 export function PropertyTitle({ item }: PropertyTitleProps) {
   return (
-    <section className="flex justify-between items-center mb-6">
-      <h1 className="text-3xl font-medium">{item.title}</h1>
+    <section className="flex justify-center md:justify-between items-center mb-6 flex-wrap gap-2 @container">
+      <h1 className="text-2xl @md:text-3xl font-medium">{item.title}</h1>
       <div className="flex items-center">
         <ShareButton propertyId={item.id} />
         <SaveButton item={item} />
