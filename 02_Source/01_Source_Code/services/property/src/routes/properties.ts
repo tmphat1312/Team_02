@@ -234,11 +234,19 @@ route.post(
     }
 
     // Categories
-    const invalidCategories = await getInvalidIds(
+    const invalidCategories: number[] = [];
+
+    if (parseResult.data.categories.includes(CATEGORY_NEW_ID)) {
+      invalidCategories.push(CATEGORY_NEW_ID);
+    }
+
+    const invalidDbCategories = await getInvalidIds(
       categoriesTable,
       categoriesTable.id,
       parseResult.data.categories
     );
+
+    invalidCategories.push(...invalidDbCategories);
 
     if (invalidCategories.length > 0) {
       return badRequest(
