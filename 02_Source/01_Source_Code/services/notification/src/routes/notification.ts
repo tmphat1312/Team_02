@@ -1,11 +1,12 @@
 import { Hono } from "hono";
 import { db } from "../db";
 import { notificationTable } from "../db/schema";
-import { eq, desc, or } from "drizzle-orm";
-import { created, badRequest, ok, noContent } from "../utils/json-helpers";
+import { eq, desc, or, is } from "drizzle-orm";
+import { created, badRequest, ok } from "../utils/json-helpers";
 import { ErrorCode } from "../constants/error-codes";
 import nodemailer from "nodemailer";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 export const notificationRoute = new Hono();
 
@@ -72,6 +73,18 @@ notificationRoute.post("/", async (c) => {
       ErrorCode.MISSING_NOTIFICATION_MESSAGE
     );
   }
+
+  const [notification] = await db
+    .insert(notificationTable)
+    .values({
+      userId,
+      title,
+      message,
+      type: notificationType,
+      sendAt: new Date(),
+      isRead: false,
+    })
+    .returning();
   if (type === "email") {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -98,7 +111,7 @@ notificationRoute.post("/", async (c) => {
     }
 
     const response = await axios.get(
-      `${Bun.env.USER_SERVICE_API_URL}${Bun.env.PATH_FETCH_EMAIL_FROM_USER_ID}?userId=${userId}`
+      `${Bun.env.GET_EMAIL_FROM_USERID_URL}?userId=${userId}`
     );
 
     if (response.status !== 200) {
@@ -121,18 +134,20 @@ notificationRoute.post("/", async (c) => {
     if (!info) {
       return badRequest(c, "Send email failed!", ErrorCode.SEND_EMAIL_FAILED);
     }
+  } else if (type === "in-app") {
+    console.log(Bun.env.SERVER_NOTIFICATION_SOCKET_URL);
+    const socket = io(Bun.env.SERVER_NOTIFICATION_SOCKET_URL, {
+      autoConnect: true,
+    });
+
+    socket.on("connect", () => {
+      console.log("[Socket] Connected:", socket.id);
+      socket.emit("send-notification", { ...notification }, () => {
+        socket.disconnect();
+      });
+    });
   }
-  const [notification] = await db
-    .insert(notificationTable)
-    .values({
-      userId,
-      title,
-      message,
-      type: notificationType,
-      sendAt: new Date(),
-      isRead: false,
-    })
-    .returning();
+
   return created(c, {
     id: notification.id,
     createdAt: notification.sendAt,
