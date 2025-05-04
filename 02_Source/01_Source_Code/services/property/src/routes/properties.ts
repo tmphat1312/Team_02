@@ -26,7 +26,7 @@ import {
   createPropertySchema,
 } from "../schemas/properties";
 
-import { badRequest, created, ok } from "../utils/json-helpers";
+import { badRequest, created, notFound, ok } from "../utils/json-helpers";
 import { getFirstZodError } from "../utils/zod-helpers";
 import { getImageUrlsFromContext } from "../utils/image-helpers";
 import {
@@ -202,6 +202,50 @@ route.get("/", transformPaginationQuery, async (c) => {
         pageSize,
       },
     },
+  });
+});
+
+route.get("/:id", async (c) => {
+  // Input processing
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+
+  if (isNaN(propertyId)) {
+    return badRequest(
+      c,
+      `Invalid property ID: ${propertyIdStr}.`,
+      ErrorCode.INVALID_PROPERTY_ID
+    );
+  }
+
+  // Query
+  const propertyRow = await db
+    .select()
+    .from(propertiesWithImagesView)
+    .where(eq(propertiesWithImagesView.id, propertyId))
+    .limit(1);
+
+  const property = propertyRow[0];
+
+  if (!property) {
+    return notFound(c, `Property not found.`, ErrorCode.PROPERTY_NOT_FOUND);
+  }
+
+  // Check if the property is available
+  if (!property.isAvailable) {
+    return badRequest(
+      c,
+      `This property is currently not available.`,
+      ErrorCode.PROPERTY_NOT_AVAILABLE
+    );
+  }
+
+  // Result
+  const { isAvailable, ...sanitizedProperty } = property;
+
+  return ok(c, {
+    ...sanitizedProperty,
+    pricePerNight: parseFloat(property.pricePerNight),
   });
 });
 
