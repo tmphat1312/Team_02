@@ -22,7 +22,6 @@ export function messageEvent(io: Server, socket: Socket) {
         isReadByReceiver: false,
       })
       .returning();
-    console.log(socket.rooms)
     socket.to(conversationId).emit("message", {
       ...newMessage
     });

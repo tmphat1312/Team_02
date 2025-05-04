@@ -10,7 +10,6 @@ const __dirname = dirname(__filename);
 
 export async function setupSocket(io: Server) {
   io.on("connection", async (socket: Socket) => {
-    console.log("Client connected:", socket.id);
 
     const eventFiles = readdirSync(join(__dirname, "events"));
     for (const file of eventFiles) {
