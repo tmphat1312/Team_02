@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { ErrorCode } from "../constants/error-codes";
 
 import { db } from "../db";
+import { isValidId } from "../db/query";
 import {
   propertiesTable,
   propertyImagesTable,
@@ -12,7 +13,14 @@ import {
 
 import { transformPaginationQuery } from "../middlewares/transform-pagination-query";
 
-import { badRequest, created, notFound, ok } from "../utils/json-helpers";
+import {
+  badRequest,
+  created,
+  notFound,
+  ok,
+  noContent,
+  forbidden,
+} from "../utils/json-helpers";
 
 import {
   calculateOffset,
@@ -148,6 +156,38 @@ route.post("/", async (c) => {
 
     throw err;
   }
+});
+
+route.delete("/:id", async (c) => {
+  const wishlistId = parseInt(c.req.param("id"));
+  const tenantId = c.req.header("x-user-id")!;
+
+  const wishlistRow = await db
+    .select()
+    .from(wishlistsTable)
+    .where(eq(wishlistsTable.id, wishlistId))
+    .limit(1);
+
+  const wishlist = wishlistRow[0];
+
+  if (!wishlist) {
+    return notFound(
+      c,
+      `Wishlist item not found.`,
+      ErrorCode.WISHLIST_ITEM_NOT_FOUND
+    );
+  }
+
+  if (wishlist.tenantId !== tenantId) {
+    return forbidden(
+      c,
+      `You do not have permission to delete this wishlist item.`,
+      ErrorCode.FORBIDDEN_WISHLIST
+    );
+  }
+
+  await db.delete(wishlistsTable).where(eq(wishlistsTable.id, wishlistId));
+  return noContent(c);
 });
 
 export const wishlistsRoute = route;
