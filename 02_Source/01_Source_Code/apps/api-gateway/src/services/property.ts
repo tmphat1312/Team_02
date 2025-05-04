@@ -27,6 +27,7 @@ route.get("/properties*", proxy);
 route.post("/properties", only(["host"]), proxy);
 
 // Property Resource
+route.get("/wishlists*", only(["tenant"]), proxy);
 route.post("/wishlists", only(["tenant"]), proxy);
 
 export const propertyService = route;

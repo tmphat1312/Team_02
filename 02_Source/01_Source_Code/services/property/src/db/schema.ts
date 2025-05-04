@@ -51,11 +51,11 @@ export const propertiesTable = pgTable("properties", {
   latitude: doublePrecision().notNull(),
   longitude: doublePrecision().notNull(),
   pricePerNight: decimal({ precision: 15, scale: 2 }).notNull(),
-  isAvailable: boolean().notNull().default(true),
   numberOfGuests: integer().notNull(),
   numberOfBedrooms: integer().notNull(),
   numberOfBeds: integer().notNull(),
   numberOfBathrooms: integer().notNull(),
+  isAvailable: boolean().notNull().default(true),
 });
 
 export const propertyImagesTable = pgTable("property_images", {

@@ -1,14 +1,116 @@
+import { desc, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 
 import { ErrorCode } from "../constants/error-codes";
 
 import { db } from "../db";
+import {
+  propertiesTable,
+  propertyImagesTable,
+  wishlistsTable,
+} from "../db/schema";
 
-import { wishlistsTable } from "../db/schema";
+import { transformPaginationQuery } from "../middlewares/transform-pagination-query";
 
-import { badRequest, created, notFound } from "../utils/json-helpers";
+import { badRequest, created, notFound, ok } from "../utils/json-helpers";
+
+import {
+  calculateOffset,
+  calculateTotalPages,
+} from "../utils/pagination-calculators";
 
 const route = new Hono();
+
+route.get("/", transformPaginationQuery, async (c) => {
+  const { page, pageSize } = c.var.pagination;
+  const offset = calculateOffset({ page, pageSize });
+
+  // Input processing
+  const tenantId = c.req.header("x-user-id")!;
+
+  // Query
+  const rankedImages = db
+    .select({
+      propertyId: propertyImagesTable.propertyId,
+      imageUrl: propertyImagesTable.imageUrl,
+      rowNumber:
+        sql<number>`ROW_NUMBER() OVER (PARTITION BY ${propertyImagesTable.propertyId} ORDER BY ${propertyImagesTable.id})`.as(
+          "rowNumber"
+        ),
+    })
+    .from(propertyImagesTable)
+    .as("rankedImages");
+
+  const firstImageSubquery = db
+    .select({
+      propertyId: rankedImages.propertyId,
+      imageUrl: rankedImages.imageUrl,
+    })
+    .from(rankedImages)
+    .where(eq(rankedImages.rowNumber, 1))
+    .as("firstImage");
+
+  const getWishlistQuery = db
+    .select()
+    .from(wishlistsTable)
+    .innerJoin(
+      propertiesTable,
+      eq(wishlistsTable.propertyId, propertiesTable.id)
+    )
+    .leftJoin(
+      firstImageSubquery,
+      eq(firstImageSubquery.propertyId, propertiesTable.id)
+    )
+    .where(eq(wishlistsTable.tenantId, tenantId))
+    .orderBy(desc(wishlistsTable.id))
+    .limit(pageSize)
+    .offset(offset);
+
+  const countWishlistQuery = db.$count(
+    wishlistsTable,
+    eq(wishlistsTable.tenantId, tenantId)
+  );
+
+  const [wishlistRows, totalItems] = await Promise.all([
+    getWishlistQuery,
+    countWishlistQuery,
+  ]);
+
+  // Format result
+  const wishlist = wishlistRows.map((row) => ({
+    id: row.wishlists.id,
+    createdAt: row.wishlists.createdAt,
+    updatedAt: row.wishlists.updatedAt,
+    property: {
+      id: row.properties.id,
+      title: row.properties.title,
+      address: row.properties.address,
+      pricePerNight: parseFloat(row.properties.pricePerNight),
+      imageUrl: row.firstImage?.imageUrl ?? null,
+      isAvailable: row.properties.isAvailable,
+    },
+  }));
+
+  // Pagination
+  const currentPage = page;
+  const totalPages = calculateTotalPages({
+    totalItems,
+    pageSize,
+  });
+
+  // Result
+  return ok(c, {
+    data: wishlist,
+    meta: {
+      pagination: {
+        currentPage,
+        totalItems,
+        totalPages,
+        pageSize,
+      },
+    },
+  });
+});
 
 route.post("/", async (c) => {
   const tenantId = c.req.header("x-user-id")!;
