@@ -10,7 +10,7 @@ const app = new Hono()
 
 app.use(logger(consola.info));
 
-app.route('/', verificationRoute);
+app.route('/verification', verificationRoute);
 
 showRoutes(app);
 
