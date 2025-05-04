@@ -45,13 +45,16 @@ route.post("/send-otp", async (c) => {
   const verificationCode = Math.floor(
     100000 + Math.random() * 900000
   ).toString();
-  const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+  const expiredMinutes : number = parseInt(String(Bun.env.TIME_EXPIRATION_CODE), 10) || 5;
+
+  const expiresAt = new Date(Date.now() +  expiredMinutes * 60 * 1000);
 
   const mailOptions = {
     from: Bun.env.GMAIL_APP_USER,
     to: email,
     subject: "Verify your email from Rento",
-    html: `<p>Your verification code is <strong>${verificationCode}</strong>.</p><p>This code will expire in 5 minutes.</p>`,
+    html: `<p>Your verification code is <strong>${verificationCode}</strong>.</p><p>This code will expire in ${expiredMinutes} minutes.</p>`,
   };
 
   const info = await transporter.sendMail(mailOptions);
@@ -171,11 +174,14 @@ route.post("/send-otp-email", async (c) => {
     },
   });
 
+  const expiredMinutes : number = parseInt(String(Bun.env.TIME_EXPIRATION_CODE), 10) || 5;
+
+
   const mailOptions = {
     from: Bun.env.GMAIL_APP_USER,
     to: email,
     subject: "Verify your email from Rento",
-    html: `<p>Your verification code is <strong>${otp}</strong>.</p><p>This code will expire in 5 minutes.</p>`,
+    html: `<p>Your verification code is <strong>${otp}</strong>.</p><p>This code will expire in ${expiredMinutes} minutes.</p>`,
   };
 
   const info = await transporter.sendMail(mailOptions);
