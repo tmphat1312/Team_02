@@ -14,7 +14,7 @@ showRoutes(app);
 
 const httpServer = serve({
     fetch: app.fetch,
-    port: Number(process.env.PORT_WEB_SOCKET) || 3011,
+    port: Number(process.env.PORT) || 3011,
 });
 
 

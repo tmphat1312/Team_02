@@ -3,7 +3,6 @@ import { Server, Socket } from "socket.io";
 export function subscribeEvent(io: Server, socket: Socket) {
   socket.on("subscribe-notification", (data) => {
     const { userId } = data;
-    console.log(userId)
     socket.join(userId); 
     io.to(userId).emit("subscribe-notification", {
       roomId: userId,
