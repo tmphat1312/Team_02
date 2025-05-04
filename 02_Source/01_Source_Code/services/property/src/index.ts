@@ -11,6 +11,7 @@ import { categoriesRoute } from "./routes/categories";
 import { internalRoute } from "./routes/internal";
 import { rulesRoute } from "./routes/rules";
 import { propertiesRoute } from "./routes/properties";
+import { wishlistsRoute } from "./routes/wishlists";
 
 const app = new Hono();
 
@@ -21,6 +22,7 @@ app.route("/categories", categoriesRoute);
 app.route("/amenities", amenitiesRoute);
 app.route("/rules", rulesRoute);
 app.route("/properties", propertiesRoute);
+app.route("/wishlists", wishlistsRoute);
 
 app.onError(onError);
 

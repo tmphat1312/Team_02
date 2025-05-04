@@ -98,4 +98,3 @@ route.delete("/:id", async (c) => {
 });
 
 export const rulesRoute = route;
-  

@@ -23,12 +23,14 @@ route.get("/", transformPaginationQuery, async (c) => {
   const { page, pageSize } = c.var.pagination;
   const offset = calculateOffset({ page, pageSize });
 
+  const order = c.req.query("order") ?? "desc";
+
   const getCategoriesQuery = db
     .select()
     .from(categoriesTable)
     .limit(pageSize)
     .offset(offset)
-    .orderBy(desc(categoriesTable.id));
+    .orderBy(order === "asc" ? categoriesTable.id : desc(categoriesTable.id));
   const countCategoriesQuery = db.$count(categoriesTable);
 
   const [categories, totalItems] = await Promise.all([
