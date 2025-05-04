@@ -26,4 +26,7 @@ route.delete("/categories/:id", only(["admin"]), proxy);
 route.get("/properties*", proxy);
 route.post("/properties", only(["host"]), proxy);
 
+// Property Resource
+route.post("/wishlists", only(["tenant"]), proxy);
+
 export const propertyService = route;

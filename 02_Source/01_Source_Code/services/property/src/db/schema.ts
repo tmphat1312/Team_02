@@ -108,6 +108,18 @@ export const propertyRulesTable = pgTable(
   (t) => [unique().on(t.propertyId, t.ruleId)]
 );
 
+export const wishlistsTable = pgTable(
+  "wishlists",
+  {
+    ...baseColumns,
+    tenantId: varchar({ length: 255 }).notNull(),
+    propertyId: integer()
+      .notNull()
+      .references(() => propertiesTable.id, { onDelete: "cascade" }),
+  },
+  (t) => [unique().on(t.tenantId, t.propertyId)]
+);
+
 const { ...propertyColumns } = getTableColumns(propertiesTable);
 
 export const propertiesWithImagesView = pgView("properties_with_images").as(
