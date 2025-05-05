@@ -36,6 +36,7 @@ async function dropTables() {
   await db.execute(sql`DROP TABLE IF EXISTS property_categories CASCADE`);
   await db.execute(sql`DROP TABLE IF EXISTS property_amenities CASCADE`);
   await db.execute(sql`DROP TABLE IF EXISTS property_rules CASCADE`);
+  await db.execute(sql`DROP TABLE IF EXISTS wishlists CASCADE`);
 }
 
 async function insertSeedData() {
