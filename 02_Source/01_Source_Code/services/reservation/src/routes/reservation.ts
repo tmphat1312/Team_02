@@ -8,7 +8,7 @@ import { zValidator } from "../utils/validator-wrapper";
 const reservationRoute = new Hono();
 
 reservationRoute.post('/', zValidator('json', reservationSchema) ,async (c) => {
-    const { propertyId, checkInDate, checkOutDate, numberOfAdults, numberOfChildren, numberOfInfants, notes} = c.req.valid('json');
+    const { propertyId, checkInDate, checkOutDate, numberOfAdults, numberOfChildren, numberOfInfants } = c.req.valid('json');
     const tenantId = c.req.header("x-user-id")!;
     
     const newReservation = await CreateReservation(
@@ -21,7 +21,6 @@ reservationRoute.post('/', zValidator('json', reservationSchema) ,async (c) => {
             numberOfInfants: numberOfInfants,
             tenantId: tenantId,
             totalPrice: "",
-            note: notes,
             hostId: "",
         })
     if(newReservation instanceof Error){
