@@ -11,6 +11,7 @@ import { corsMiddleware } from "./middlewares/cors.js";
 import { iamService } from "./services/iam.js";
 import { internalService } from "./services/internal.js";
 import { propertyService } from "./services/property.js";
+import { reservationService } from "./services/reservation.js";
 
 const app = new Hono();
 
@@ -19,7 +20,7 @@ app.use("*", corsMiddleware);
 
 registerServices({
   app,
-  services: [iamService, propertyService, internalService],
+  services: [iamService, propertyService, internalService, reservationService],
 });
 
 showRoutes(app);
