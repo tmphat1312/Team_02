@@ -1,13 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { cn } from "@/lib/utils";
+
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const fontClasses = `${geistSans.variable} ${geistMono.variable} antialiased`;
+export const fontClasses = cn(
+  figtree.variable,
+  figtree.className,
+  "antialiased"
+);
