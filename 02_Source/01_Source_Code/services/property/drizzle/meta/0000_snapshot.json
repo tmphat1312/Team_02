@@ -1,5 +1,5 @@
 {
-  "id": "fa979280-56a6-448c-b2d3-1245b0189da7",
+  "id": "d6903229-c99d-4f29-adc3-2d0e9a742a04",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -218,13 +218,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "isAvailable": {
-          "name": "isAvailable",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": true
-        },
         "numberOfGuests": {
           "name": "numberOfGuests",
           "type": "integer",
@@ -248,6 +241,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "isAvailable": {
+          "name": "isAvailable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
         }
       },
       "indexes": {},
@@ -335,7 +335,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "property_amenities_propertyId_amenityId_unique": {
+          "name": "property_amenities_propertyId_amenityId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "propertyId",
+            "amenityId"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -417,7 +426,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "property_categories_propertyId_categoryId_unique": {
+          "name": "property_categories_propertyId_categoryId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "propertyId",
+            "categoryId"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -568,7 +586,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "property_rules_propertyId_ruleId_unique": {
+          "name": "property_rules_propertyId_ruleId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "propertyId",
+            "ruleId"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -643,6 +670,84 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+    },
+    "public.wishlists": {
+      "name": "wishlists",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "wishlists_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tenantId": {
+          "name": "tenantId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "propertyId": {
+          "name": "propertyId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "wishlists_propertyId_properties_id_fk": {
+          "name": "wishlists_propertyId_properties_id_fk",
+          "tableFrom": "wishlists",
+          "tableTo": "properties",
+          "columnsFrom": [
+            "propertyId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "wishlists_tenantId_propertyId_unique": {
+          "name": "wishlists_tenantId_propertyId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "tenantId",
+            "propertyId"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
@@ -659,7 +764,120 @@
   "sequences": {},
   "roles": {},
   "policies": {},
-  "views": {},
+  "views": {
+    "public.properties_with_images": {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "properties_with_images_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hostId": {
+          "name": "hostId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pricePerNight": {
+          "name": "pricePerNight",
+          "type": "numeric(15, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numberOfGuests": {
+          "name": "numberOfGuests",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numberOfBedrooms": {
+          "name": "numberOfBedrooms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numberOfBeds": {
+          "name": "numberOfBeds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numberOfBathrooms": {
+          "name": "numberOfBathrooms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isAvailable": {
+          "name": "isAvailable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "definition": "select \"properties\".\"id\", \"properties\".\"createdAt\", \"properties\".\"updatedAt\", \"properties\".\"hostId\", \"properties\".\"title\", \"properties\".\"description\", \"properties\".\"address\", \"properties\".\"latitude\", \"properties\".\"longitude\", \"properties\".\"pricePerNight\", \"properties\".\"numberOfGuests\", \"properties\".\"numberOfBedrooms\", \"properties\".\"numberOfBeds\", \"properties\".\"numberOfBathrooms\", \"properties\".\"isAvailable\", array_agg(\"property_images\".\"imageUrl\") as \"imageUrls\" from \"properties\" left join \"property_images\" on \"property_images\".\"propertyId\" = \"properties\".\"id\" group by \"properties\".\"id\"",
+      "name": "properties_with_images",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
+    }
+  },
   "_meta": {
     "columns": {},
     "schemas": {},

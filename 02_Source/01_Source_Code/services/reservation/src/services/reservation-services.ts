@@ -3,8 +3,17 @@ import { reservationTable } from "../db/schema";
 
 
 export const CreateReservation = async (reservationData: NewReservation) => {
-       // [ get property detail ]
-       const hostId = ""
+       let hostId = ""
+       let propertyPrice = 0;
+       const res = await fetch(`${Bun.env.API_GATEWAY_URL}/properties/${reservationData.propertyId}`)
+       if(!res.ok){
+        return Error(res.statusText)
+       }else{
+        await res.json().then((data) => {
+            hostId = data.data.hostId;
+            propertyPrice = data.data.pricePerNight;
+        });
+       }
 
 
        if(reservationData.tenantId == hostId) {
@@ -14,10 +23,8 @@ export const CreateReservation = async (reservationData: NewReservation) => {
         const checkInDate = new Date(reservationData.checkInDate);
         const checkOutDate = new Date(reservationData.checkOutDate);
 
-       // [ calculate price ] USD/night
-        const PROPERTY_PRICE = 3000;
         const nights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
-        let totalPrice  = PROPERTY_PRICE * nights;
+        let totalPrice  = propertyPrice * nights;
         
         const queryData = {
             ...reservationData,

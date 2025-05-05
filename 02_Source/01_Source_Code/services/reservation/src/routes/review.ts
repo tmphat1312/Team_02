@@ -30,11 +30,10 @@ reviewRoute.post('/',zValidator('json', reviewSchema), async(c) => {
         tenantId: tenantId,
         propertyId: -1,
     })
-    if(!resp.success){
+    if(resp instanceof Error){
         return badRequest(c, resp.message.toString())
-    }else{
-        return created(c, resp.message)
     }
+    return created(c, resp);
 })
 
 

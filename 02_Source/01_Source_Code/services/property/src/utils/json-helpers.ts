@@ -96,6 +96,22 @@ export const badRequest = (
   return c.json({ data, error, metadata }, StatusCodes.BAD_REQUEST);
 };
 
+export const forbidden = (
+  c: Context,
+  errorMsg?: string,
+  errorCode?: string
+) => {
+  const data: DataResponse = null;
+  const error: ErrorResponse = {
+    code: errorCode || ErrorCode.FORBIDDEN,
+    message: errorMsg || ReasonPhrases.FORBIDDEN,
+    status: StatusCodes.FORBIDDEN,
+    statusText: ReasonPhrases.FORBIDDEN,
+  };
+  const metadata: MetadataResponse = {};
+  return c.json({ data, error, metadata }, StatusCodes.FORBIDDEN);
+};
+
 export const internalServerError = (
   c: Context,
   errorMsg?: string,

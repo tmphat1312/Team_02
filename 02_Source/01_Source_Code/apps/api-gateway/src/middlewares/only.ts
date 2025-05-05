@@ -17,7 +17,7 @@ export function only(roles: Role[]) {
     const isAllowed = roles.includes(session.user.role as Role);
 
     if (!isAllowed) {
-      return forbidden(c, "You don't have permission to access this resource");
+      return forbidden(c, "You don't have permission to access this resource.");
     }
 
     // 3. Set the user in the context

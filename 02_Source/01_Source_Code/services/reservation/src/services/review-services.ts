@@ -5,17 +5,11 @@ import { reservationTable, reviewTable } from "../db/schema";
 export const createReview = async (reviewData: NewReview) => {
     const reservation =  await db.select().from(reservationTable).where(eq(reservationTable.id, reviewData.reservationId));
     if(reservation.length <= 0){
-        return {
-            success: false,
-            message: 'Reservation does not exist'
-        }
+        return Error("Reservation does not exist");
     }
 
     if(reviewData.tenantId != reservation[0].tenantId){
-        return {
-            success: false,
-            message: 'The tenant ID provided does not match the tenant associated with the reservation'
-        }
+        return Error("The tenant Id provided does not match the tenant associated with the reservation");
     }
 
     const newReview =  await db.insert(reviewTable).values({
