@@ -1,17 +1,9 @@
-# prod
-dist/
-
-
 # deps
 node_modules/
 
 # env
 .env
-.env.production
+docker.env
 
-# logs
-logs/
-
-
-# misc
-.DS_Store
+# Editor
+.vscode
