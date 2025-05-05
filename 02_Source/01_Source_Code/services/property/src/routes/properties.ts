@@ -231,20 +231,9 @@ route.get("/:id", async (c) => {
     return notFound(c, `Property not found.`, ErrorCode.PROPERTY_NOT_FOUND);
   }
 
-  // Check if the property is available
-  if (!property.isAvailable) {
-    return badRequest(
-      c,
-      `This property is currently not available.`,
-      ErrorCode.PROPERTY_NOT_AVAILABLE
-    );
-  }
-
   // Result
-  const { isAvailable, ...sanitizedProperty } = property;
-
   return ok(c, {
-    ...sanitizedProperty,
+    ...property,
     pricePerNight: parseFloat(property.pricePerNight),
   });
 });
