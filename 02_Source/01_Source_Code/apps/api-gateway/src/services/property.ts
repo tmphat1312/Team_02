@@ -26,7 +26,7 @@ route.delete("/categories/:id", only(["admin"]), proxy);
 route.get("/properties*", proxy);
 route.post("/properties", only(["host"]), proxy);
 
-// Property Resource
+// Wishlist Resource
 route.get("/wishlists*", only(["tenant"]), proxy);
 route.post("/wishlists", only(["tenant"]), proxy);
 route.delete("/wishlists/:id", only(["tenant"]), proxy);
