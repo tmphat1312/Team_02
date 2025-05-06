@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: rento-postgres
+    environment:
+      POSTGRES_DB: rento-property
+      POSTGRES_USER: rento-property_owner
+      POSTGRES_PASSWORD: npg_Sn1LWwU4lCQA
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rento-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rento-property_owner -d rento-property"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    container_name: rento-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - rento-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  search:
+    build:
+      context: ./02_Source/01_Source_Code/services/search
+      dockerfile: Dockerfile
+    container_name: rento-search
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/rento-property
+      - SPRING_DATASOURCE_USERNAME=rento-property_owner
+      - SPRING_DATASOURCE_PASSWORD=npg_Sn1LWwU4lCQA
+      - SPRING_ELASTICSEARCH_URIS=http://elasticsearch:9200
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - rento-network
+
+volumes:
+  postgres_data:
+  elasticsearch_data:
+
+networks:
+  rento-network:
+    driver: bridge 
