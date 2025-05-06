@@ -35,8 +35,8 @@ export function FilterDialogContent({
     },
     setFilterValues,
   ] = useFilterValues();
-  const [priceMax, setPriceMax] = useState(initialPriceMin || PRICE_MAX);
-  const [priceMin, setPriceMin] = useState(initialPriceMax || PRICE_MIN);
+  const [priceMax, setPriceMax] = useState(initialPriceMax || PRICE_MAX);
+  const [priceMin, setPriceMin] = useState(initialPriceMin || PRICE_MIN);
   const [noBeds, setNoBeds] = useState(initialNoBeds || 0);
   const [noBedrooms, setNoBedrooms] = useState(initialNoBedrooms || 0);
   const [noBathrooms, setNoBathrooms] = useState(initialNoBathrooms || 0);

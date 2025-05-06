@@ -1,12 +1,11 @@
 import useSWRInfinite from "swr/infinite";
 
-import { mockHttpClient } from "@/lib/http-client";
+import { httpClient } from "@/lib/http-client";
 
 import { PAGE_SIZE } from "../config/settings";
 import { useFilterValues } from "./use-filter-values";
 
-const fetcher = (path: string) =>
-  mockHttpClient.get(path).then((res) => res.data);
+const fetcher = (path: string) => httpClient.get(path).then((res) => res.data);
 
 const fetchKey = ({
   categoryId,
@@ -36,13 +35,13 @@ const fetchKey = ({
   if (priceMax) searchParams.append("priceMax", priceMax.toString());
   if (priceMin) searchParams.append("priceMin", priceMin.toString());
   if (noBathroomsMin)
-    searchParams.append("noBathrooms", noBathroomsMin.toString());
+    searchParams.append("noBathroomsMin", noBathroomsMin.toString());
   if (noBedroomsMin)
-    searchParams.append("noBedrooms", noBedroomsMin.toString());
-  if (noBedsMin) searchParams.append("noBeds", noBedsMin.toString());
+    searchParams.append("noBedroomsMin", noBedroomsMin.toString());
+  if (noBedsMin) searchParams.append("noBedsMin", noBedsMin.toString());
 
-  searchParams.append("_page", page.toString());
-  searchParams.append("_per_page", pageSize.toString());
+  searchParams.append("page", page.toString());
+  searchParams.append("pageSize", pageSize.toString());
 
   return `/properties?${searchParams}`;
 };
@@ -78,8 +77,9 @@ export function useRooms() {
 
   const properties = (data ?? []).flatMap((page) => page.data);
   const isEmpty = data && properties.length === 0;
-  const lastPage = data?.[data.length - 1];
-  const isReachingEnd = isEmpty || (lastPage && lastPage.last <= size);
+  const lastPage = data?.at(-1);
+  const isReachingEnd =
+    isEmpty || (lastPage && lastPage.metadata.pagination.totalPages <= size);
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
 

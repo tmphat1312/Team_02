@@ -29,6 +29,8 @@ const SocialMediaLinks = [
     icon: <InstagramBlack />,
   },
 ];
+const Language = "English (US)";
+const Currency = "$US Dollar";
 
 export function Footer({ containerType = "wide" }: FooterProps) {
   return (
@@ -36,11 +38,11 @@ export function Footer({ containerType = "wide" }: FooterProps) {
       <Container size={containerType == "wide" ? "default" : "sm"}>
         <Stack
           orientation="vertical"
-          className="md:flex-row flex-wrap justify-center lg:justify-between md:items-center gap-6"
+          className="flex-wrap justify-center gap-6 md:flex-row lg:justify-between md:items-center"
         >
           <Stack
             orientation="vertical"
-            className="md:flex-row items-center gap-1"
+            className="items-center gap-1 md:flex-row"
           >
             <p>&copy;2025 Airbnb, Inc.</p>
             <Dot size={16} className="hidden md:block" />
@@ -65,9 +67,9 @@ export function Footer({ containerType = "wide" }: FooterProps) {
           <Stack className="gap-5">
             <span className="flex items-center gap-1.5">
               <Globe size={16} className="stroke-current mt-0.5" />
-              English (US)
+              {Language}
             </span>
-            <span>₫ VND</span>
+            <span>{Currency}</span>
 
             <nav className="flex items-center gap-4">
               {SocialMediaLinks.map((link) => (

@@ -10,12 +10,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatPrice = (value: number) => {
-  const formatter = new Intl.NumberFormat("vi-VN", {
+  const formatter = new Intl.NumberFormat("en-US", {
     style: "decimal",
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: 0,
   });
-  return `₫${formatter.format(value)}`;
+  return `$${formatter.format(value)}`;
 };
 
 export function delay(ms: number) {

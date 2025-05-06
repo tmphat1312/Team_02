@@ -18,7 +18,7 @@ export function RoomList() {
 
   return (
     <Container className="py-6 space-y-8">
-      <Grid className="grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-6 gap-y-10">
+      <Grid className="gap-x-6 gap-y-10 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
         {properties.map((room, i) => (
           <Room key={i} item={room} />
         ))}

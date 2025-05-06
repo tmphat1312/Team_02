@@ -24,7 +24,7 @@ export type Property = {
   latitude: number;
   longitude: number;
   pricePerNight: number;
-  location: string;
+  address: string;
   numberOfGuests: number;
   numberOfBeds: number;
   numberOfBedrooms: number;
