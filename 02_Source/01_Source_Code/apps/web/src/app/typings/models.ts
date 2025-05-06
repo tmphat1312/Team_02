@@ -124,3 +124,30 @@ export type Trip = {
   checkOutDate: string;
   numberOfGuests: number;
 };
+
+export type Reservation = {
+  id: number;
+  propertyId: number;
+  status: "upcoming" | "completed" | "cancelled";
+  totalPrice: number;
+  property: {
+    name: string;
+    address: string;
+    hostId: string;
+    imageUrls: string[];
+  };
+  tenant: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  checkInDate: string;
+  checkOutDate: string;
+  numberOfGuests: number;
+  review?: {
+    rating: number;
+  } | null;
+  payment?: {
+    status: "deposit-paid" | "full-paid" | "refunded";
+  };
+};

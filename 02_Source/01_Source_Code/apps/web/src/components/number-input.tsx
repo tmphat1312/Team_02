@@ -5,14 +5,17 @@ import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import { Grid } from "./layout/grid";
+import { Stack } from "./layout/stack";
+
 type Props = {
   label: string;
   value: number;
-  onValueChange: (value: number) => void;
-  greaterInput?: boolean;
   maxValue?: number;
   minValue?: number;
   disabled?: boolean;
+  greaterInput?: boolean;
+  onValueChange: (value: number) => void;
 };
 
 export function NumberInput({
@@ -39,9 +42,9 @@ export function NumberInput({
   const incrementDisabled = disabled || value >= (maxValue ?? Infinity);
 
   return (
-    <div className="flex items-center justify-between">
+    <Stack className="justify-between">
       <span>{label}</span>
-      <div className="grid grid-cols-[auto_1.5rem_auto] items-center gap-4">
+      <Grid className="grid-cols-[auto_1.5rem_auto] items-center gap-4">
         <CountButton onClick={decrement} disabled={decrementDisabled}>
           <Minus />
         </CountButton>
@@ -49,8 +52,8 @@ export function NumberInput({
         <CountButton onClick={increment} disabled={incrementDisabled}>
           <Plus />
         </CountButton>
-      </div>
-    </div>
+      </Grid>
+    </Stack>
   );
 }
 

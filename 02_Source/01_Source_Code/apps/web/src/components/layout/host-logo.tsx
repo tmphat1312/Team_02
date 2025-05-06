@@ -4,7 +4,7 @@ import { LogoCompact } from "@/components/icons/logo-compact";
 
 export function HostLogo() {
   return (
-    <Link href="/host" className="flex items-center text-airbnb">
+    <Link href="/host" className="text-airbnb">
       <LogoCompact />
     </Link>
   );

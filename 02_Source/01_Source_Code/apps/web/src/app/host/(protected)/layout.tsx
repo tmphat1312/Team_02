@@ -1,30 +1,9 @@
-import { redirect } from "next/navigation";
+import { HostOnly } from "@/features/auth/components/host-only";
 
-import { Footer } from "@/components/layout/footer";
-import { HostHeader } from "@/components/layout/host-header";
-
-import { getServerSession } from "@/app/(auth)/_data/get-server-session";
-
-export default async function ProtectedHostLayout({
+export default async function HostSignUpLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (!session) {
-    return redirect("/sign-in");
-  }
-
-  if (session.user.role != "host") {
-    return redirect("/host/sign-up");
-  }
-
-  return (
-    <>
-      <HostHeader />
-      <main>{children}</main>
-      <Footer />
-    </>
-  );
+  return <HostOnly>{children}</HostOnly>;
 }

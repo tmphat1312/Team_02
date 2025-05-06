@@ -64,3 +64,22 @@ export const internalServerError = (
   const metadata: MetadataResponse = {};
   return c.json({ data, error, metadata }, StatusCodes.INTERNAL_SERVER_ERROR);
 };
+
+export const notFound = (c: Context, errorMsg?: string, errorCode?: string) => {
+  const data: DataResponse = null;
+  const error: ErrorResponse = {
+    code: errorCode || "NOT_FOUND",
+    message: errorMsg || ReasonPhrases.NOT_FOUND,
+    status: StatusCodes.NOT_FOUND,
+    statusText: ReasonPhrases.NOT_FOUND,
+  };
+  const metadata: MetadataResponse = {};
+  return c.json({ data, error, metadata }, StatusCodes.NOT_FOUND);
+};
+
+export const ok = (c: Context, options: OkOptions) => {
+  const { data, meta } = options;
+  const error: ErrorResponse = null;
+  const metadata: MetadataResponse = meta || {};
+  return c.json({ data, error, metadata }, StatusCodes.OK);
+};

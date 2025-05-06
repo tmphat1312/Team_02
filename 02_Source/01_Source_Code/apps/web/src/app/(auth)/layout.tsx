@@ -1,28 +1,21 @@
-import { redirect } from "next/navigation";
-
+import { Container } from "@/components/layout/container";
 import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-
-import { getServerSession } from "./_data/get-server-session";
+import { TenantHeader } from "@/components/layout/tenant-header";
+import { GridWindow } from "@/components/layout/window";
+import { GuestOnly } from "@/features/auth/components/guest-only";
 
 export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (session && session.user) {
-    return redirect("/");
-  }
-
   return (
-    <>
-      <Header />
-      <main className="my-16 max-w-xl mx-auto rounded-xl border">
-        {children}
-      </main>
-      <Footer />
-    </>
+    <GuestOnly>
+      <GridWindow>
+        <TenantHeader />
+        <Container>{children}</Container>
+        <Footer />
+      </GridWindow>
+    </GuestOnly>
   );
 }

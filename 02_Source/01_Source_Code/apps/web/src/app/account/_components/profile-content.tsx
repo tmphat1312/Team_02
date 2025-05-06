@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/app/(auth)/_hooks/use-user";
+import { useUser } from "@/features/auth/hooks/use-user";
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import { ProfileCard } from "./profile-card";
 import { UpdateLoginForm } from "./update-login-form";
 import { UpdatePersonalInfoForm } from "./update-personal-info-form";
 import { UpdateUserWalletForm } from "./update-user-wallet-form";
+import { Grid } from "@/components/layout/grid";
 
 export default function ProfileContent() {
   const { user, isLoading } = useUser();
@@ -23,8 +24,8 @@ export default function ProfileContent() {
   }
 
   return (
-    <div className="py-12 grid grid-cols-[auto_1fr] gap-8 items-start">
-      <ProfileCard user={user!} />
+    <Grid className="items-start gap-8 grid-cols-[auto_1fr]">
+      <ProfileCard />
 
       <Card>
         <CardHeader>
@@ -61,6 +62,6 @@ export default function ProfileContent() {
           </Tabs>
         </CardContent>
       </Card>
-    </div>
+    </Grid>
   );
 }
