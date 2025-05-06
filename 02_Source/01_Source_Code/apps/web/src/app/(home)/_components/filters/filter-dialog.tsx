@@ -24,7 +24,7 @@ export function FiltersDialog({ children }: { children?: React.ReactNode }) {
         className="sm:max-w-[35.5rem] rounded-4xl p-0 gap-0"
         hideCloseButton
       >
-        <DialogHeader className="flex items-center justify-between border-b border-gray-200 py-4 px-6">
+        <DialogHeader className="flex items-center justify-between border-b py-4 px-6">
           <DialogTitle className="text-lg font-semibold">Filters</DialogTitle>
         </DialogHeader>
 

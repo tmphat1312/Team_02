@@ -3,18 +3,19 @@
 import { Suspense, useRef, useState } from "react";
 
 import { Amenity } from "@/app/typings/models";
-
 import { NumberInput } from "@/components/number-input";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import {
+  PRICE_MAX,
+  PRICE_MIN,
+  PRICE_STEP,
+} from "@/features/listing/config/settings";
+import { useFilterValues } from "@/features/listing/hooks/use-filter-values";
 
 import { AmenityInput } from "./amenity-input";
 import { PriceInput } from "./price-input";
-
-import { PRICE_MAX, PRICE_MIN, PRICE_STEP } from "../../_config/settings";
-
-import { useFilterValues } from "../../_hooks/use-filter-values";
 
 type FilterDialogContentProps = {
   amenitiesPromise: Promise<Amenity[]>;
@@ -46,16 +47,18 @@ export function FilterDialogContent({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const handlePriceMinChange = (value: number) => {
-    if (value > priceMax) {
-      setPriceMax(value);
+    if (value > PRICE_MAX) {
+      setPriceMax(PRICE_MAX);
     }
     setPriceMin(value);
+    handlePriceValueChange([value, priceMax]);
   };
   const handlePriceMaxChange = (value: number) => {
-    if (value < priceMin) {
-      setPriceMin(value);
+    if (value < PRICE_MIN) {
+      setPriceMin(PRICE_MIN);
     }
     setPriceMax(value);
+    handlePriceValueChange([priceMin, value]);
   };
   const handlePriceValueChange = (value: number[]) => {
     const [min, max] = value;
@@ -110,9 +113,9 @@ export function FilterDialogContent({
 
   return (
     <>
-      <div className="border-b border-gray-200 py-7 px-6 max-h-[32rem] overflow-y-auto">
+      <div className="border-b py-7 px-6 max-h-[32rem] overflow-y-auto">
         <section>
-          <h4 className="text-lg font-medium">Price range</h4>
+          <h3 className="text-lg font-medium">Price range</h3>
           <p className="text-sm mb-6">Nightly prices before fees and taxes</p>
           <PriceInput
             min={PRICE_MIN}
@@ -124,7 +127,7 @@ export function FilterDialogContent({
             onValueChange={handlePriceValueChange}
           />
         </section>
-        <Separator className="border-gray-200/50 my-7" />
+        <Separator className="my-7" />
         <section>
           <h3 className="text-lg font-medium mb-2">Rooms and Beds</h3>
           <div className="space-y-4">
@@ -148,13 +151,13 @@ export function FilterDialogContent({
             />
           </div>
         </section>
-        <Separator className="border-gray-200/50 my-7" />
+        <Separator className="my-7" />
         <section>
           <h3 className="text-lg font-medium mb-2">Amenities</h3>
           <Suspense fallback={null}>
             <AmenityInput
-              amenitiesPromise={amenitiesPromise}
               value={amenityIds}
+              amenitiesPromise={amenitiesPromise}
               onValueChange={handleAmenitiesChange}
             />
           </Suspense>
@@ -170,7 +173,8 @@ export function FilterDialogContent({
           Clear all
         </Button>
         <Button
-          className="h-12 text-base text-white bg-black/80 hover:bg-black/90 px-6 py-3.5"
+          className="h-12 text-base px-6 py-3.5"
+          variant="secondary"
           onClick={handleApplyFilters}
           disabled={!isDirty}
         >

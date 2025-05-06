@@ -12,9 +12,9 @@ import {
 
 export function VerifyEmailForm() {
   return (
-    <Card className="w-lg gap-3">
+    <Card className="gap-3 w-lg">
       <CardHeader className="mb-3">
-        <CardTitle className="text-3xl mb-2">Verify your email</CardTitle>
+        <CardTitle className="mb-2 text-3xl">Verify your email</CardTitle>
         <CardDescription>
           Your email address is not verified, which prevents you from becoming a
           host. Please verify your email address to proceed.
@@ -24,7 +24,7 @@ export function VerifyEmailForm() {
       <CardContent>
         <Link
           href="/account"
-          className="w-full bg-secondary text-secondary-foreground px-4 py-2 rounded text-lg"
+          className="bg-secondary px-4 py-2 rounded-lg w-full text-secondary-foreground text-base"
         >
           Go to Account Page to verify your email
         </Link>

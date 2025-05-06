@@ -1,82 +1,90 @@
+import { Dot, Globe } from "lucide-react";
 import Link from "next/link";
 
-import { cn } from "@/lib/utils";
-
-import { Dot } from "../icons/dot";
 import { FacebookBlack } from "../icons/facebook-black";
 import { InstagramBlack } from "../icons/instagram-black";
 import { PrivacyChoice } from "../icons/privacy-choice";
 import { XBlack } from "../icons/x-black";
+import { Container } from "./container";
+import { Stack } from "./stack";
 
 type FooterProps = {
-  containerStyle?: "wide" | "narrow";
+  containerType?: "wide" | "narrow";
 };
 
-export function Footer({ containerStyle = "wide" }: FooterProps) {
+const SocialMediaLinks = [
+  {
+    href: "https://fb.com",
+    label: "Facebook",
+    icon: <FacebookBlack />,
+  },
+  {
+    href: "https://x.com",
+    label: "X",
+    icon: <XBlack />,
+  },
+  {
+    href: "https://instagram.com",
+    label: "Instagram",
+    icon: <InstagramBlack />,
+  },
+];
+
+export function Footer({ containerType = "wide" }: FooterProps) {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 py-6">
-      <div
-        className={cn(
-          containerStyle == "wide" ? "width-container" : "details-container",
-          "px-4"
-        )}
-      >
-        <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center flex-wrap gap-6">
-          <div className="flex items-center flex-col md:flex-row gap-4 font-medium text-gray-700 text-sm">
-            <p className="text-sm text-gray-700">© 2025 Airbnb, Inc.</p>
-            <Dot className="hidden md:block" />
+    <footer className="py-4 border-t">
+      <Container size={containerType == "wide" ? "default" : "sm"}>
+        <Stack
+          orientation="vertical"
+          className="md:flex-row flex-wrap justify-center lg:justify-between md:items-center gap-6"
+        >
+          <Stack
+            orientation="vertical"
+            className="md:flex-row items-center gap-1"
+          >
+            <p>&copy;2025 Airbnb, Inc.</p>
+            <Dot size={16} className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Terms
             </Link>
-            <Dot className="hidden md:block" />
+            <Dot size={16} className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Sitemap
             </Link>
-            <Dot className="hidden md:block" />
+            <Dot size={16} className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Privacy
             </Link>
-            <Dot className="hidden md:block" />
-            <Link href="#" className="hover:underline flex items-center gap-2">
+            <Dot size={16} className="hidden md:block" />
+            <Link href="#" className="flex items-center gap-2 hover:underline">
               Your Privacy Choices
-              <PrivacyChoice className="translate-y-1/6" />
+              <PrivacyChoice />
             </Link>
-          </div>
+          </Stack>
 
-          <div className="flex items-center gap-4.5 font-medium text-sm text-gray-700">
-            <span>English (US)</span>
-            <Dot />
+          <Stack className="gap-5">
+            <span className="flex items-center gap-1.5">
+              <Globe size={16} className="stroke-current mt-0.5" />
+              English (US)
+            </span>
             <span>₫ VND</span>
-            <Dot />
-            <div className="flex items-center gap-4">
-              <Link
-                href="https://fb.com"
-                rel="noreferrer noopener"
-                target="_blank"
-                aria-label="Facebook"
-              >
-                <FacebookBlack />
-              </Link>
-              <Link
-                href="https://x.com"
-                rel="noreferrer noopener"
-                target="_blank"
-                aria-label="X"
-              >
-                <XBlack />
-              </Link>
-              <Link
-                href="https://instagram.com"
-                rel="noreferrer noopener"
-                target="_blank"
-                aria-label="Instagram"
-              >
-                <InstagramBlack />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+
+            <nav className="flex items-center gap-4">
+              {SocialMediaLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                </Link>
+              ))}
+            </nav>
+          </Stack>
+        </Stack>
+      </Container>
     </footer>
   );
 }

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { use } from "react";
 
 import { Category } from "@/app/typings/models";
-
 import {
   Carousel,
   CarouselContent,
@@ -12,9 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
-import { useFilterValues } from "../../_hooks/use-filter-values";
-
+import { useFilterValues } from "@/features/listing/hooks/use-filter-values";
 import { cn } from "@/lib/utils";
 
 type CategoryListProps = {
@@ -66,7 +63,7 @@ function CategoryItem({ item }: CategoryItemProps) {
         "text-center space-y-1 text-muted-foreground p-2",
         "border-b-3 border-transparent hover:border-current",
         "cursor-pointer font-medium",
-        { "border-current text-black": categoryId === item.id }
+        { "border-current text-secondary": categoryId === item.id }
       )}
       onClick={handleClick}
     >

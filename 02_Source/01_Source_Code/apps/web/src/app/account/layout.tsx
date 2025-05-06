@@ -1,26 +1,21 @@
-import { redirect } from "next/navigation";
-
+import { Container } from "@/components/layout/container";
 import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-
-import { getServerSession } from "../(auth)/_data/get-server-session";
+import { TenantHeader } from "@/components/layout/tenant-header";
+import { GridWindow } from "@/components/layout/window";
+import { UserOnly } from "@/features/auth/components/user-only";
 
 export default async function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (!session) {
-    return redirect("/sign-in");
-  }
-
   return (
-    <>
-      <Header />
-      <main className="width-container">{children}</main>
-      <Footer />
-    </>
+    <GridWindow>
+      <UserOnly>
+        <TenantHeader />
+        <Container>{children}</Container>
+        <Footer />
+      </UserOnly>
+    </GridWindow>
   );
 }

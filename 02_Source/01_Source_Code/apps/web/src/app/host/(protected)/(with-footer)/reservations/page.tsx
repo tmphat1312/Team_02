@@ -1,20 +1,15 @@
-import { Separator } from "@/components/ui/separator";
+import { Page } from "@/components/layout/page";
+import { PageHeading } from "@/components/typography/page-heading";
 
-import { Feedback } from "./_components/feedback";
 import { FilterButtons } from "./_components/filter-buttons";
 import { ReservationList } from "./_components/reservation-list";
 
 export default function ReservationsPage() {
   return (
-    <div className="py-8">
-      <section className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold">Reservations</h1>
-      </section>
-
-      <FilterButtons className="mb-6" />
+    <Page className="py-8">
+      <PageHeading>Reservations</PageHeading>
+      <FilterButtons className="mb-8" />
       <ReservationList />
-      <Separator className="mt-12 mb-8" />
-      <Feedback />
-    </div>
+    </Page>
   );
 }

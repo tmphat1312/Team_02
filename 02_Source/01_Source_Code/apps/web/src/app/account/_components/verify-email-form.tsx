@@ -2,7 +2,7 @@
 
 import { useReducer, useTransition } from "react";
 
-import { useUser } from "@/app/(auth)/_hooks/use-user";
+import { useUser } from "@/features/auth/hooks/use-user";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
 import { env } from "@/env";
+import { TextAlert } from "@/components/typography/text-alert";
 
 export function VerifyEmailForm() {
   const [isSent, setIsSent] = useReducer(() => true, false);
@@ -30,11 +31,15 @@ export function VerifyEmailForm() {
     });
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
-    <section className="flex items-center justify-between">
-      <h4>Email Verification</h4>
-      {user?.emailVerified ? (
-        <p className="text-sm text-gray-500">Email verified</p>
+    <section className="flex justify-between items-center">
+      <h3>Email Verification</h3>
+      {user.emailVerified ? (
+        <TextAlert>Email verified</TextAlert>
       ) : (
         <Dialog>
           <DialogTrigger asChild>

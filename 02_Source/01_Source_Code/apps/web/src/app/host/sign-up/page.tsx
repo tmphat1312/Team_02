@@ -1,8 +1,10 @@
-import { getServerSession } from "@/app/(auth)/_data/get-server-session";
+import { Page } from "@/components/layout/page";
+import { getServerSession } from "@/features/auth/data/get-server-session";
 
 import { BecomeAHostForm } from "./_components/become-a-host-form";
 import { UpdatePersonalInformation } from "./_components/update-personal-information";
 import { VerifyEmailForm } from "./_components/verify-email-form";
+import { Stack } from "@/components/layout/stack";
 
 export default async function HostSignupPage() {
   const session = await getServerSession();
@@ -10,13 +12,17 @@ export default async function HostSignupPage() {
   const isEmailVerified = user.emailVerified || false;
   const didUpdatePersonalInfo = user.phoneNumber && user.address;
 
-  if (!isEmailVerified) {
-    return <VerifyEmailForm />;
-  }
+  const children = !isEmailVerified ? (
+    <VerifyEmailForm />
+  ) : !didUpdatePersonalInfo ? (
+    <UpdatePersonalInformation />
+  ) : (
+    <BecomeAHostForm userId={user.id} />
+  );
 
-  if (!didUpdatePersonalInfo) {
-    return <UpdatePersonalInformation />;
-  }
-
-  return <BecomeAHostForm userId={user.id} />;
+  return (
+    <Page>
+      <Stack className="justify-center my-8">{children}</Stack>
+    </Page>
+  );
 }

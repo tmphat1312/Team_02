@@ -51,7 +51,7 @@ export function UpdateUserWalletForm() {
       <div className="space-y-6">
         <section className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <h4 className="text-lg font-semibold">Balance: </h4>
+            <h4 className="font-semibold text-lg">Balance: </h4>
             <p className="text-2xl">{formatPrice(mockData.wallet.balance)}</p>
           </div>
           <Button size={"lg"} variant={"ghost"} className="underline">
@@ -62,7 +62,7 @@ export function UpdateUserWalletForm() {
         <Separator />
 
         <section className="max-w-md">
-          <h4 className="text-lg mb-2 font-medium">Deposit History</h4>
+          <h4 className="mb-2 font-medium text-lg">Deposit History</h4>
           <ul>
             {mockData.depositHistory.map((item) => (
               <li key={item.id} className="flex justify-between">
@@ -76,7 +76,7 @@ export function UpdateUserWalletForm() {
         <Separator />
 
         <section className="max-w-md">
-          <h4 className="text-lg font-medium mb-2">Payment History</h4>
+          <h4 className="mb-2 font-medium text-lg">Payment History</h4>
           <ul>
             {mockData.paymentHistory.map((item) => (
               <li key={item.id} className="flex justify-between">

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { getServerSession } from "@/app/(auth)/_data/get-server-session";
+import { getServerSession } from "@/features/auth/data/get-server-session";
 import { HostHeader } from "@/components/layout/host-header";
 
 export default async function ProtectedHostLayout({

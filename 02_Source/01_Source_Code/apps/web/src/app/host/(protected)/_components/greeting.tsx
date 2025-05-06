@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/app/(auth)/_hooks/use-user";
+import { useUser } from "@/features/auth/hooks/use-user";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function Greeting(props: React.ComponentProps<"section">) {

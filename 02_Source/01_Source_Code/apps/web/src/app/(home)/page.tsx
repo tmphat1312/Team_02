@@ -1,5 +1,9 @@
 import { Suspense } from "react";
 
+import { Page } from "@/components/layout/page";
+import { fetchAmenities } from "@/features/listing/data/fetch-amenities";
+import { fetchCategories } from "@/features/listing/data/fetch-categories";
+
 import {
   CategoryList,
   CategoryListFallback,
@@ -9,15 +13,12 @@ import { FilterDialogContent } from "./_components/filters/filter-dialog-content
 import { Filters } from "./_components/filters/filters";
 import { RoomList, RoomListFallback } from "./_components/room-list";
 
-import { fetchAmenities } from "./_data/fetch-amenities";
-import { fetchCategories } from "./_data/fetch-categories";
-
 export default function Home() {
   const categoriesPromise = fetchCategories();
   const amenitiesPromise = fetchAmenities();
 
   return (
-    <>
+    <Page className="pt-0 pb-8">
       <Filters>
         <Suspense fallback={<CategoryListFallback />}>
           <CategoryList categoriesPromise={categoriesPromise} />
@@ -29,6 +30,6 @@ export default function Home() {
       <Suspense fallback={<RoomListFallback />}>
         <RoomList />
       </Suspense>
-    </>
+    </Page>
   );
 }

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Card,
   CardContent,
@@ -5,13 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 
 export function UpdatePersonalInformation() {
   return (
-    <Card className="w-lg gap-3">
+    <Card className="gap-3 w-lg">
       <CardHeader className="mb-3">
-        <CardTitle className="text-3xl mb-2">
+        <CardTitle className="mb-2 text-3xl">
           Update your personal information
         </CardTitle>
         <CardDescription>
@@ -23,7 +24,7 @@ export function UpdatePersonalInformation() {
       <CardContent>
         <Link
           href="/account"
-          className="w-full bg-secondary text-secondary-foreground px-4 py-2 rounded text-lg"
+          className="bg-secondary px-4 py-2 rounded-lg w-full text-secondary-foreground text-base"
         >
           Update your personal information
         </Link>

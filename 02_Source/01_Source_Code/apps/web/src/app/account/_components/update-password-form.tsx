@@ -87,7 +87,7 @@ export function UpdatePasswordForm() {
   const isDisabled = !isDirty || isPending;
 
   return (
-    <section className="flex items-center justify-between">
+    <section className="flex justify-between items-center">
       <h4>Password</h4>
 
       <Dialog onOpenChange={onDialogOpenChange}>
@@ -182,12 +182,8 @@ export function UpdatePasswordForm() {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button
-                  type="submit"
-                  className="bg-black/90 hover:bg-black/80"
-                  disabled={isDisabled}
-                >
-                  Update Email
+                <Button type="submit" variant="secondary" disabled={isDisabled}>
+                  Update Password
                 </Button>
               </div>
             </form>

@@ -1,15 +1,8 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 
-import { useUser } from "@/app/(auth)/_hooks/use-user";
-
-import { HostSignedIn } from "@/app/(auth)/_components/host-signed-in";
-import { SignOutButton } from "@/app/(auth)/_components/sign-out-button";
-import { SignedIn } from "@/app/(auth)/_components/signed-in";
-import { SignedOut } from "@/app/(auth)/_components/signed-out";
-import { TenantSignedIn } from "@/app/(auth)/_components/tenant-signed-in";
 import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +14,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { HostSignedIn } from "@/features/auth/components/host-signed-in";
+import { SignOutButton } from "@/features/auth/components/sign-out-button";
+import { SignedIn } from "@/features/auth/components/signed-in";
+import { SignedOut } from "@/features/auth/components/signed-out";
+import { TenantSignedIn } from "@/features/auth/components/tenant-signed-in";
+import { useUser } from "@/features/auth/hooks/use-user";
+import { cn } from "@/lib/utils";
 
 export function UserButton() {
   const { isLoading } = useUser();
@@ -59,38 +59,17 @@ function SignedOutItems() {
     <SignedOut>
       <DropdownMenuGroup className="py-1.5">
         <DropdownMenuItem asChild>
-          <Link href="/sign-in" className="w-full py-2.5 cursor-pointer">
-            Log in
-          </Link>
+          <LinkItem href="/sign-in">Log in</LinkItem>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/sign-up" className="w-full py-2.5 cursor-pointer">
-            Sign up
-          </Link>
+          <LinkItem href="/sign-up">Sign up</LinkItem>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        {/* <DropdownMenuItem asChild disabled>
-          <Link href="#" className="w-full py-2.5 cursor-pointer">
-            Gift cards
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild disabled>
-          <Link href="#" className="w-full py-2.5 cursor-pointer">
-            Host an experience
-          </Link>
-        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
-          <Link href="/host" className="w-full py-2.5 cursor-pointer">
-            Airbnb your home
-          </Link>
+          <LinkItem href="/host">Airbnb your home</LinkItem>
         </DropdownMenuItem>
-        {/* <DropdownMenuItem asChild disabled>
-          <Link href="#" className="w-full py-2.5 cursor-pointer">
-            Help Center
-          </Link>
-        </DropdownMenuItem> */}
       </DropdownMenuGroup>
     </SignedOut>
   );
@@ -101,28 +80,19 @@ function SignedInItems() {
     <SignedIn>
       <DropdownMenuGroup className="py-1.5">
         <DropdownMenuItem asChild>
-          <Link
-            href="/messages"
-            className="w-full py-2.5 font-medium cursor-pointer"
-          >
+          <LinkItem href="/messages" className="font-medium">
             Messages
-          </Link>
+          </LinkItem>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link
-            href="/trips"
-            className="w-full py-2.5 font-medium cursor-pointer"
-          >
+          <LinkItem href="/trips" className="font-medium">
             Trips
-          </Link>
+          </LinkItem>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link
-            href="/wishlists"
-            className="w-full py-2.5 font-medium cursor-pointer"
-          >
+          <LinkItem href="/wishlists" className="font-medium">
             Wishlists
-          </Link>
+          </LinkItem>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
@@ -130,23 +100,11 @@ function SignedInItems() {
         <HostSignedInItems />
         <TenantSignedInItems />
         <DropdownMenuItem asChild>
-          <Link href="/account" className="w-full py-2.5 cursor-pointer">
-            Account
-          </Link>
+          <LinkItem href="/account">Account</LinkItem>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
-        {/* <DropdownMenuItem asChild disabled>
-          <Link href="#" className="w-full py-2.5 cursor-pointer">
-            Gift cards
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild disabled>
-          <Link href="#" className="w-full py-2.5 cursor-pointer">
-            Help Center
-          </Link>
-        </DropdownMenuItem> */}
         <DropdownMenuItem className="p-0">
           <SignOutButton className="w-full py-2.5 px-2 cursor-pointer" />
         </DropdownMenuItem>
@@ -159,20 +117,8 @@ function HostSignedInItems() {
   return (
     <HostSignedIn>
       <DropdownMenuItem asChild>
-        <Link href="/host/listings" className="w-full py-2.5 cursor-pointer">
-          Manage listings
-        </Link>
+        <LinkItem href="/host">Manage listings</LinkItem>
       </DropdownMenuItem>
-      {/* <DropdownMenuItem asChild disabled>
-        <Link href="#" className="w-full py-2.5 cursor-pointer">
-          Host an experience
-        </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild disabled>
-        <Link href="#" className="w-full py-2.5 cursor-pointer">
-          Refer a Host
-        </Link>
-      </DropdownMenuItem> */}
     </HostSignedIn>
   );
 }
@@ -181,10 +127,20 @@ function TenantSignedInItems() {
   return (
     <TenantSignedIn>
       <DropdownMenuItem asChild>
-        <Link href="/host" className="w-full py-2.5 cursor-pointer">
-          Airbnb your home
-        </Link>
+        <LinkItem href="/host">Airbnb your home</LinkItem>
       </DropdownMenuItem>
     </TenantSignedIn>
+  );
+}
+
+function LinkItem({
+  className,
+  ...props
+}: LinkProps & React.ComponentProps<"a">) {
+  return (
+    <Link
+      className={cn(className, "w-full py-2.5 cursor-pointer flex")}
+      {...props}
+    />
   );
 }

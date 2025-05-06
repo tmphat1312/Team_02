@@ -1,62 +1,36 @@
 "use client";
 
-import { useRooms } from "../_hooks/use-rooms";
+import { Container } from "@/components/layout/container";
+import { Grid } from "@/components/layout/grid";
+import { TextAlert } from "@/components/typography/text-alert";
+import { PAGE_SIZE } from "@/features/listing/config/settings";
+import { useRooms } from "@/features/listing/hooks/use-rooms";
 
-import { cn } from "@/lib/utils";
-
-import { PAGE_SIZE } from "../_config/settings";
-
-import { Button } from "@/components/ui/button";
+import { LoadMoreButton } from "./load-more-button";
 import { Room, RoomFallback } from "./room";
 
 export function RoomList() {
   const { isEmpty, isLoadingMore, properties } = useRooms();
 
   if (isEmpty) {
-    return (
-      <div className="width-container py-6 text-center">
-        No properties found
-      </div>
-    );
+    return <RoomListEmpty />;
   }
 
   return (
-    <div className="width-container py-6 space-y-8">
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-6 gap-y-10">
+    <Container className="py-6 space-y-8">
+      <Grid className="grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-6 gap-y-10">
         {properties.map((room, i) => (
           <Room key={i} item={room} />
         ))}
         {isLoadingMore && <RoomListFallback />}
-      </div>
+      </Grid>
       <LoadMoreButton />
-    </div>
+    </Container>
   );
 }
 
-function LoadMoreButton() {
-  const { loadMore, isReachingEnd, isLoadingMore, isLoading } = useRooms();
-
-  return (
-    <div className="flex items-center justify-center">
-      <Button
-        onClick={loadMore}
-        disabled={isReachingEnd}
-        size="lg"
-        variant={"secondary"}
-        className={cn(
-          "disabled:hidden",
-          isLoading || isLoadingMore ? "opacity-50" : ""
-        )}
-      >
-        {isLoading || isLoadingMore ? "Loading..." : "Load more"}
-      </Button>
-      {isReachingEnd && (
-        <p className="text-sm text-gray-500">
-          You have reached the end of the list
-        </p>
-      )}
-    </div>
-  );
+export function RoomListEmpty() {
+  return <TextAlert className="py-8 text-center">No rooms found</TextAlert>;
 }
 
 export function RoomListFallback() {

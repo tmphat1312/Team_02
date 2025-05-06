@@ -5,13 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const HOST_NAVIGATION_LINKS = [
-  { href: "/host", label: "Today" },
-  { href: "/host/listings", label: "Listings" },
+  { href: "/host", label: "Listings" },
   { href: "/host/reservations", label: "Reservations" },
   { href: "/host/messages", label: "Messages" },
 ];
 
-  export function HostNavigation() {
+export function HostNavigation() {
   const pathname = usePathname();
 
   return (

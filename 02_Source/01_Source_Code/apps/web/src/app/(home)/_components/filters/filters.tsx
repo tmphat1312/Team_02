@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
+import { Container } from "@/components/layout/container";
+import { Stack } from "@/components/layout/stack";
+
 type FilterProps = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 };
 
 export function Filters({ children }: FilterProps) {
@@ -28,11 +31,9 @@ export function Filters({ children }: FilterProps) {
     <>
       <div ref={observerElRef} />
       <div ref={categoryListRef} className="sticky top-[81px] z-50 bg-white">
-        <div className="width-container">
-          <div className="flex items-center gap-6  h-[4.875rem]">
-            {children}
-          </div>
-        </div>
+        <Container>
+          <Stack className="gap-6 h-[4.875rem]">{children}</Stack>
+        </Container>
       </div>
     </>
   );

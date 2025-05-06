@@ -4,6 +4,7 @@ import { useId } from "react";
 
 import { Slider } from "@/components/ui/slider";
 import { formatPrice } from "@/lib/utils";
+import { Stack } from "@/components/layout/stack";
 
 type PriceInputProps = {
   min: number;
@@ -40,10 +41,10 @@ export function PriceInput({
         min={min}
         step={step}
         value={value}
-        className="mt-2 bg-airbnb"
+        className="mt-2 bg-primary"
         onValueChange={onValueChange}
       />
-      <div className="flex justify-between items-center">
+      <Stack className="justify-between">
         <PriceNumberInput
           label="Minimum"
           name="minimum"
@@ -56,7 +57,7 @@ export function PriceInput({
           value={formatPrice(maxValue)}
           onChange={handlePriceMaxChange}
         />
-      </div>
+      </Stack>
     </div>
   );
 }
@@ -67,18 +68,17 @@ type PriceNumberInputProps = {
 
 function PriceNumberInput({ label, ...props }: PriceNumberInputProps) {
   const id = useId();
-  const inputId = props.id ?? `${id}-${props.name}`;
   return (
-    <div className="flex flex-col gap-2 items-center">
-      <label htmlFor={inputId} className="text-xs font-medium">
+    <Stack orientation="vertical" className="gap-2">
+      <label htmlFor={id} className="text-xs font-medium">
         {label}
       </label>
       <input
         type="text"
-        id={inputId}
+        id={id}
         className="border max-w-[14ch] rounded-full text-center h-12 px-2"
         {...props}
       />
-    </div>
+    </Stack>
   );
 }

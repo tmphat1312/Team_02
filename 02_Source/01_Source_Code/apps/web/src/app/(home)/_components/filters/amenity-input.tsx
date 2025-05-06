@@ -4,9 +4,9 @@ import Image from "next/image";
 import { use } from "react";
 
 import { Amenity } from "@/app/typings/models";
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Stack } from "@/components/layout/stack";
 
 type AmenityInputProps = {
   amenitiesPromise: Promise<Amenity[]>;
@@ -23,37 +23,34 @@ export function AmenityInput({
 
   const toggleAmenity = (id: number) => {
     const newSet = new Set(value);
-
-    if (newSet.has(id)) {
-      newSet.delete(id);
-    } else {
-      newSet.add(id);
-    }
-
+    const toggle = newSet.has(id)
+      ? (id: number) => newSet.delete(id)
+      : (id: number) => newSet.add(id);
+    toggle(id);
     onValueChange(Array.from(newSet));
   };
 
   return (
-    <div className="flex flex-wrap gap-x-2 gap-y-3">
+    <Stack className="flex-wrap gap-x-2 gap-y-3">
       {amenities.map((amenity) => (
         <Button
           key={amenity.id}
           variant="outline"
-          className={cn("rounded-full py-2.5 px-4  font-normal", {
-            "bg-airbnb/10 text-black": value.includes(amenity.id),
+          className={cn("rounded-full py-2.5 px-4 font-normal", {
+            "bg-primary/10 border-primary/50": value.includes(amenity.id),
           })}
           onClick={() => toggleAmenity(amenity.id)}
         >
           <Image
-            className="size-5"
+            alt={`Photo by ${amenity.name}`}
             src={amenity.imageUrl}
             width={20}
             height={20}
-            alt={`Photo by ${amenity.name}`}
+            className="size-5"
           />
           {amenity.name}
         </Button>
       ))}
-    </div>
+    </Stack>
   );
 }

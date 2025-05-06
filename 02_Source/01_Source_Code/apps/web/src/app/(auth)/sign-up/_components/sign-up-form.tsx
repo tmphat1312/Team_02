@@ -3,15 +3,12 @@
 import { AlertCircle, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { OrSeparator } from "@/app/(auth)/_components/or-separator";
-import { SocialSignIn } from "@/app/(auth)/_components/social-sign-in";
+import { OrSeparator } from "@/components/or-separator";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,8 +21,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import { SocialSignIn } from "@/features/auth/components/social-sign-in";
 import { authClient } from "@/lib/auth-client";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const FormSchema = z
   .object({
@@ -64,16 +62,26 @@ export default function SignUpForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const fullName = `${data.firstName} ${data.lastName}`;
+  useEffect(() => {
+    form.subscribe({
+      formState: { isDirty: true },
+      callback: () => {
+        setErrMsg("");
+      },
+    });
+  }, [form]);
+
+  function onSubmit({
+    email,
+    password,
+    firstName,
+    lastName,
+  }: z.infer<typeof FormSchema>) {
+    setErrMsg("");
+    const name = `${firstName} ${lastName}`;
     startTransition(async () => {
-      setErrMsg("");
       await authClient.signUp.email(
-        {
-          email: data.email,
-          password: data.password,
-          name: fullName,
-        },
+        { email, password, name },
         {
           onSuccess: () => {
             toast.success("Account created successfully!", {
@@ -97,15 +105,11 @@ export default function SignUpForm() {
   }
 
   return (
-    <section>
-      <header className="text-center border-b p-5">
-        <h1 className="font-semibold">Sign up</h1>
-      </header>
-
+    <div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 px-7 py-6"
+          className="space-y-4 px-7 pt-6 mb-9"
         >
           <h2 className="text-[1.375rem] mb-5 font-medium">
             Create an Airbnb account
@@ -268,16 +272,6 @@ export default function SignUpForm() {
 
       <OrSeparator />
       <SocialSignIn />
-
-      <footer className="text-center text-sm mb-6">
-        Already have an account?{" "}
-        <Link
-          href="/sign-in"
-          className="text-airbnb font-medium hover:underline"
-        >
-          Log in
-        </Link>
-      </footer>
-    </section>
+    </div>
   );
 }

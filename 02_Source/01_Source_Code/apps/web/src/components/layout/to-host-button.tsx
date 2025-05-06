@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { useUser } from "@/app/(auth)/_hooks/use-user";
+import { useUser } from "@/features/auth/hooks/use-user";
 
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
@@ -19,7 +19,7 @@ export function ToHostButton() {
     <Link
       href="/host"
       className={cn(
-        `hidden md:flex items-center px-4 py-2.5 rounded-full`,
+        "hidden md:flex items-center px-4 py-2.5 rounded-full",
         "text-sm hover:bg-accent font-medium"
       )}
     >

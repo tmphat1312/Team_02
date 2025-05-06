@@ -1,16 +1,17 @@
 import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
+import { TenantHeader } from "@/components/layout/tenant-header";
+import { FlexWindow } from "@/components/layout/window";
 
-export default async function RootLayout({
+export default async function HomeLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <>
-      <Header />
-      <main className="mb-12">{children}</main>
+    <FlexWindow>
+      <TenantHeader />
+      {children}
       <Footer />
-    </>
+    </FlexWindow>
   );
 }

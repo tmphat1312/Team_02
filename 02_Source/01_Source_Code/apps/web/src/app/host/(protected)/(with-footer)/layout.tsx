@@ -1,30 +1,19 @@
-import { redirect } from "next/navigation";
-
 import { Footer } from "@/components/layout/footer";
 import { HostHeader } from "@/components/layout/host-header";
 
-import { getServerSession } from "@/app/(auth)/_data/get-server-session";
+import { Container } from "@/components/layout/container";
+import { GridWindow } from "@/components/layout/window";
 
 export default async function ProtectedHostLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (!session) {
-    return redirect("/sign-in");
-  }
-
-  if (session.user.role != "host") {
-    return redirect("/host/sign-up");
-  }
-
   return (
-    <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
+    <GridWindow>
       <HostHeader />
-      <main className="width-container">{children}</main>
+      <Container>{children}</Container>
       <Footer />
-    </div>
+    </GridWindow>
   );
 }
