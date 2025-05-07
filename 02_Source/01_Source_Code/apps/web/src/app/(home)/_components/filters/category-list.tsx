@@ -73,6 +73,7 @@ function CategoryItem({ item }: CategoryItemProps) {
         className="aspect-1 size-6 object-cover mx-auto mb-1"
         width={24}
         height={24}
+        priority
       />
       <figcaption className="text-xs">{item.name}</figcaption>
     </figure>
