@@ -11,6 +11,7 @@ const proxy = proxyMiddleware({
 
 // reservation route
 route.post("/reservation", only(["tenant", "host"]),  proxy);
+route.get("/reservation*",proxy);
 
 // review route
 route.get("/reviews*", proxy);

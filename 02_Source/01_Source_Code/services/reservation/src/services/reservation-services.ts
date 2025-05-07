@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import db, { NewReservation } from "../db";
 import { reservationTable } from "../db/schema";
 
@@ -40,4 +41,14 @@ export const CreateReservation = async (reservationData: NewReservation) => {
         return {
             reservation: newReservation[0],
         }
+}
+
+export const GetReservationAvailable = async(propertyId: number) => {
+    const availableDates = await db.select({
+        checkIndate: reservationTable.checkInDate,
+        checkOutDate: reservationTable.checkOutDate,
+        tennantID: reservationTable.tenantId,
+    }).from(reservationTable).where(eq(reservationTable.propertyId, propertyId))
+
+    return availableDates;
 }

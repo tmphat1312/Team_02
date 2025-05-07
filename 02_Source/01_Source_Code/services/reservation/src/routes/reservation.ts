@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { CreateReservation } from "../services/reservation-services";
-import { badRequest, created } from "../utils/json-helpers";
+import { CreateReservation, GetReservationAvailable } from "../services/reservation-services";
+import { badRequest, created, ok } from "../utils/json-helpers";
 import { reservationSchema } from "../utils/validation";
 import { zValidator } from "../utils/validator-wrapper";
 
@@ -26,6 +26,19 @@ reservationRoute.post('/', zValidator('json', reservationSchema) ,async (c) => {
         return badRequest(c, newReservation.message, newReservation.name);
     }
     return created(c, newReservation);
+})
+
+
+reservationRoute.get('/available', async(c) => {
+    const propertyId = c.req.queries('propertyId');
+    if(!propertyId){
+        return badRequest(c, "propertyId is required");
+    }
+    const availableReservations = await GetReservationAvailable(parseInt(propertyId[0]))
+    if(availableReservations instanceof Error){
+        return badRequest(c, availableReservations.message, availableReservations.name);
+    }
+    return ok(c, availableReservations);
 })
 
 export default reservationRoute;
