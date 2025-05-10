@@ -23,7 +23,7 @@ export function PhotoGallery({ item }: PhotoGalleryProps) {
           alt={`Spotlight image of ${item.title}`}
           width={560}
           height={400}
-          className="object-cover size-full col-span-2 row-span-2 bg-accent"
+          className="size-full col-span-2 row-span-2 bg-accent"
         />
         {featuredImageUrls.map((url, i) => (
           <Image
@@ -32,7 +32,7 @@ export function PhotoGallery({ item }: PhotoGalleryProps) {
             alt={`Featured image of ${item.title}`}
             width={300}
             height={300}
-            className="object-cover size-full bg-accent"
+            className="size-full bg-accent"
           />
         ))}
       </div>

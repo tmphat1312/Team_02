@@ -238,6 +238,67 @@ route.get("/:id", async (c) => {
   });
 });
 
+route.get("/:id/categories", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+
+  const categories = await db
+    .select({
+      id: categoriesTable.id,
+      name: categoriesTable.name,
+      description: categoriesTable.description,
+      imageUrl: categoriesTable.imageUrl,
+      createdAt: categoriesTable.createdAt,
+      updatedAt: categoriesTable.updatedAt,
+    })
+    .from(propertyCategoriesTable)
+    .leftJoin(
+      categoriesTable,
+      eq(categoriesTable.id, propertyCategoriesTable.categoryId)
+    )
+    .where(eq(propertyCategoriesTable.propertyId, propertyId));
+
+  return ok(c, categories);
+});
+
+route.get("/:id/amenities", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+  const amenities = await db
+    .select({
+      id: amenitiesTable.id,
+      name: amenitiesTable.name,
+      description: amenitiesTable.description,
+      imageUrl: amenitiesTable.imageUrl,
+      createdAt: amenitiesTable.createdAt,
+      updatedAt: amenitiesTable.updatedAt,
+    })
+    .from(propertyAmenitiesTable)
+    .leftJoin(
+      amenitiesTable,
+      eq(amenitiesTable.id, propertyAmenitiesTable.amenityId)
+    )
+    .where(eq(propertyAmenitiesTable.propertyId, propertyId));
+  return ok(c, amenities);
+});
+
+route.get("/:id/rules", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+  const rules = await db
+    .select({
+      id: rulesTable.id,
+      name: rulesTable.name,
+      description: rulesTable.description,
+      createdAt: rulesTable.createdAt,
+      updatedAt: rulesTable.updatedAt,
+    })
+    .from(propertyRulesTable)
+    .leftJoin(rulesTable, eq(rulesTable.id, propertyRulesTable.ruleId))
+    .where(eq(propertyRulesTable.propertyId, propertyId));
+  return ok(c, rules);
+});
+
 route.post(
   "/",
   async (c, next) => {

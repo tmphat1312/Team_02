@@ -15,6 +15,15 @@ export type Amenity = {
   updatedAt: string;
 };
 
+export type Rule = {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Property = {
   id: number;
   hostId: string;

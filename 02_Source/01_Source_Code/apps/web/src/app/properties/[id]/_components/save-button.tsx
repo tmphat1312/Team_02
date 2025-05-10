@@ -41,13 +41,7 @@ export function SaveButton({ item }: SaveButtonProps) {
 
   const isLoading = isInWishlist == undefined;
   const clickAction = isInWishlist ? handleUnsave : handleSave;
-  const clickText = isInWishlist
-    ? isPending
-      ? "Removing..."
-      : "Remove"
-    : isPending
-    ? "Saving..."
-    : "Save";
+  const clickText = isInWishlist ? "Remove" : "Save";
   const clickIcon = isInWishlist ? (
     <HeartIcon size={16} className="fill-current text-airbnb" />
   ) : (

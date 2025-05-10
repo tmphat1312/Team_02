@@ -30,7 +30,7 @@ const SocialMediaLinks = [
   },
 ];
 const Language = "English (US)";
-const Currency = "$US Dollar";
+const Currency = "$ USD";
 
 export function Footer({ containerType = "wide" }: FooterProps) {
   return (

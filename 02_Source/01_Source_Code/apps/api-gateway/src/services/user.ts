@@ -9,7 +9,7 @@ const route = new Hono();
 route.get("/users/:id", async (c) => {
   const { id } = c.req.param();
   const { rows } = await dbClient.query(
-    `SELECT id, name, email, role, image FROM public.user WHERE id = $1`,
+    `SELECT * FROM public.user WHERE id = $1`,
     [id]
   );
   const user = rows[0];

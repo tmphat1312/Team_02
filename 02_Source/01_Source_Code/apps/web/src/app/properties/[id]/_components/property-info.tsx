@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Amenity, Property } from "@/app/typings/models";
+import { Amenity, Category, Property, User } from "@/app/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { calculateRelativeTime, makePluralNoun } from "@/lib/utils";
@@ -14,12 +14,8 @@ type PropertyInfoProps = React.ComponentProps<"div"> & {
     numberOfReviews: number;
     averageRating: number;
   };
-  host: {
-    name: string;
-    imageUrl: string;
-    hostDate: string;
-  };
-  category?: string;
+  host: User;
+  categories: Category[];
   amenities: Amenity[];
 };
 
@@ -27,17 +23,18 @@ export function PropertyInfo({
   item,
   host,
   rating,
-  category,
+  categories,
   amenities,
   ...props
 }: PropertyInfoProps) {
+  const category = categories.at(0)?.name;
   return (
     <div {...props}>
       <section className="pb-6 border-b">
         <PageSubHeading className="mb-0">
           <span>{category || "Category"}</span>
           <span> in </span>
-          <span>{item.location}</span>
+          <span>{item.address}</span>
         </PageSubHeading>
         <p className="mb-3 text-muted-foreground">
           <span>{makePluralNoun("guest", item.numberOfGuests)} · </span>
@@ -59,12 +56,12 @@ export function PropertyInfo({
 
       <Stack className="gap-4 py-6 border-b">
         <Avatar className="size-10">
-          <AvatarImage src={host.imageUrl} alt={host.name} />
+          <AvatarImage src={host.image ?? undefined} alt={host.name} />
           <AvatarFallback>JD</AvatarFallback>
         </Avatar>
         <section>
           <h3 className="font-medium">Hosted by {host.name}</h3>
-          <p>{calculateRelativeTime(new Date(host.hostDate))} of hosting</p>
+          <p>{calculateRelativeTime(new Date(host.createdAt))} of hosting</p>
         </section>
       </Stack>
 

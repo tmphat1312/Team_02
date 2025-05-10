@@ -1,8 +1,6 @@
 import { Property } from "@/app/typings/models";
-import { mockHttpClient } from "@/lib/http-client";
-import { delay } from "@/lib/utils";
+import { httpClient } from "@/lib/http-client";
 
 export async function fetchPropertyDetails(id: number): Promise<Property> {
-  await delay(2_000);
-  return mockHttpClient.get(`/properties/${id}`).then((res) => res.data);
+  return httpClient.get(`/properties/${id}`).then((res) => res.data.data);
 }

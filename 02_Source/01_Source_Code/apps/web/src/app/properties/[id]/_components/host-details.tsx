@@ -1,28 +1,27 @@
+import { User } from "@/app/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
 import { TextAlert } from "@/components/typography/text-alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
 
-export function HostDetails() {
+type HostDetailsProps = {
+  host: User;
+};
+
+export function HostDetails({ host }: HostDetailsProps) {
   return (
     <section>
       <PageSubHeading>Meet your host</PageSubHeading>
       <Stack className="flex-wrap gap-16">
         <Stack className="shadow-lg p-8 border border-border/50 rounded-lg">
           <section className="flex flex-col items-center px-12">
-            <Avatar className="size-24">
-              <AvatarImage
-                src="https://avatar.iran.liara.run/public"
-                alt="Fred"
-              />
-              <AvatarFallback>
-                <Skeleton className="rounded-full size-full" />
-              </AvatarFallback>
+            <Avatar className="size-24 mb-1">
+              <AvatarImage src={host.image ?? undefined} alt={host.name} />
+              <AvatarFallback>{host.name.at(0)}</AvatarFallback>
             </Avatar>
-            <h3 className="font-bold text-3xl">Fred</h3>
+            <h3 className="font-bold text-2xl">{host.name}</h3>
             <TextAlert>Host</TextAlert>
           </section>
           <div className="divide-y-1">
