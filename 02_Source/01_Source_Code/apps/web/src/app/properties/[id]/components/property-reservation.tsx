@@ -33,8 +33,8 @@ const calculateNumberOfDates = (start: Date, end: Date) => {
 };
 
 const INITIAL_DATE = {
-  from: new Date(),
-  to: addDays(new Date(), 5),
+  from: addDays(new Date(), 1),
+  to: addDays(new Date(), 6),
 };
 
 const SERVICE_FEE = 20;

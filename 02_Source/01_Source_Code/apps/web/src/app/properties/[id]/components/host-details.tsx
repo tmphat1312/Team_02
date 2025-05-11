@@ -5,6 +5,7 @@ import { TextAlert } from "@/components/typography/text-alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { calculateRelativeTime } from "@/lib/utils";
 
 type HostDetailsProps = {
   host: User;
@@ -24,26 +25,14 @@ export function HostDetails({ host }: HostDetailsProps) {
             <h3 className="font-bold text-2xl">{host.name}</h3>
             <TextAlert>Host</TextAlert>
           </section>
-          <div className="divide-y-1">
-            <div className="pb-2">
-              <div className="font-semibold text-x2">5</div>
-              <div className="text-sm">Reviews</div>
-            </div>
-            <div className="py-2">
-              <div className="font-semibold text-x2">4.8</div>
-              <div className="text-sm">Ratings</div>
-            </div>
-            <div className="py-2">
-              <div className="font-semibold text-x2">12</div>
-              <div className="text-sm">Months Hosting</div>
-            </div>
-          </div>
         </Stack>
 
         <section className="grow">
           <h3 className="mb-4 font-medium text-xl">Host details</h3>
           <div className="mb-6">
-            <div>Response rate: N/A</div>
+            <div>
+              {calculateRelativeTime(new Date(host.createdAt))} of hosting
+            </div>
             <div>Response within few hours</div>
           </div>
           <Button size="lg" variant="secondary" className="text-base">

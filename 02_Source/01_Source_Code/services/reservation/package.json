@@ -1,12 +1,12 @@
 {
   "name": "reservation",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",
     "@neondatabase/serverless": "^1.0.0",
-    "consola": "^3.4.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.42.0",
     "hono": "^4.7.7",

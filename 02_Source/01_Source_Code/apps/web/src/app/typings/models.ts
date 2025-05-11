@@ -52,9 +52,12 @@ export type Review = {
   accuracy: number;
   location: number;
   content: string;
-  reviewAt: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type ReviewWithTenant = Review & {
+  tenant: User;
 };
 
 export type RecentlyViewed = {

@@ -1,41 +1,60 @@
 import { Hono } from "hono";
-import { zValidator } from "../utils/validator-wrapper";
+import { z } from "zod";
+
+import { and, eq } from "drizzle-orm";
+import { db } from "../db";
+import { reviewTable } from "../db/schema";
+import { badRequest, ok } from "../utils/json-helpers";
 import { reviewSchema } from "../utils/validation";
-import { createReview, getReviewById } from "../services/review-services";
-import { badRequest, created, internalServerError, ok } from "../utils/json-helpers";
+import { zValidator } from "../utils/validator-wrapper";
 
-const reviewRoute = new Hono();
+const route = new Hono();
 
-reviewRoute.get('/', async (c) => {
-    const propertyId = c.req.queries('propertyId')
-    if (!propertyId) {
-        return badRequest(c, "Property ID is required", "InvalidParameter");
-    }
-    const results = await getReviewById(parseInt(propertyId[0], 10));
-    return ok(c, results);
-})
-
-reviewRoute.post('/',zValidator('json', reviewSchema), async(c) => {
-    const tenantId = c.req.header('x-user-id');
-    const {reservationId, cleanliness, communication, accuracy, location} = c.req.valid('json');
-    if(tenantId == undefined){
-        return internalServerError(c, "null value in column \"tenantId\" of relation \"reviews\" violates not-null constraint")
-    }
-    const resp = await createReview({
-        reservationId: reservationId,
-        cleanliness: cleanliness,
-        communication: communication,
-        accuracy: accuracy,
-        location: location,
-        tenantId: tenantId,
-        propertyId: -1,
+route.get(
+  "/",
+  zValidator(
+    "query",
+    z.object({
+      propertyId: z
+        .string({
+          message: "propertyId is required",
+        })
+        .transform((val) => parseInt(val)),
     })
-    if(resp instanceof Error){
-        return badRequest(c, resp.message.toString())
-    }
-    return created(c, resp);
-})
+  ),
+  async (c) => {
+    const { propertyId } = c.req.valid("query");
+    const results = await db
+      .select()
+      .from(reviewTable)
+      .where(eq(reviewTable.propertyId, propertyId));
+    return ok(c, results);
+  }
+);
 
+route.post("/", zValidator("json", reviewSchema)    , async (c) => {
+  const review = c.req.valid("json");
 
+  const [existingReview] = await db
+    .select()
+    .from(reviewTable)
+    .where(
+      and(
+        eq(reviewTable.tenantId, review.tenantId),
+        eq(reviewTable.propertyId, review.propertyId),
+        eq(reviewTable.reservationId, review.reservationId)
+      )
+    );
 
-export default reviewRoute;
+  if (existingReview) {
+    return badRequest(
+      c,
+      `You have already submitted a review for this reservation.`
+    );
+  }
+
+  const [newReview] = await db.insert(reviewTable).values(review).returning();
+  return ok(c, newReview);
+});
+
+export default route;

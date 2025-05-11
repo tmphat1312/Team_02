@@ -50,7 +50,7 @@ export function SaveButton({ item }: SaveButtonProps) {
   const clickDisabled = isPending;
 
   if (isLoading) {
-    return <Skeleton className="w-[78px] h-9" />;
+    return <Skeleton className="w-[78px] h-9 opacity-20" />;
   }
 
   return (

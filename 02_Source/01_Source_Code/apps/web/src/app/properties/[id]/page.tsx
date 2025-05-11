@@ -1,23 +1,23 @@
-import { Suspense } from "react";
-
 import { Grid } from "@/components/layout/grid";
 import { Page } from "@/components/layout/page";
 import { Separator } from "@/components/ui/separator";
 import { AddToRecentlyViewedList } from "@/features/listing/components/add-to-recently-viewed-list";
 import { fetchPropertyDetails } from "@/features/listing/data/fetch-property-details";
 
-import { HostDetails } from "./_components/host-details";
-import { PhotoGallery } from "./_components/photo-gallery";
-import { PropertyInfo } from "./_components/property-info";
-import { PropertyMaps } from "./_components/property-maps";
-import { PropertyReservation } from "./_components/property-reservation";
-import { PropertyReviews } from "./_components/property-reviews";
-import { PropertyRules } from "./_components/property-rules";
-import { PropertyTitle } from "./_components/property-title";
-import { fetchPropertyCategories } from "@/features/listing/data/fetch-property-categories";
 import { fetchPropertyAmenities } from "@/features/listing/data/fetch-property-amenities";
-import { fetchPropertyRules } from "@/features/listing/data/fetch-property-rules";
+import { fetchPropertyCategories } from "@/features/listing/data/fetch-property-categories";
 import { fetchPropertyHost } from "@/features/listing/data/fetch-property-host";
+import { fetchPropertyRules } from "@/features/listing/data/fetch-property-rules";
+import { HostDetails } from "./components/host-details";
+import { PhotoGallery } from "./components/photo-gallery";
+import { PropertyInfo } from "./components/property-info";
+import { PropertyMaps } from "./components/property-maps";
+import { PropertyReservation } from "./components/property-reservation";
+import { PropertyRules } from "./components/property-rules";
+import { PropertyTitle } from "./components/property-title";
+import { fetchPropertyReviews } from "@/features/listing/data/fetch-property-reviews";
+import { PropertyReviews } from "./components/property-reviews";
+import { calculateAvgRating } from "@/lib/utils";
 
 export default async function AirbnbRoomDetails({
   params,
@@ -25,13 +25,19 @@ export default async function AirbnbRoomDetails({
   params: Promise<{ id: number }>;
 }) {
   const { id } = await params;
-  const [details, categories, amenities, rules] = await Promise.all([
+  const [details, categories, amenities, rules, reviews] = await Promise.all([
     fetchPropertyDetails(id),
     fetchPropertyCategories(id),
     fetchPropertyAmenities(id),
     fetchPropertyRules(id),
+    fetchPropertyReviews(id),
   ]);
   const host = await fetchPropertyHost(details.hostId);
+
+  const numberOfReviews = reviews.length;
+  const averageRating =
+    reviews.reduce((acc, review) => acc + calculateAvgRating(review), 0) /
+    reviews.length;
 
   return (
     <Page className="space-y-8 mb-8 py-6">
@@ -41,8 +47,8 @@ export default async function AirbnbRoomDetails({
         <PropertyInfo
           item={details}
           rating={{
-            averageRating: 4.5,
-            numberOfReviews: 100,
+            averageRating,
+            numberOfReviews,
           }}
           host={host}
           amenities={amenities}
@@ -52,9 +58,7 @@ export default async function AirbnbRoomDetails({
         <Separator className="lg:hidden my-6" />
         <PropertyReservation item={details} />
       </Grid>
-      {/* <Suspense fallback={null}>
-        <PropertyReviews propertyId={details.id} />
-      </Suspense> */}
+      <PropertyReviews reviews={reviews} />
       <Separator />
       <PropertyMaps longitude={details.longitude} latitude={details.latitude} />
       <Separator />

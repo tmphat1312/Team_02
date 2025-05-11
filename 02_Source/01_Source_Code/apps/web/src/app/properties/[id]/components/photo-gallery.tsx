@@ -24,6 +24,7 @@ export function PhotoGallery({ item }: PhotoGalleryProps) {
           width={560}
           height={400}
           className="size-full col-span-2 row-span-2 bg-accent"
+          priority
         />
         {featuredImageUrls.map((url, i) => (
           <Image
@@ -33,6 +34,7 @@ export function PhotoGallery({ item }: PhotoGalleryProps) {
             width={300}
             height={300}
             className="size-full bg-accent"
+            priority
           />
         ))}
       </div>

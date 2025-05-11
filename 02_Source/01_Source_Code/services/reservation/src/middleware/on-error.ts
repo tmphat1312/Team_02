@@ -1,6 +1,7 @@
 import type { ErrorHandler } from "hono";
-import { consola } from "consola";
-import { StatusCodes, ReasonPhrases } from "http-status-codes";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
+
+import { ErrorCode } from "../constants/error-codes";
 import {
   DataResponse,
   ErrorResponse,
@@ -11,12 +12,15 @@ export const onError: ErrorHandler = (err, c) => {
   const env = c.env?.NODE_ENV || process.env?.NODE_ENV;
   const isProduction = env === "production";
 
-  if (!isProduction) consola.error(err);
+  if (!isProduction) {
+    console.log(err);
+  }
 
   const data: DataResponse = null;
   const error: ErrorResponse = {
-    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    code: ErrorCode.INTERNAL_SERVER_ERROR,
     message: err.message,
+    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     statusText: ReasonPhrases.INTERNAL_SERVER_ERROR,
   };
   const metadata: MetadataResponse = !isProduction
@@ -28,10 +32,5 @@ export const onError: ErrorHandler = (err, c) => {
       }
     : {};
 
-  c.status(StatusCodes.INTERNAL_SERVER_ERROR);
-  return c.json({
-    data,
-    error,
-    metadata,
-  });
+  return c.json({ data, error, metadata }, StatusCodes.INTERNAL_SERVER_ERROR);
 };

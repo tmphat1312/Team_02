@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 
+import { ReviewWithTenant } from "@/app/typings/models";
 import { Accuracy } from "@/components/icons/accuracy";
 import { Cleanliness } from "@/components/icons/cleanliness";
 import { Communication } from "@/components/icons/communication";
@@ -7,19 +8,22 @@ import { Location } from "@/components/icons/location";
 import { Grid } from "@/components/layout/grid";
 import { Stack } from "@/components/layout/stack";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
-import { TextAlert } from "@/components/typography/text-alert";
 import { Separator } from "@/components/ui/separator";
-import { fetchPropertyReviews } from "@/features/listing/data/fetch-property-reviews";
 import { calculateAvgRating, makePluralNoun } from "@/lib/utils";
 
+import { ShowMore } from "@/components/show-more";
 import { ReviewCard } from "./review-card";
 
 type PropertyReviewsProps = {
-  propertyId: number;
+  reviews: ReviewWithTenant[];
 };
 
-export async function PropertyReviews({ propertyId }: PropertyReviewsProps) {
-  const reviews = await fetchPropertyReviews(propertyId);
+const CutOffLength = 6;
+
+export function PropertyReviews({ reviews }: PropertyReviewsProps) {
+  if (reviews.length === 0) {
+    return <p className="text-xl font-medium">No reviews (yet)</p>;
+  }
 
   const numberOfReviews = reviews.length;
   const numberOfReviewsInText = makePluralNoun("review", numberOfReviews);
@@ -110,20 +114,27 @@ export async function PropertyReviews({ propertyId }: PropertyReviewsProps) {
 
       <Separator className="my-8" />
 
-      {reviews.length === 0 && (
-        <section className="text-center">
-          <h4 className="mb-0.5 font-semibold text-lg">No reviews yet</h4>
-          <TextAlert>
-            Be the first to leave a review if you are a tenant!
-          </TextAlert>
-        </section>
-      )}
-
       <Grid className="gap-12 grid-cols-2">
-        {reviews.map((review) => (
+        {reviews.slice(0, CutOffLength).map((review) => (
           <ReviewCard item={review} key={review.id} />
         ))}
       </Grid>
+
+      {reviews.length > CutOffLength && (
+        <ShowMore
+          title="Reviews"
+          buttonLabel={`Show more ${makePluralNoun(
+            "review",
+            numberOfReviews - CutOffLength
+          )}`}
+        >
+          <Stack className="gap-10" orientation="vertical">
+            {reviews.map((review) => (
+              <ReviewCard item={review} key={review.id} />
+            ))}
+          </Stack>
+        </ShowMore>
+      )}
     </div>
   );
 }
