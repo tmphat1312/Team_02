@@ -1,4 +1,4 @@
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { PageHeading } from "@/components/typography/page-heading";
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Amenity } from "@/app/typings/models";
+import { Amenity } from "@/typings/models";
 import { ShowMore } from "@/components/show-more";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
 import { cn, makePluralNoun } from "@/lib/utils";

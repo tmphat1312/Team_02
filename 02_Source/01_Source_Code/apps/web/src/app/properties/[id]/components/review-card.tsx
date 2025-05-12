@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 
-import { ReviewWithTenant } from "@/app/typings/models";
+import { ReviewWithTenant } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import {
   calculateAvgRating,

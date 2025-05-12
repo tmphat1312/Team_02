@@ -1,13 +1,13 @@
 "use client";
 
-import { Trip } from "@/app/typings/models";
+import { Trip } from "@/typings/models";
 import { Grid } from "@/components/layout/grid";
 import { Page } from "@/components/layout/page";
 import { PageHeading } from "@/components/typography/page-heading";
 
-import { FilterButtons } from "./_components/filter-buttons";
-import { ReservationCard } from "./_components/reservation-card";
-import { useActiveTab } from "./_hooks/use-active-tab";
+import { FilterButtons } from "./components/filter-buttons";
+import { ReservationCard } from "./components/reservation-card";
+import { useActiveTab } from "./hooks/use-active-tab";
 
 const mockTrips: Trip[] = [
   {

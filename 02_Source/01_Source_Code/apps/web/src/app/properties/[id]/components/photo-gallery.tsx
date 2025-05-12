@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 import {
   Carousel,
   CarouselContent,

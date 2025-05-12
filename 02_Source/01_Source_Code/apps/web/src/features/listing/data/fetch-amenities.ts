@@ -1,4 +1,4 @@
-import { Amenity } from "@/app/typings/models";
+import { Amenity } from "@/typings/models";
 import { httpClient } from "@/lib/http-client";
 
 export async function fetchAmenities(): Promise<Amenity[]> {

@@ -1,4 +1,4 @@
-import { Rule } from "@/app/typings/models";
+import { Rule } from "@/typings/models";
 import { Grid } from "@/components/layout/grid";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
 

@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import Link from "next/link";
 
-import { Amenity, Category, Property, User } from "@/app/typings/models";
+import { Amenity, Category, Property, User } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { calculateRelativeTime, makePluralNoun } from "@/lib/utils";

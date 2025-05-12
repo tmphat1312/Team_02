@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 
 import { addToRecentlyViewedList } from "../data/add-to-recently-viewed-list";
 

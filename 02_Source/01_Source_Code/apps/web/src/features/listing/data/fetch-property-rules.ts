@@ -1,4 +1,4 @@
-import { Rule } from "@/app/typings/models";
+import { Rule } from "@/typings/models";
 import { httpClient } from "@/lib/http-client";
 
 export async function fetchPropertyRules(id: number): Promise<Rule[]> {

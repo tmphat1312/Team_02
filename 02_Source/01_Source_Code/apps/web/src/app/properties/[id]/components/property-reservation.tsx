@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { NumberInput } from "@/components/number-input";
 import { TextAlert } from "@/components/typography/text-alert";

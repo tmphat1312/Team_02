@@ -8,8 +8,8 @@ import {
   addWishlist,
   checkIfWishlistExists,
   deleteWishlistByPropertyId,
-} from "@/app/(tenant)/wishlists/_data/crud";
-import { Property } from "@/app/typings/models";
+} from "@/app/(tenant)/wishlists/data/crud";
+import { Property } from "@/typings/models";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 

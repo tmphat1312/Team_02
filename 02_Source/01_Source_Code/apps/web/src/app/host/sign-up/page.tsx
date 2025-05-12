@@ -1,9 +1,9 @@
 import { Page } from "@/components/layout/page";
 import { getServerSession } from "@/features/auth/data/get-server-session";
 
-import { BecomeAHostForm } from "./_components/become-a-host-form";
-import { UpdatePersonalInformation } from "./_components/update-personal-information";
-import { VerifyEmailForm } from "./_components/verify-email-form";
+import { BecomeAHostForm } from "./components/become-a-host-form";
+import { UpdatePersonalInformation } from "./components/update-personal-information";
+import { VerifyEmailForm } from "./components/verify-email-form";
 import { Stack } from "@/components/layout/stack";
 
 export default async function HostSignupPage() {

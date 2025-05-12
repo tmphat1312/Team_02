@@ -1,4 +1,4 @@
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 import { httpClient } from "@/lib/http-client";
 
 export async function fetchPropertyDetails(id: number): Promise<Property> {

@@ -7,11 +7,11 @@ import { fetchCategories } from "@/features/listing/data/fetch-categories";
 import {
   CategoryList,
   CategoryListFallback,
-} from "./_components/filters/category-list";
-import { FiltersDialog } from "./_components/filters/filter-dialog";
-import { FilterDialogContent } from "./_components/filters/filter-dialog-content";
-import { Filters } from "./_components/filters/filters";
-import { RoomList, RoomListFallback } from "./_components/room-list";
+} from "./components/filters/category-list";
+import { FiltersDialog } from "./components/filters/filter-dialog";
+import { FilterDialogContent } from "./components/filters/filter-dialog-content";
+import { Filters } from "./components/filters/filters";
+import { RoomList, RoomListFallback } from "./components/room-list";
 
 export default function Home() {
   const categoriesPromise = fetchCategories();

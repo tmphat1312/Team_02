@@ -1,4 +1,4 @@
-import { User } from "@/app/typings/models";
+import { User } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
 import { TextAlert } from "@/components/typography/text-alert";

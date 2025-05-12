@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 
-import { ReviewWithTenant } from "@/app/typings/models";
+import { ReviewWithTenant } from "@/typings/models";
 import { Accuracy } from "@/components/icons/accuracy";
 import { Cleanliness } from "@/components/icons/cleanliness";
 import { Communication } from "@/components/icons/communication";

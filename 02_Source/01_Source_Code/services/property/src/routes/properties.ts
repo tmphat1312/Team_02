@@ -205,6 +205,22 @@ route.get("/", transformPaginationQuery, async (c) => {
   });
 });
 
+route.get("/host/:hostId", async (c) => {
+  const hostId = c.req.param("hostId");
+  const properties = await db
+    .select()
+    .from(propertiesWithImagesView)
+    .where(eq(propertiesWithImagesView.hostId, hostId))
+    .orderBy(desc(propertiesWithImagesView.createdAt));
+  const propertiesWithParsedPrices = properties.map(
+    ({ isAvailable, ...property }) => ({
+      ...property,
+      pricePerNight: parseFloat(property.pricePerNight),
+    })
+  );
+  return ok(c, propertiesWithParsedPrices);
+});
+
 route.get("/:id", async (c) => {
   // Input processing
   const propertyIdStr = c.req.param("id");

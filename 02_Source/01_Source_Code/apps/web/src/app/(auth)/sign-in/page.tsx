@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import { Page } from "@/components/layout/page";
 
-import { PageContainer } from "../_components/page-container";
+import { PageContainer } from "../components/page-container";
 import { SignInForm } from "./_components/sign-in-form";
-import { PageHeader } from "../_components/page-header";
-import { PageHeading } from "../_components/page-heading";
-import { PageFooter } from "../_components/page-footer";
+import { PageHeader } from "../components/page-header";
+import { PageHeading } from "../components/page-heading";
+import { PageFooter } from "../components/page-footer";
 
 export default function SignInPage() {
   return (

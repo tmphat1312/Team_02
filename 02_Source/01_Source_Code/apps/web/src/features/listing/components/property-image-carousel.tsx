@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { Property } from "@/app/typings/models";
+import { Property } from "@/typings/models";
 import {
   Carousel,
   CarouselApi,
@@ -13,12 +13,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 type PropertyImageCarousel = {
   item: Property;
-};
+} & React.ComponentProps<"div">;
 
-export function PropertyImageCarousel({ item }: PropertyImageCarousel) {
+export function PropertyImageCarousel({
+  item,
+  ...props
+}: PropertyImageCarousel) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -37,7 +41,13 @@ export function PropertyImageCarousel({ item }: PropertyImageCarousel) {
   }, [api]);
 
   return (
-    <div className="relative mb-2 shadow group rounded-xl overflow-clip">
+    <div
+      {...props}
+      className={cn(
+        "relative mb-2 shadow group rounded-xl overflow-clip",
+        props.className
+      )}
+    >
       <Carousel setApi={setApi}>
         <CarouselContent>
           {item.imageUrls.slice(0, 5).map((url, i) => (

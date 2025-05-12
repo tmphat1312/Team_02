@@ -1,7 +1,7 @@
 import { Page } from "@/components/layout/page";
-import { RecentlyViewed } from "./_components/recently-viewed";
-import { ToggleEditingButton } from "./_components/toggle-editing-button";
-import { Wishlist } from "./_components/wishlist";
+import { RecentlyViewed } from "./components/recently-viewed";
+import { ToggleEditingButton } from "./components/toggle-editing-button";
+import { Wishlist } from "./components/wishlist";
 import { PageHeading } from "@/components/typography/page-heading";
 
 export default function WishlistsPage() {

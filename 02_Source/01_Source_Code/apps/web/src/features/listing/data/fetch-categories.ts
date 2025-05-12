@@ -1,4 +1,4 @@
-import { Category } from "@/app/typings/models";
+import { Category } from "@/typings/models";
 import { httpClient } from "@/lib/http-client";
 
 export async function fetchCategories(): Promise<Category[]> {

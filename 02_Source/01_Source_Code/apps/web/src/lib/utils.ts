@@ -3,7 +3,7 @@ import { formatDistance } from "date-fns/formatDistance";
 import pluralize from "pluralize";
 import { twMerge } from "tailwind-merge";
 
-import { Review } from "@/app/typings/models";
+import { Review } from "@/typings/models";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

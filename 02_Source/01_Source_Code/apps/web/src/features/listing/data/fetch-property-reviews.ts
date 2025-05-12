@@ -1,4 +1,4 @@
-import { Review, ReviewWithTenant } from "@/app/typings/models";
+import { Review, ReviewWithTenant } from "@/typings/models";
 import { fetchUserDetails } from "@/features/auth/data/fetch-user-details";
 import { httpClient } from "@/lib/http-client";
 

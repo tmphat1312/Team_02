@@ -1,8 +1,8 @@
 import { Page } from "@/components/layout/page";
 import { PageHeading } from "@/components/typography/page-heading";
 
-import { FilterButtons } from "./_components/filter-buttons";
-import { ReservationList } from "./_components/reservation-list";
+import { FilterButtons } from "./components/filter-buttons";
+import { ReservationList } from "./components/reservation-list";
 
 export default function ReservationsPage() {
   return (
