@@ -8,25 +8,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Setting;
-import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.GeoPointField;
-import org.springframework.data.geo.Point;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(indexName = "properties")
-@Setting(
-    settingPath = "elasticsearch-config.json",
-    shards = 1,
-    replicas = 0
-)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(indexName = "properties")
 public class PropertyDocument {
     @Id
     private String id;
@@ -40,11 +33,14 @@ public class PropertyDocument {
     @Field(type = FieldType.Double)
     private BigDecimal price;
 
-    @Field(type = FieldType.Text, analyzer = "standard")
+    @Field(type = FieldType.Double)
+    private BigDecimal pricePerNight;
+
+    @Field(type = FieldType.Keyword)
     private String location;
 
-    @Field(type = FieldType.Text)
-    private String propertyType;
+    @GeoPointField
+    private GeoPoint locationPoint;
 
     @Field(type = FieldType.Double)
     private Double area;
@@ -55,8 +51,14 @@ public class PropertyDocument {
     @Field(type = FieldType.Integer)
     private Integer bathrooms;
 
-    @GeoPointField
-    private Point locationPoint;
+    @Field(type = FieldType.Integer)
+    private Integer beds;
+
+    @Field(type = FieldType.Integer)
+    private Integer guests;
+
+    @Field(type = FieldType.Keyword)
+    private String hostId;
 
     @Field(type = FieldType.Date)
     private LocalDateTime createdAt;
@@ -69,4 +71,7 @@ public class PropertyDocument {
 
     @Field(type = FieldType.Keyword)
     private List<String> amenityIds;
+
+    @Field(type = FieldType.Keyword)
+    private String propertyType;
 }

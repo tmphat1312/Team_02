@@ -40,15 +40,11 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
         }
 
         // Add price range filter
-        if (minPrice != null || maxPrice != null) {
-            Criteria priceCriteria = new Criteria("price");
-            if (minPrice != null) {
-                priceCriteria.greaterThanEqual(minPrice);
-            }
-            if (maxPrice != null) {
-                priceCriteria.lessThanEqual(maxPrice);
-            }
-            criteria.and(priceCriteria);
+        if (minPrice != null) {
+            criteria.and("price").greaterThanEqual(minPrice);
+        }
+        if (maxPrice != null) {
+            criteria.and("price").lessThanEqual(maxPrice);
         }
 
         // Add location filter
