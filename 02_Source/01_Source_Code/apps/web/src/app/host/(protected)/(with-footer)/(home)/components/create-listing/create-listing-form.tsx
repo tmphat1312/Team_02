@@ -73,7 +73,7 @@ const InitialState: State = {
   description: "A beautiful house in the countryside",
   categories: [],
   price: 10,
-  address: "Long An",
+  address: "",
   guests: 4,
   bedrooms: 2,
   beds: 2,
@@ -82,6 +82,7 @@ const InitialState: State = {
   amenities: [],
   rules: [],
   customRules: [],
+  coordinates: undefined,
 };
 
 prefetchCategories();
@@ -201,7 +202,19 @@ export function CreateListingForm() {
           }
         />
       )}
-      {currentStep == 4 && <AddressForm />}
+      {currentStep == 4 && (
+        <AddressForm
+          defaultCoordinates={state.coordinates}
+          defaultAddress={state.address}
+          onAddressChange={(coordinates, address) => {
+            dispatch({
+              type: ActionType.SET_COORDINATES,
+              payload: coordinates,
+            });
+            dispatch({ type: ActionType.SET_ADDRESS, payload: address });
+          }}
+        />
+      )}
       {currentStep == 5 && (
         <NumbersForm
           defaultBeds={state.beds}
@@ -295,6 +308,7 @@ type State = {
   amenities: number[];
   rules: number[];
   customRules: string[];
+  coordinates?: [number, number];
 };
 
 enum ActionType {
@@ -311,6 +325,7 @@ enum ActionType {
   SET_AMENITIES = "SET_AMENITIES",
   SET_RULES = "SET_RULES",
   SET_CUSTOM_RULES = "SET_CUSTOM_RULES",
+  SET_COORDINATES = "SET_COORDINATES",
 }
 
 type Action =
@@ -326,7 +341,8 @@ type Action =
   | { type: ActionType.SET_IMAGES; payload: State["images"] }
   | { type: ActionType.SET_AMENITIES; payload: State["amenities"] }
   | { type: ActionType.SET_RULES; payload: State["rules"] }
-  | { type: ActionType.SET_CUSTOM_RULES; payload: State["customRules"] };
+  | { type: ActionType.SET_CUSTOM_RULES; payload: State["customRules"] }
+  | { type: ActionType.SET_COORDINATES; payload: State["coordinates"] };
 
 function reducer(prevState: State, action: Action) {
   switch (action.type) {
@@ -360,6 +376,8 @@ function reducer(prevState: State, action: Action) {
       return { ...prevState, rules: action.payload };
     case ActionType.SET_CUSTOM_RULES:
       return { ...prevState, customRules: action.payload };
+    case ActionType.SET_COORDINATES:
+      return { ...prevState, coordinates: action.payload };
     default:
       return prevState;
   }

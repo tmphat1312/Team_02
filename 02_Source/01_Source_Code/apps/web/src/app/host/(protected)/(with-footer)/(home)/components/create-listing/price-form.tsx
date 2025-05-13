@@ -55,6 +55,7 @@ export function PriceForm({ defaultPrice, onPriceChange }: Props) {
           className="text-7xl focus:outline-none font-semibold text-center! max-w-lg"
           value={price}
           onChange={handlePriceChange}
+          autoComplete="off"
         />
         {exceedPriceRange && (
           <p
