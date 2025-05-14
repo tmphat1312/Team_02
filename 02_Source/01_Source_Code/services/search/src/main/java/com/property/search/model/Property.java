@@ -24,7 +24,7 @@ public class Property {
 
     private String description;
 
-    private BigDecimal price;
+   
 
     private String location;
 

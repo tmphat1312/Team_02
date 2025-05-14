@@ -55,7 +55,7 @@ public class DataSyncService {
                 if (priceObj != null) {
                     try {
                         if (priceObj instanceof Number) {
-                            price = new BigDecimal(priceObj.toString());
+                        price = new BigDecimal(priceObj.toString());
                         } else if (priceObj instanceof String) {
                             price = new BigDecimal((String) priceObj);
                         }
@@ -98,7 +98,7 @@ public class DataSyncService {
                 document.setPricePerNight(price);
                 document.setLocation((String) property.get("address"));
                 if (locationPoint != null) {
-                    document.setLocationPoint(locationPoint);
+                document.setLocationPoint(locationPoint);
                 }
                 document.setArea(property.get("area") != null ? ((Number) property.get("area")).doubleValue() : null);
                 document.setBedrooms(property.get("numberOfBedrooms") != null ? ((Number) property.get("numberOfBedrooms")).intValue() : null);
@@ -106,14 +106,14 @@ public class DataSyncService {
                 document.setBeds(property.get("numberOfBeds") != null ? ((Number) property.get("numberOfBeds")).intValue() : null);
                 document.setGuests(property.get("numberOfGuests") != null ? ((Number) property.get("numberOfGuests")).intValue() : null);
                 document.setHostId((String) property.get("hostId"));
-                // Convert Timestamp to LocalDateTime
+                // Convert Timestamp to String for dates
                 Object createdAtObj = property.get("createdAt");
                 if (createdAtObj instanceof java.sql.Timestamp) {
-                    document.setCreatedAt(((java.sql.Timestamp) createdAtObj).toLocalDateTime());
+                    document.setCreatedAt(((java.sql.Timestamp) createdAtObj).toLocalDateTime().toString());
                 }
                 Object updatedAtObj = property.get("updatedAt");
                 if (updatedAtObj instanceof java.sql.Timestamp) {
-                    document.setUpdatedAt(((java.sql.Timestamp) updatedAtObj).toLocalDateTime());
+                    document.setUpdatedAt(((java.sql.Timestamp) updatedAtObj).toLocalDateTime().toString());
                 }
                 document.setIsActive((Boolean) property.get("isAvailable"));
                 document.setAmenityIds(amenityIds);

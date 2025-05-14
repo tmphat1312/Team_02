@@ -5,6 +5,7 @@ import com.property.search.model.PropertyDocument;
 import com.property.search.repository.PropertySearchRepository;
 import com.property.search.util.GeoUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -13,17 +14,21 @@ import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class PropertySearchService {
-    private final PropertySearchRepository propertySearchRepository;
-    private final GeocodingService geocodingService;
+    
+    @Autowired
+    private PropertySearchRepository propertySearchRepository;
+    
+    @Autowired
+    private GeocodingService geocodingService;
 
-    public Page<PropertySearchResult> searchProperties(
+    public Page<PropertyDocument> searchProperties(
             String query,
             BigDecimal minPrice,
             BigDecimal maxPrice,
@@ -32,57 +37,50 @@ public class PropertySearchService {
             Double radiusKm,
             PageRequest pageRequest) {
         
-        // Get coordinates from location if provided
-        final GeoPoint searchLocation;
-        if (location != null && !location.isEmpty()) {
-            Point point = geocodingService.getCoordinates(location);
-            if (point != null) {
-                searchLocation = new GeoPoint(point.getY(), point.getX());
-            } else {
-                searchLocation = null;
-            }
-        } else {
-            searchLocation = null;
-        }
-
         // First get all properties matching the search criteria
         Page<PropertyDocument> properties = propertySearchRepository.searchProperties(
                 query, minPrice, maxPrice, location, propertyType, pageRequest);
-
-        // If no search location or geocoding failed, return results without distance
-        if (searchLocation == null || radiusKm == null) {
-            List<PropertySearchResult> results = properties.getContent().stream()
-                .map(property -> PropertySearchResult.builder()
-                    .property(property)
-                    .distance(0.0)
-                    .build())
-                .collect(Collectors.toList());
-            return new PageImpl<>(results, pageRequest, properties.getTotalElements());
+        
+        // If no radius filter, return all results
+        if (radiusKm == null || location == null || location.isEmpty()) {
+            return properties;
         }
-
-        // Calculate distances and filter by radius
-        final double finalRadiusKm = radiusKm;
-        List<PropertySearchResult> results = properties.getContent().stream()
-            .filter(property -> property.getLocationPoint() != null)
-            .map(property -> {
-                Point propertyPoint = new Point(
-                    property.getLocationPoint().getLon(),
-                    property.getLocationPoint().getLat()
-                );
-                Point searchPoint = new Point(
-                    searchLocation.getLon(),
-                    searchLocation.getLat()
-                );
+        
+        // Get coordinates for the location search
+        Point searchPoint = geocodingService.getCoordinates(location);
+        if (searchPoint == null) {
+            // If geocoding fails, return unfiltered results
+            System.out.println("Geocoding failed for location: " + location);
+            return properties;
+        }
+        
+        System.out.println("Search coordinates: lat=" + searchPoint.getY() + ", lon=" + searchPoint.getX());
+        
+        // Create GeoPoint for calculations
+        GeoPoint searchLocation = new GeoPoint(searchPoint.getY(), searchPoint.getX());
+        
+        // Filter results by distance
+        List<PropertyDocument> filteredProperties = properties.getContent().stream()
+            .filter(property -> {
+                // Skip properties without location data
+                if (property.getLocationPoint() == null) {
+                    return false;
+                }
+                
+                GeoPoint propertyLocation = property.getLocationPoint();
+                Point propertyPoint = new Point(propertyLocation.getLon(), propertyLocation.getLat());
+                
+                // Calculate distance using Haversine formula
                 double distance = GeoUtils.calculateDistance(searchPoint, propertyPoint);
-                return PropertySearchResult.builder()
-                    .property(property)
-                    .distance(distance)
-                    .build();
+                System.out.println("Property: " + property.getTitle() + ", Distance: " + distance + "km");
+                
+                // Include if within radius
+                return distance <= radiusKm;
             })
-            .filter(result -> result.getDistance() <= finalRadiusKm)
             .collect(Collectors.toList());
-
-        return new PageImpl<>(results, pageRequest, results.size());
+        
+        // Create new page with filtered results
+        return new PageImpl<>(filteredProperties, pageRequest, filteredProperties.size());
     }
 
     public Optional<PropertyDocument> findById(String id) {

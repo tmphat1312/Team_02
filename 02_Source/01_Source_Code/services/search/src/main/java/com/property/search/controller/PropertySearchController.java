@@ -1,8 +1,10 @@
 package com.property.search.controller;
 
 import com.property.search.dto.PropertySearchResult;
+import com.property.search.model.PropertyDocument;
 import com.property.search.service.PropertySearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,13 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/properties/search")
-@RequiredArgsConstructor
 public class PropertySearchController {
 
-    private final PropertySearchService propertySearchService;
+    @Autowired
+    private PropertySearchService propertySearchService;
 
     @GetMapping
-    public ResponseEntity<Page<PropertySearchResult>> searchProperties(
+    public ResponseEntity<Page<PropertyDocument>> searchProperties(
             @RequestParam(value = "q", required = false) String q,
             @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
             @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
@@ -32,8 +34,15 @@ public class PropertySearchController {
         PageRequest pageable = PageRequest.of(page, size);
 
         // Call service to search
-        Page<PropertySearchResult> results = propertySearchService.searchProperties(
+        Page<PropertyDocument> results = propertySearchService.searchProperties(
                 q, minPrice, maxPrice, location, propertyType, radiusKm, pageable);
+        System.out.println("q: " + q);
+        System.out.println("minPrice: " + minPrice);
+        System.out.println("maxPrice: " + maxPrice);
+        System.out.println("location: " + location);
+        System.out.println("propertyType: " + propertyType);
+        System.out.println("radiusKm: " + radiusKm);
+        System.out.println("Results: " + results.getContent());
 
         return ResponseEntity.ok(results);
     }

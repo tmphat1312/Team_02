@@ -2,15 +2,36 @@ package com.property.search.dto;
 
 import com.property.search.model.PropertyDocument;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PropertySearchResult {
     private PropertyDocument property;
-    private double distance; // Distance in kilometers
+    private Double distance; // Distance in kilometers
+    
+    public static PropertySearchResultBuilder builder() {
+        return new PropertySearchResultBuilder();
+    }
+    
+    public static class PropertySearchResultBuilder {
+        private PropertyDocument property;
+        private Double distance;
+        
+        public PropertySearchResultBuilder property(PropertyDocument property) {
+            this.property = property;
+            return this;
+        }
+        
+        public PropertySearchResultBuilder distance(Double distance) {
+            this.distance = distance;
+            return this;
+        }
+        
+        public PropertySearchResult build() {
+            return new PropertySearchResult(property, distance);
+        }
+    }
 } 

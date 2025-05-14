@@ -30,8 +30,7 @@ public class PropertyDocument {
     @Field(type = FieldType.Text, analyzer = "standard")
     private String description;
 
-    @Field(type = FieldType.Double)
-    private BigDecimal price;
+   
 
     @Field(type = FieldType.Double)
     private BigDecimal pricePerNight;
@@ -60,11 +59,11 @@ public class PropertyDocument {
     @Field(type = FieldType.Keyword)
     private String hostId;
 
-    @Field(type = FieldType.Date)
-    private LocalDateTime createdAt;
+    @Field(type = FieldType.Keyword)
+    private String createdAt;
 
-    @Field(type = FieldType.Date)
-    private LocalDateTime updatedAt;
+    @Field(type = FieldType.Keyword)
+    private String updatedAt;
 
     @Field(type = FieldType.Boolean)
     private Boolean isActive;
@@ -74,4 +73,12 @@ public class PropertyDocument {
 
     @Field(type = FieldType.Keyword)
     private String propertyType;
+
+    public GeoPoint getLocationPoint() {
+        return this.locationPoint;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
 }

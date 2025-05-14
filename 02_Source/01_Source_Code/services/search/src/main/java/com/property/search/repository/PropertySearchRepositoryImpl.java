@@ -39,17 +39,17 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
                    .or("description").contains(query);
         }
 
-        // Add price range filter
+        // Add price range filter using pricePerNight
         if (minPrice != null) {
-            criteria.and("price").greaterThanEqual(minPrice);
+            criteria.and("pricePerNight").greaterThanEqual(minPrice);
         }
         if (maxPrice != null) {
-            criteria.and("price").lessThanEqual(maxPrice);
+            criteria.and("pricePerNight").lessThanEqual(maxPrice);
         }
 
         // Add location filter
         if (location != null && !location.isEmpty()) {
-            criteria.and("location").is(location);
+            criteria.and("location").contains(location);
         }
 
         // Add property type filter
@@ -62,7 +62,11 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
 
         Query searchQuery = new CriteriaQuery(criteria, pageRequest);
         
+        System.out.println("Executing Elasticsearch query: " + searchQuery);
+        
         SearchHits<PropertyDocument> searchHits = elasticsearchOperations.search(searchQuery, PropertyDocument.class);
+        
+        System.out.println("Found " + searchHits.getTotalHits() + " results");
         
         List<PropertyDocument> properties = searchHits.getSearchHits().stream()
                 .map(hit -> hit.getContent())
