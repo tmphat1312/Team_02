@@ -10,6 +10,10 @@ This service provides powerful search functionality for real estate properties i
 - Property type filtering
 - Geospatial search with radius filtering
 
+## Initilizing ES server
+cd \Team_02> 
+docker-compose up -d
+
 ## API Endpoints
 
 ### Search Properties
@@ -74,5 +78,5 @@ GET http://localhost:8082/api/properties/search?q=lake&minPrice=100&maxPrice=500
 3. Build the service: `mvn clean package`
 4. Run the service: `java -jar target/property-search-service.jar`
 
-## Data Synchronization
+## Data Synchronization (per 5 min)
 The service includes a `DataSyncService` that can synchronize property data from the main database to Elasticsearch. This ensures the search index stays up-to-date with the latest property information. 
