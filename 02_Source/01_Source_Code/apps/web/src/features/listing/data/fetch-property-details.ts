@@ -1,6 +1,6 @@
 import { Property } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchPropertyDetails(id: number): Promise<Property> {
-  return httpClient.get(`/properties/${id}`).then((res) => res.data.data);
+  return http.get(`/properties/${id}`).then((res) => res.data.data);
 }

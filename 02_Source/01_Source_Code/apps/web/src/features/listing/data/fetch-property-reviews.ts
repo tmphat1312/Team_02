@@ -1,11 +1,11 @@
 import { Review, ReviewWithTenant } from "@/typings/models";
 import { fetchUserDetails } from "@/features/auth/data/fetch-user-details";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchPropertyReviews(
   propertyId: number
 ): Promise<ReviewWithTenant[]> {
-  const reviews = await httpClient
+  const reviews = await http
     .get(`/reviews?propertyId=${propertyId}`)
     .then((res) => res.data.data);
   const reviewsWithTenant = await Promise.all(

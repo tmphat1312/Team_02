@@ -1,7 +1,7 @@
 import {
   addRecentlyViewed,
   checkIfRecentlyViewedExists,
-} from "@/app/(tenant)/wishlists/data/crud";
+} from "@/app/(user)/wishlists/data/crud";
 import { RecentlyViewed } from "@/typings/models";
 
 export async function addToRecentlyViewedList(

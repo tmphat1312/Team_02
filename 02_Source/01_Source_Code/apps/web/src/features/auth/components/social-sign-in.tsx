@@ -5,14 +5,14 @@ import { useTransition } from "react";
 import { Google } from "@/components/icons/google";
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
 
 export function SocialSignIn() {
   const [isPending, startTransition] = useTransition();
 
   const googleSignIn = () => {
     startTransition(async () => {
-      await authClient.signIn.social({
+      await auth.signIn.social({
         provider: "google",
         callbackURL: env.NEXT_PUBLIC_APP_URL,
       });

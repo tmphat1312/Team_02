@@ -1,7 +1,7 @@
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
 
 export function useUser() {
-  const { data, isPending, error } = authClient.useSession();
+  const { data, isPending, error } = auth.useSession();
 
   const user = data?.user;
   const isLoggedIn = !!user;

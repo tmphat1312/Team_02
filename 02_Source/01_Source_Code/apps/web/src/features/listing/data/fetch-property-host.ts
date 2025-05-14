@@ -1,6 +1,6 @@
 import { User } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchPropertyHost(id: string): Promise<User> {
-  return httpClient.get(`/users/${id}`).then((res) => res.data.data);
+  return http.get(`/users/${id}`).then((res) => res.data.data);
 }

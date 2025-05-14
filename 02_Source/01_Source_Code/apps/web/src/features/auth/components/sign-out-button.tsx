@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export function SignOutButton({ className }: { className?: string }) {
@@ -14,7 +14,7 @@ export function SignOutButton({ className }: { className?: string }) {
 
   const signOut = () => {
     startTransition(async () => {
-      await authClient.signOut({
+      await auth.signOut({
         fetchOptions: {
           onSuccess: () => {
             router.replace("/");

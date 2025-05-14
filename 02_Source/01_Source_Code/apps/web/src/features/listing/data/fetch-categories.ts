@@ -1,8 +1,8 @@
 import { Category } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchCategories(): Promise<Category[]> {
-  const response = await httpClient.get("/categories", {
+  const response = await http.get("/categories", {
     params: {
       pageSize: 1_000,
       order: "asc",

@@ -4,10 +4,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const HOST_NAVIGATION_LINKS = [
+const HostNavigationLinks = [
   { href: "/host", label: "Listings" },
   { href: "/host/reservations", label: "Reservations" },
-  { href: "/host/messages", label: "Messages" },
 ];
 
 export function HostNavigation() {
@@ -15,7 +14,7 @@ export function HostNavigation() {
 
   return (
     <nav className="flex items-center gap-6">
-      {HOST_NAVIGATION_LINKS.map((link) => (
+      {HostNavigationLinks.map((link) => (
         <Link
           key={link.href}
           href={link.href}

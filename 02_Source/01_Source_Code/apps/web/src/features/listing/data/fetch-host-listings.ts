@@ -1,5 +1,5 @@
 import { Property, PropertyWithReviews, Review } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 import { calculateAvgRating } from "@/lib/utils";
 
 export async function fetchHostListings({
@@ -9,7 +9,7 @@ export async function fetchHostListings({
 }): Promise<PropertyWithReviews[]> {
   const {
     data: { data: properties },
-  } = await httpClient.get(`/properties/host/${hostId}`);
+  } = await http.get(`/properties/host/${hostId}`);
 
   const propertiesWithReviewsPromises = properties.map(
     async (property: Property) => {
@@ -17,7 +17,7 @@ export async function fetchHostListings({
       params.append("propertyId", property.id.toString());
       const {
         data: { data: reviews },
-      } = await httpClient.get(`/reviews`, {
+      } = await http.get(`/reviews`, {
         params,
       });
 

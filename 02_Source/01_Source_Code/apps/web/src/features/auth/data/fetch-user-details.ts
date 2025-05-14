@@ -1,6 +1,6 @@
 import { User } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchUserDetails(userId: string): Promise<User> {
-  return httpClient.get(`/users/${userId}`).then((res) => res.data.data);
+  return http.get(`/users/${userId}`).then((res) => res.data.data);
 }

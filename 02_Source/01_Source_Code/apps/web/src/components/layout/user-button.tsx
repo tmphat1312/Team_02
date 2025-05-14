@@ -80,11 +80,6 @@ function SignedInItems() {
     <SignedIn>
       <DropdownMenuGroup className="py-1.5">
         <DropdownMenuItem asChild>
-          <LinkItem href="/messages" className="font-medium">
-            Messages
-          </LinkItem>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
           <LinkItem href="/trips" className="font-medium">
             Trips
           </LinkItem>

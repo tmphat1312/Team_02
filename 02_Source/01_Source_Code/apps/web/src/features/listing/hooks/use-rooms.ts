@@ -1,11 +1,11 @@
 import useSWRInfinite from "swr/infinite";
 
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 import { PAGE_SIZE } from "../config/settings";
 import { useFilterValues } from "./use-filter-values";
 
-const fetcher = (path: string) => httpClient.get(path).then((res) => res.data);
+const fetcher = (path: string) => http.get(path).then((res) => res.data);
 
 const fetchKey = ({
   categoryId,

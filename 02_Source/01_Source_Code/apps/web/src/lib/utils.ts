@@ -63,3 +63,10 @@ export function calculateAvgRating(review: Review) {
 export function makePluralNoun(word: string, count: number) {
   return pluralize(word, count, true);
 }
+
+export const kebabCaseToTitleCase = (str: string) => {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

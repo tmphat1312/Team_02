@@ -21,8 +21,6 @@
   --border: oklch(90.7% 0.022 261.325);
   --input: oklch(85.7% 0.022 261.325);
   --ring: oklch(0.25 0 0);
-  --airbnb: #ff385c;
-  --airbnb-hover: #e31c5f;
 }
 
 @theme inline {
@@ -48,8 +46,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-airbnb: var(--airbnb);
-  --color-airbnb-hover: var(--airbnb-hover);
 }
 
 @layer base {

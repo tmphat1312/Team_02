@@ -1,8 +1,6 @@
 import { Amenity } from "@/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { http } from "@/lib/http";
 
 export async function fetchPropertyAmenities(id: number): Promise<Amenity[]> {
-  return httpClient
-    .get(`/properties/${id}/amenities`)
-    .then((res) => res.data.data);
+  return http.get(`/properties/${id}/amenities`).then((res) => res.data.data);
 }
