@@ -321,19 +321,19 @@ route.post(
     const formData = await c.req.formData();
 
     const formBody = {
-      title: formData.get("title")?.toString() ?? "",
-      description: formData.get("description")?.toString() ?? "",
-      address: formData.get("address")?.toString() ?? "",
-      latitude: formData.get("latitude")?.toString() ?? "",
-      longitude: formData.get("longitude")?.toString() ?? "",
-      pricePerNight: formData.get("pricePerNight")?.toString() ?? "",
-      numberOfGuests: formData.get("numberOfGuests")?.toString() ?? "",
-      numberOfBedrooms: formData.get("numberOfBedrooms")?.toString() ?? "",
-      numberOfBeds: formData.get("numberOfBeds")?.toString() ?? "",
-      numberOfBathrooms: formData.get("numberOfBathrooms")?.toString() ?? "",
-      categories: formData.getAll("categories"),
-      amenities: formData.getAll("amenities"),
-      rules: formData.getAll("rules"),
+      title: formData.get("title") ?? "",
+      description: formData.get("description") ?? "",
+      address: formData.get("address") ?? "",
+      latitude: formData.get("latitude") ?? "",
+      longitude: formData.get("longitude") ?? "",
+      pricePerNight: formData.get("pricePerNight") ?? "",
+      numberOfGuests: formData.get("numberOfGuests") ?? "",
+      numberOfBedrooms: formData.get("numberOfBedrooms") ?? "",
+      numberOfBeds: formData.get("numberOfBeds") ?? "",
+      numberOfBathrooms: formData.get("numberOfBathrooms") ?? "",
+      categories: JSON.parse((formData.getAll("categories") ?? []).toString()),
+      amenities: JSON.parse((formData.getAll("amenities") ?? []).toString()),
+      rules: JSON.parse((formData.getAll("rules") ?? []).toString()),
     };
 
     const parseResult = createPropertySchema.safeParse(formBody);
@@ -396,7 +396,7 @@ route.post(
     }
 
     // Images
-    const imageFiles = formData.getAll("images");
+    const imageFiles = formData.getAll("images") || [];
 
     if (imageFiles.length < 5) {
       return badRequest(

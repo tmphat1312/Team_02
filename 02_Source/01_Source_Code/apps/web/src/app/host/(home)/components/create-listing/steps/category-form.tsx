@@ -8,18 +8,19 @@ import { Stack } from "@/components/layout/stack";
 import { TextAlert } from "@/components/typography/text-alert";
 import { cn } from "@/lib/utils";
 
-import { useCategories } from "../../hooks/use-categories";
-import { StepHeader, StepHeading, StepSection } from "../step";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
+import { useCategories } from "../../../hooks/use-categories";
+import { StepHeader, StepHeading, StepSection } from "../../step";
 
-type Props = {
-  defaultCategories?: number[];
-  onCategoriesChange: (categories: number[]) => void;
-};
-
-export function CategoryForm({ defaultCategories, onCategoriesChange }: Props) {
+export function CategoryForm() {
   const { data: categories, isLoading } = useCategories();
+  const { state, dispatch } = useCreateListingContext();
+
   const [selectedCategories, setSelectedCategories] = useState<Set<number>>(
-    new Set(defaultCategories)
+    new Set(state.categories)
   );
 
   const handleCategoryClick = (categoryId: number) => {
@@ -29,8 +30,11 @@ export function CategoryForm({ defaultCategories, onCategoriesChange }: Props) {
     } else {
       newSet.add(categoryId);
     }
-    onCategoriesChange(Array.from(newSet));
     setSelectedCategories(newSet);
+    dispatch({
+      type: ActionType.SET_CATEGORIES,
+      payload: Array.from(newSet),
+    });
   };
 
   if (isLoading) {

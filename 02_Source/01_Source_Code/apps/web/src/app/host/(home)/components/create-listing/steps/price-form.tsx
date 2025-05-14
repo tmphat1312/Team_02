@@ -2,41 +2,42 @@
 
 import { useId, useState } from "react";
 
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
 import { formatPrice } from "@/lib/utils";
-
-type Props = {
-  defaultPrice?: number;
-  onPriceChange: (price: number) => void;
-};
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
 
 const MaxPrice = 100_000;
 const MinPrice = 2;
 
-export function PriceForm({ defaultPrice, onPriceChange }: Props) {
+export function PriceForm() {
+  const { state, dispatch } = useCreateListingContext();
+
   const id = useId();
   const [exceedPriceRange, setExceedPriceRange] = useState(false);
-  const [price, setPrice] = useState(formatPrice(defaultPrice || 10));
+  const [price, setPrice] = useState(formatPrice(state.price));
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const priceStr = e.target.value;
     const priceNum = parseFloat(priceStr.replace(/[^0-9.-]+/g, ""));
-
     const price = isNaN(priceNum) ? 0 : priceNum;
 
     if (price < MinPrice || price > MaxPrice) {
       setExceedPriceRange(true);
-      onPriceChange(0);
+      dispatch({ type: ActionType.SET_PRICE, payload: 0 });
     } else {
       setExceedPriceRange(false);
-      onPriceChange(price);
+      dispatch({ type: ActionType.SET_PRICE, payload: price });
     }
 
     setPrice(formatPrice(price));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
   };
 
   return (
@@ -46,7 +47,7 @@ export function PriceForm({ defaultPrice, onPriceChange }: Props) {
         <StepDescription>You can change it anytime.</StepDescription>
       </StepHeader>
 
-      <form className="mb-18" onSubmit={handleSubmit}>
+      <form className="mb-18" onSubmit={(e) => e.preventDefault()}>
         <label htmlFor={id} className="sr-only">
           price
         </label>

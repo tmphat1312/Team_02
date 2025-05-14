@@ -1,48 +1,42 @@
 "use client";
 
-import { useId, useState } from "react";
+import React from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
 
-type Props = {
-  defaultTitle?: string;
-  defaultDescription?: string;
-  onTitleChange: (title: string) => void;
-  onDescriptionChange: (description: string) => void;
-};
+export function TitleAndDescForm() {
+  const { state, dispatch } = useCreateListingContext();
 
-export function TitleAndDescriptionForm({
-  defaultTitle,
-  defaultDescription,
-  onTitleChange,
-  onDescriptionChange,
-}: Props) {
-  const [title, setTitle] = useState(defaultTitle || "");
-  const [description, setDescription] = useState(defaultDescription || "");
+  const [title, setTitle] = React.useState(state.title);
+  const [desc, setDesc] = React.useState(state.description);
 
-  const id = useId();
+  const id = React.useId();
   const titleId = `title-${id}`;
   const descriptionId = `description-${id}`;
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    onTitleChange(e.target.value);
+    dispatch({ type: ActionType.SET_TITLE, payload: e.target.value });
   };
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(e.target.value);
-    onDescriptionChange(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log("Form submitted:", { title, description });
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDesc(e.target.value);
+    dispatch({
+      type: ActionType.SET_DESCRIPTION,
+      payload: e.target.value,
+    });
   };
 
   return (
@@ -53,7 +47,7 @@ export function TitleAndDescriptionForm({
           Provide a detailed description of your listing.
         </StepDescription>
       </StepHeader>
-      <form className="w-lg" onSubmit={handleSubmit}>
+      <form className="w-lg" onSubmit={(e) => e.preventDefault()}>
         <div className="mb-6">
           <Label htmlFor={titleId} className="text-lg font-medium mb-2">
             Name your listing
@@ -76,8 +70,8 @@ export function TitleAndDescriptionForm({
             placeholder="Describe your listing in a few sentences"
             className="text-lg! placeholder:text-base h-[unset]! py-2 px-4"
             rows={5}
-            value={description}
-            onChange={handleDescriptionChange}
+            value={desc}
+            onChange={handleDescChange}
           />
         </div>
       </form>

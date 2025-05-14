@@ -6,49 +6,34 @@ import { Stack } from "@/components/layout/stack";
 import { NumberInput } from "@/components/number-input";
 import { Separator } from "@/components/ui/separator";
 
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../contexts/create-listing-context";
 import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
 
-type Props = {
-  defaultBeds?: number;
-  defaultGuests?: number;
-  defaultBedrooms?: number;
-  defaultBathrooms?: number;
-  onBedsChange: (beds: number) => void;
-  onGuestsChange: (guests: number) => void;
-  onBedroomsChange: (bedrooms: number) => void;
-  onBathroomsChange: (bathrooms: number) => void;
-};
-
-export function NumbersForm({
-  defaultBeds,
-  defaultGuests,
-  defaultBedrooms,
-  defaultBathrooms,
-  onBedsChange,
-  onGuestsChange,
-  onBedroomsChange,
-  onBathroomsChange,
-}: Props) {
-  const [beds, setBeds] = useState(defaultBeds || 1);
-  const [guests, setGuests] = useState(defaultGuests || 1);
-  const [bedrooms, setBedrooms] = useState(defaultBedrooms || 1);
-  const [bathrooms, setBathrooms] = useState(defaultBathrooms || 1);
+export function NumbersForm() {
+  const { state, dispatch } = useCreateListingContext();
+  const [beds, setBeds] = useState(state.beds);
+  const [guests, setGuests] = useState(state.guests);
+  const [bedrooms, setBedrooms] = useState(state.bedrooms);
+  const [bathrooms, setBathrooms] = useState(state.bathrooms);
 
   const handleBedsChange = (value: number) => {
     setBeds(value);
-    onBedsChange(value);
+    dispatch({ type: ActionType.SET_BEDS, payload: value });
   };
   const handleGuestsChange = (value: number) => {
     setGuests(value);
-    onGuestsChange(value);
+    dispatch({ type: ActionType.SET_GUESTS, payload: value });
   };
   const handleBedroomsChange = (value: number) => {
     setBedrooms(value);
-    onBedroomsChange(value);
+    dispatch({ type: ActionType.SET_BEDROOMS, payload: value });
   };
   const handleBathroomsChange = (value: number) => {
     setBathrooms(value);
-    onBathroomsChange(value);
+    dispatch({ type: ActionType.SET_BATHROOMS, payload: value });
   };
 
   return (

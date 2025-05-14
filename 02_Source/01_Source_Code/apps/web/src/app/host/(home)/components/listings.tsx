@@ -1,7 +1,7 @@
-import { PropertyWithReviews } from "@/typings/models";
-import { TextAlert } from "@/components/typography/text-alert";
-
 import { Grid } from "@/components/layout/grid";
+import { TextAlert } from "@/components/typography/text-alert";
+import { PropertyWithReviews } from "@/typings/models";
+
 import { ListingCard } from "./listing-card";
 
 type ListingsProps = {

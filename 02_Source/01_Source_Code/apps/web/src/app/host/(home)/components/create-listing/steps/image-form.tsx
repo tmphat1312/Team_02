@@ -6,20 +6,25 @@ import { useEffect } from "react";
 
 import { Stack } from "@/components/layout/stack";
 import { Button } from "@/components/ui/button";
-import { FileMetadata, useFileUpload } from "@/hooks/use-file-upload";
+import { useFileUpload } from "@/hooks/use-file-upload";
 
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
 
-type Props = {
-  defaultFiles?: FileMetadata[];
-  onFilesChange: (files: FileMetadata[]) => void;
-};
+const MaxSizeMB = 5;
+const MaxSize = MaxSizeMB * 1024 * 1024; // 5MB default
+const MaxFiles = 8;
 
-export function ImageForm({ defaultFiles, onFilesChange }: Props) {
-  const maxSizeMB = 5;
-  const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
-  const maxFiles = 8;
-
+export function ImageForm() {
+  const { state, dispatch } = useCreateListingContext();
   const [
     { files, isDragging, errors },
     {
@@ -32,24 +37,25 @@ export function ImageForm({ defaultFiles, onFilesChange }: Props) {
       getInputProps,
     },
   ] = useFileUpload({
-    accept: "image/svg+xml,image/png,image/jpeg,image/jpg",
-    maxSize,
+    accept:
+      "image/svg+xml,image/png,image/jpeg,image/jpg,image/webp,image/avif",
+    maxSize: MaxSize,
     multiple: true,
-    maxFiles,
-    initialFiles: defaultFiles || [],
+    maxFiles: MaxFiles,
+    initialFiles: state.images || [],
   });
 
   useEffect(() => {
-    onFilesChange(
-      files.map((f) => ({
-        id: f.id,
-        name: f.file.name,
-        size: f.file.size,
-        type: f.file.type,
-        url: f.preview || "",
-      }))
-    );
-    console.log("Files changed:", files);
+    const images = files.map((f) => ({
+      id: f.id,
+      name: f.file.name,
+      size: f.file.size,
+      type: f.file.type,
+      url: f.preview || "",
+    }));
+    const imageFiles = files.map((f) => f.file as File);
+    dispatch({ type: ActionType.SET_IMAGES, payload: images });
+    dispatch({ type: ActionType.SET_IMAGE_FILES, payload: imageFiles });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
@@ -89,7 +95,7 @@ export function ImageForm({ defaultFiles, onFilesChange }: Props) {
                   variant="outline"
                   size="sm"
                   onClick={openFileDialog}
-                  disabled={files.length >= maxFiles}
+                  disabled={files.length >= MaxFiles}
                 >
                   <UploadIcon
                     className="-ms-0.5 size-3.5 opacity-60"
@@ -141,7 +147,7 @@ export function ImageForm({ defaultFiles, onFilesChange }: Props) {
                 Drop your images here
               </p>
               <p className="text-muted-foreground text-xs">
-                SVG, PNG, JPG (max. {maxSizeMB}MB)
+                SVG, PNG, JPG, WEBP, AVIF (max. {MaxSizeMB}MB)
               </p>
               <Button
                 variant="outline"
@@ -156,13 +162,10 @@ export function ImageForm({ defaultFiles, onFilesChange }: Props) {
         </div>
 
         {errors.length > 0 && (
-          <div
-            className="text-destructive flex items-center gap-1 text-xs"
-            role="alert"
-          >
+          <Stack className="text-destructive gap-1 text-xs" role="alert">
             <AlertCircleIcon className="size-3 shrink-0" />
             <span>{errors[0]}</span>
-          </div>
+          </Stack>
         )}
       </Stack>
     </StepSection>

@@ -3,29 +3,30 @@
 import { useEffect, useRef, useState } from "react";
 
 import { env } from "@/env";
+import { getGeocoding } from "@/features/map/data/get-geocoding";
 import { mapboxgl } from "@/lib/mapbox";
 
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
-import { getGeocoding } from "@/features/map/data/get-geocoding";
-import { GeoSearchbox } from "./geo-searchbox";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
+import { GeoSearchbox } from "../geo-searchbox";
 
-type Props = {
-  defaultCoordinates?: [number, number];
-  defaultAddress?: string;
-  onAddressChange: (coordinates: [number, number], address: string) => void;
-};
+export function CoordinatesForm() {
+  const { state, dispatch } = useCreateListingContext();
 
-export function AddressForm({
-  onAddressChange,
-  defaultCoordinates,
-  defaultAddress,
-}: Props) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map>(null);
   const markerRef = useRef<mapboxgl.Marker>(null);
 
-  const [lng] = useState(defaultCoordinates?.[0] ?? 106.522144);
-  const [lat] = useState(defaultCoordinates?.[1] ?? 10.6102784);
+  const [lng] = useState(state.coordinates?.[0] ?? 106.8102784);
+  const [lat] = useState(state.coordinates?.[1] ?? 10.6102784);
   const [zoom] = useState(10);
 
   const changeMarkerPosition = (
@@ -36,7 +37,14 @@ export function AddressForm({
     markerRef.current.setLngLat(coordinates);
     markerRef.current.setPopup(new mapboxgl.Popup().setHTML(address));
     markerRef.current.togglePopup();
-    onAddressChange(coordinates, address);
+    dispatch({
+      type: ActionType.SET_COORDINATES,
+      payload: coordinates,
+    });
+    dispatch({
+      type: ActionType.SET_ADDRESS,
+      payload: address,
+    });
   };
 
   const handleAddressChange = (
@@ -80,8 +88,8 @@ export function AddressForm({
       .setLngLat([lng, lat])
       .addTo(mapRef.current);
 
-    if (defaultAddress) {
-      markerRef.current.setPopup(new mapboxgl.Popup().setHTML(defaultAddress));
+    if (state.address) {
+      markerRef.current.setPopup(new mapboxgl.Popup().setHTML(state.address));
       markerRef.current.togglePopup();
     }
 
@@ -107,7 +115,7 @@ export function AddressForm({
         <div
           ref={mapContainerRef}
           className="h-96 w-xl rounded-lg shadow overflow-clip"
-        ></div>
+        />
         <GeoSearchbox onAddressChange={handleAddressChange} />
       </div>
     </StepSection>

@@ -8,18 +8,23 @@ import { Stack } from "@/components/layout/stack";
 import { TextAlert } from "@/components/typography/text-alert";
 import { cn } from "@/lib/utils";
 
-import { useAmenities } from "../../hooks/use-amenities";
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
+import { useAmenities } from "../../../hooks/use-amenities";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
 
-type Props = {
-  defaultAmenities?: number[];
-  onAmenitiesChange: (amenities: number[]) => void;
-};
-
-export function AmenityForm({ defaultAmenities, onAmenitiesChange }: Props) {
+export function AmenityForm() {
+  const { state, dispatch } = useCreateListingContext();
   const { data: amenities, isLoading } = useAmenities();
   const [selectedAmenities, setSelectedAmenities] = useState<Set<number>>(
-    new Set(defaultAmenities)
+    new Set(state.amenities)
   );
 
   const handleCategoryClick = (categoryId: number) => {
@@ -29,7 +34,10 @@ export function AmenityForm({ defaultAmenities, onAmenitiesChange }: Props) {
     } else {
       newSet.add(categoryId);
     }
-    onAmenitiesChange(Array.from(newSet));
+    dispatch({
+      type: ActionType.SET_AMENITIES,
+      payload: Array.from(newSet),
+    });
     setSelectedAmenities(newSet);
   };
 

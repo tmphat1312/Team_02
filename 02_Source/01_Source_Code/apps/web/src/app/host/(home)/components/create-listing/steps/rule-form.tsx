@@ -9,30 +9,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, X } from "lucide-react";
-import { useCommonRules } from "../../hooks/use-common-rules";
-import { StepDescription, StepHeader, StepHeading, StepSection } from "../step";
+import { useCommonRules } from "../../../hooks/use-common-rules";
+import {
+  StepDescription,
+  StepHeader,
+  StepHeading,
+  StepSection,
+} from "../../step";
+import {
+  ActionType,
+  useCreateListingContext,
+} from "../../../contexts/create-listing-context";
 
-type Props = {
-  defaultRules?: number[];
-  onRulesChange: (rules: number[]) => void;
-  defaultCustomRules?: string[];
-  onCustomRulesChange: (rules: string[]) => void;
-};
-
-export function RuleForm({
-  defaultRules,
-  onRulesChange,
-  defaultCustomRules,
-  onCustomRulesChange,
-}: Props) {
+export function RuleForm() {
+  const { state, dispatch } = useCreateListingContext();
   const { data: commonRules, isLoading } = useCommonRules();
   const [selectedRules, setSelectedRules] = useState<Set<number>>(
-    new Set(defaultRules || [])
+    new Set(state.rules)
   );
   const [customRule, setCustomRule] = useState("");
-  const [customRules, setCustomRules] = useState<string[]>(
-    defaultCustomRules || []
-  );
+  const [customRules, setCustomRules] = useState<string[]>(state.customRules);
 
   const customRuleDisabled = customRule.length <= 5;
 
@@ -44,7 +40,10 @@ export function RuleForm({
       newSet.add(ruleId);
     }
     setSelectedRules(newSet);
-    onRulesChange(Array.from(newSet));
+    dispatch({
+      type: ActionType.SET_RULES,
+      payload: Array.from(newSet),
+    });
   };
 
   const handleCustomRuleSubmit = (e: React.FormEvent) => {
@@ -53,14 +52,20 @@ export function RuleForm({
 
     const newCustomRules = [customRule, ...customRules];
     setCustomRules(newCustomRules);
-    onCustomRulesChange(newCustomRules);
+    dispatch({
+      type: ActionType.SET_CUSTOM_RULES,
+      payload: newCustomRules,
+    });
     setCustomRule("");
   };
 
   const handleCustomRuleRemove = (index: number) => {
     const newCustomRules = customRules.filter((_, i) => i !== index);
     setCustomRules(newCustomRules);
-    onCustomRulesChange(newCustomRules);
+    dispatch({
+      type: ActionType.SET_CUSTOM_RULES,
+      payload: newCustomRules,
+    });
   };
 
   if (isLoading) {
@@ -89,6 +94,7 @@ export function RuleForm({
                 id={rule.id.toString()}
                 name={rule.id.toString()}
                 className="hidden peer"
+                defaultChecked={selectedRules.has(rule.id)}
               />
               <label
                 htmlFor={rule.id.toString()}
