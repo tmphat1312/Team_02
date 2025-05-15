@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/properties/search")
@@ -26,6 +27,7 @@ public class PropertySearchController {
             @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
             @RequestParam(value = "location", required = false) String location,
             @RequestParam(value = "propertyType", required = false) String propertyType,
+            @RequestParam(value = "amenityNames", required = false) List<String> amenityNames,
             @RequestParam(value = "radiusKm", required = false) Double radiusKm,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -35,15 +37,23 @@ public class PropertySearchController {
 
         // Call service to search
         Page<PropertyDocument> results = propertySearchService.searchProperties(
-                q, minPrice, maxPrice, location, propertyType, radiusKm, pageable);
+                q, minPrice, maxPrice, location, propertyType, amenityNames, radiusKm, pageable);
         System.out.println("q: " + q);
         System.out.println("minPrice: " + minPrice);
         System.out.println("maxPrice: " + maxPrice);
         System.out.println("location: " + location);
         System.out.println("propertyType: " + propertyType);
+        System.out.println("amenityNames: " + amenityNames);
         System.out.println("radiusKm: " + radiusKm);
         System.out.println("Results: " + results.getContent());
 
         return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PropertyDocument> getPropertyById(@PathVariable String id) {
+        return propertySearchService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 } 

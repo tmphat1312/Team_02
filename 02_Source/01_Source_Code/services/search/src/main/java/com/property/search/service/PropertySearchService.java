@@ -4,7 +4,6 @@ import com.property.search.dto.PropertySearchResult;
 import com.property.search.model.PropertyDocument;
 import com.property.search.repository.PropertySearchRepository;
 import com.property.search.util.GeoUtils;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,11 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class PropertySearchService {
     
+    private final PropertySearchRepository propertySearchRepository;
+    private final GeocodingService geocodingService;
+
     @Autowired
-    private PropertySearchRepository propertySearchRepository;
-    
-    @Autowired
-    private GeocodingService geocodingService;
+    public PropertySearchService(PropertySearchRepository propertySearchRepository, GeocodingService geocodingService) {
+        this.propertySearchRepository = propertySearchRepository;
+        this.geocodingService = geocodingService;
+    }
 
     public Page<PropertyDocument> searchProperties(
             String query,
@@ -34,12 +36,13 @@ public class PropertySearchService {
             BigDecimal maxPrice,
             String location,
             String propertyType,
+            List<String> amenityNames,
             Double radiusKm,
             PageRequest pageRequest) {
         
         // First get all properties matching the search criteria
         Page<PropertyDocument> properties = propertySearchRepository.searchProperties(
-                query, minPrice, maxPrice, location, propertyType, pageRequest);
+                query, minPrice, maxPrice, location, propertyType, amenityNames, pageRequest);
         
         // If no radius filter, return all results
         if (radiusKm == null || location == null || location.isEmpty()) {

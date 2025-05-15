@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository
 public interface PropertySearchRepository extends ElasticsearchRepository<PropertyDocument, String>, PropertySearchRepositoryCustom {
@@ -17,5 +18,6 @@ public interface PropertySearchRepository extends ElasticsearchRepository<Proper
             BigDecimal maxPrice,
             String location,
             String propertyType,
+            List<String> amenityNames,
             PageRequest pageRequest);
 }

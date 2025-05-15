@@ -1,7 +1,7 @@
 package com.property.search.repository;
 
 import com.property.search.model.PropertyDocument;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +17,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-@RequiredArgsConstructor
 public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCustom {
 
     private final ElasticsearchOperations elasticsearchOperations;
+
+    @Autowired
+    public PropertySearchRepositoryImpl(ElasticsearchOperations elasticsearchOperations) {
+        this.elasticsearchOperations = elasticsearchOperations;
+    }
 
     @Override
     public Page<PropertyDocument> searchProperties(
@@ -29,6 +33,7 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
             BigDecimal maxPrice,
             String location,
             String propertyType,
+            List<String> amenityNames,
             PageRequest pageRequest) {
 
         Criteria criteria = new Criteria();
@@ -55,6 +60,15 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
         // Add property type filter
         if (propertyType != null && !propertyType.isEmpty()) {
             criteria.and("propertyType").is(propertyType);
+        }
+
+        // Add amenities filter by name
+        if (amenityNames != null && !amenityNames.isEmpty()) {
+            Criteria amenitiesCriteria = new Criteria("amenities.name");
+            for (String amenityName : amenityNames) {
+                amenitiesCriteria.or("amenities.name").contains(amenityName.toLowerCase());
+            }
+            criteria.and(amenitiesCriteria);
         }
 
         // Add active filter
