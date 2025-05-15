@@ -1,5 +1,6 @@
 package com.property.search.service;
 
+import com.property.search.model.AmenityInfo;
 import com.property.search.model.PropertyDocument;
 import com.property.search.repository.PropertySearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +32,10 @@ public class DataSyncService {
     @Transactional
     public void syncProperties() {
         String sql = "SELECT p.*, " +
-                    "STRING_AGG(pa.\"amenityId\"::text, ',') as amenity_ids " +
+                    "STRING_AGG(DISTINCT CONCAT(pa.\"amenityId\"::text, ':', a.name, ':', a.description, ':', a.\"imageUrl\"), '||') as amenity_data " +
                     "FROM properties p " +
                     "LEFT JOIN \"property_amenities\" pa ON p.id = pa.\"propertyId\" " +
+                    "LEFT JOIN amenities a ON pa.\"amenityId\" = a.id " +
                     "GROUP BY p.id";
 
         List<Map<String, Object>> properties = jdbcTemplate.queryForList(sql);
@@ -55,7 +58,7 @@ public class DataSyncService {
                 if (priceObj != null) {
                     try {
                         if (priceObj instanceof Number) {
-                        price = new BigDecimal(priceObj.toString());
+                            price = new BigDecimal(priceObj.toString());
                         } else if (priceObj instanceof String) {
                             price = new BigDecimal((String) priceObj);
                         }
@@ -67,11 +70,24 @@ public class DataSyncService {
                     logger.warn("pricePerNight is null for property {}", id);
                 }
 
-                // Handle amenity IDs
-                String amenityIdsStr = (String) property.get("amenity_ids");
-                List<String> amenityIds = amenityIdsStr != null ? 
-                    Arrays.asList(amenityIdsStr.split(",")) : 
-                    List.of();
+                // Handle amenities
+                List<AmenityInfo> amenities = new ArrayList<>();
+                String amenityDataStr = (String) property.get("amenity_data");
+                
+                if (amenityDataStr != null && !amenityDataStr.isEmpty()) {
+                    String[] amenityDataArray = amenityDataStr.split("\\|\\|");
+                    for (String amenityData : amenityDataArray) {
+                        String[] parts = amenityData.split(":", 4);
+                        if (parts.length == 4) {
+                            amenities.add(AmenityInfo.builder()
+                                .id(parts[0])
+                                .name(parts[1])
+                                .description(parts[2])
+                                .imageUrl(parts[3])
+                                .build());
+                        }
+                    }
+                }
 
                 // Handle location point
                 GeoPoint locationPoint = null;
@@ -98,7 +114,7 @@ public class DataSyncService {
                 document.setPricePerNight(price);
                 document.setLocation((String) property.get("address"));
                 if (locationPoint != null) {
-                document.setLocationPoint(locationPoint);
+                    document.setLocationPoint(locationPoint);
                 }
                 document.setArea(property.get("area") != null ? ((Number) property.get("area")).doubleValue() : null);
                 document.setBedrooms(property.get("numberOfBedrooms") != null ? ((Number) property.get("numberOfBedrooms")).intValue() : null);
@@ -116,7 +132,7 @@ public class DataSyncService {
                     document.setUpdatedAt(((java.sql.Timestamp) updatedAtObj).toLocalDateTime().toString());
                 }
                 document.setIsActive((Boolean) property.get("isAvailable"));
-                document.setAmenityIds(amenityIds);
+                document.setAmenities(amenities);
 
                 // Save to Elasticsearch
                 propertySearchRepository.save(document);

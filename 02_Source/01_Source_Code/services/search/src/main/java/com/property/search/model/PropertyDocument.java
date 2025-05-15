@@ -30,8 +30,6 @@ public class PropertyDocument {
     @Field(type = FieldType.Text, analyzer = "standard")
     private String description;
 
-   
-
     @Field(type = FieldType.Double)
     private BigDecimal pricePerNight;
 
@@ -68,11 +66,80 @@ public class PropertyDocument {
     @Field(type = FieldType.Boolean)
     private Boolean isActive;
 
-    @Field(type = FieldType.Keyword)
-    private List<String> amenityIds;
+    @Field(type = FieldType.Nested)
+    private List<AmenityInfo> amenities;
 
     @Field(type = FieldType.Keyword)
     private String propertyType;
+
+    // Getters and setters
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPricePerNight(BigDecimal pricePerNight) {
+        this.pricePerNight = pricePerNight;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setLocationPoint(GeoPoint locationPoint) {
+        this.locationPoint = locationPoint;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public void setBedrooms(Integer bedrooms) {
+        this.bedrooms = bedrooms;
+    }
+
+    public void setBathrooms(Integer bathrooms) {
+        this.bathrooms = bathrooms;
+    }
+
+    public void setBeds(Integer beds) {
+        this.beds = beds;
+    }
+
+    public void setGuests(Integer guests) {
+        this.guests = guests;
+    }
+
+    public void setHostId(String hostId) {
+        this.hostId = hostId;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public void setAmenities(List<AmenityInfo> amenities) {
+        this.amenities = amenities;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
 
     public GeoPoint getLocationPoint() {
         return this.locationPoint;
