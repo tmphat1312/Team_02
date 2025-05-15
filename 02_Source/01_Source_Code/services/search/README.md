@@ -15,6 +15,13 @@ This service provides powerful search functionality for real estate properties i
 cd \Team_02> 
 docker-compose up -d
 
+## Initilize app 
+mvn clean install
+mvn spring-boot:run
+
+GET http://localhost:9200/properties/_search?pretty
+for check in up data whether it was synced from pg ?
+
 ## API Endpoints
 
 ### Search Properties
