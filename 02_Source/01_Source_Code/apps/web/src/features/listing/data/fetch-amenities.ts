@@ -1,8 +1,8 @@
-import { Amenity } from "@/app/typings/models";
-import { httpClient } from "@/lib/http-client";
+import { Amenity } from "@/typings/models";
+import { http } from "@/lib/http";
 
 export async function fetchAmenities(): Promise<Amenity[]> {
-  const response = await httpClient.get("/amenities", {
+  const response = await http.get("/amenities", {
     params: {
       pageSize: 1_000,
     },

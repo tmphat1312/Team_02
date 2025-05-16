@@ -205,6 +205,22 @@ route.get("/", transformPaginationQuery, async (c) => {
   });
 });
 
+route.get("/host/:hostId", async (c) => {
+  const hostId = c.req.param("hostId");
+  const properties = await db
+    .select()
+    .from(propertiesWithImagesView)
+    .where(eq(propertiesWithImagesView.hostId, hostId))
+    .orderBy(desc(propertiesWithImagesView.createdAt));
+  const propertiesWithParsedPrices = properties.map(
+    ({ isAvailable, ...property }) => ({
+      ...property,
+      pricePerNight: parseFloat(property.pricePerNight),
+    })
+  );
+  return ok(c, propertiesWithParsedPrices);
+});
+
 route.get("/:id", async (c) => {
   // Input processing
   const propertyIdStr = c.req.param("id");
@@ -238,25 +254,89 @@ route.get("/:id", async (c) => {
   });
 });
 
+route.get("/:id/categories", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+
+  const categories = await db
+    .select({
+      id: categoriesTable.id,
+      name: categoriesTable.name,
+      description: categoriesTable.description,
+      imageUrl: categoriesTable.imageUrl,
+      createdAt: categoriesTable.createdAt,
+      updatedAt: categoriesTable.updatedAt,
+    })
+    .from(propertyCategoriesTable)
+    .leftJoin(
+      categoriesTable,
+      eq(categoriesTable.id, propertyCategoriesTable.categoryId)
+    )
+    .where(eq(propertyCategoriesTable.propertyId, propertyId));
+
+  return ok(c, categories);
+});
+
+route.get("/:id/amenities", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+  const amenities = await db
+    .select({
+      id: amenitiesTable.id,
+      name: amenitiesTable.name,
+      description: amenitiesTable.description,
+      imageUrl: amenitiesTable.imageUrl,
+      createdAt: amenitiesTable.createdAt,
+      updatedAt: amenitiesTable.updatedAt,
+    })
+    .from(propertyAmenitiesTable)
+    .leftJoin(
+      amenitiesTable,
+      eq(amenitiesTable.id, propertyAmenitiesTable.amenityId)
+    )
+    .where(eq(propertyAmenitiesTable.propertyId, propertyId));
+  return ok(c, amenities);
+});
+
+route.get("/:id/rules", async (c) => {
+  const propertyIdStr = c.req.param("id");
+  const propertyId = parseInt(propertyIdStr);
+  const rules = await db
+    .select({
+      id: rulesTable.id,
+      name: rulesTable.name,
+      description: rulesTable.description,
+      createdAt: rulesTable.createdAt,
+      updatedAt: rulesTable.updatedAt,
+    })
+    .from(propertyRulesTable)
+    .leftJoin(rulesTable, eq(rulesTable.id, propertyRulesTable.ruleId))
+    .where(eq(propertyRulesTable.propertyId, propertyId));
+  return ok(c, rules);
+});
+
 route.post(
   "/",
   async (c, next) => {
     const formData = await c.req.formData();
 
     const formBody = {
-      title: formData.get("title")?.toString() ?? "",
-      description: formData.get("description")?.toString() ?? "",
-      address: formData.get("address")?.toString() ?? "",
-      latitude: formData.get("latitude")?.toString() ?? "",
-      longitude: formData.get("longitude")?.toString() ?? "",
-      pricePerNight: formData.get("pricePerNight")?.toString() ?? "",
-      numberOfGuests: formData.get("numberOfGuests")?.toString() ?? "",
-      numberOfBedrooms: formData.get("numberOfBedrooms")?.toString() ?? "",
-      numberOfBeds: formData.get("numberOfBeds")?.toString() ?? "",
-      numberOfBathrooms: formData.get("numberOfBathrooms")?.toString() ?? "",
-      categories: formData.getAll("categories"),
-      amenities: formData.getAll("amenities"),
-      rules: formData.getAll("rules"),
+      title: formData.get("title") ?? "",
+      description: formData.get("description") ?? "",
+      address: formData.get("address") ?? "",
+      latitude: formData.get("latitude") ?? "",
+      longitude: formData.get("longitude") ?? "",
+      pricePerNight: formData.get("pricePerNight") ?? "",
+      numberOfGuests: formData.get("numberOfGuests") ?? "",
+      numberOfBedrooms: formData.get("numberOfBedrooms") ?? "",
+      numberOfBeds: formData.get("numberOfBeds") ?? "",
+      numberOfBathrooms: formData.get("numberOfBathrooms") ?? "",
+      categories: JSON.parse((formData.getAll("categories") ?? []).toString()),
+      amenities: JSON.parse((formData.getAll("amenities") ?? []).toString()),
+      rules: JSON.parse((formData.getAll("rules") ?? []).toString()),
+      customRules: JSON.parse(
+        (formData.getAll("customRules") ?? []).toString()
+      ),
     };
 
     const parseResult = createPropertySchema.safeParse(formBody);
@@ -319,7 +399,7 @@ route.post(
     }
 
     // Images
-    const imageFiles = formData.getAll("images");
+    const imageFiles = formData.getAll("images") || [];
 
     if (imageFiles.length < 5) {
       return badRequest(
@@ -349,7 +429,7 @@ route.post(
     folder: "Properties",
   }),
   async (c) => {
-    const { categories, amenities, rules, ...rest } =
+    const { categories, amenities, rules, customRules, ...rest } =
       c.get("validatedProperty");
     const hostId = c.req.header("x-user-id")!;
 
@@ -419,6 +499,29 @@ route.post(
           rules.map((ruleId: number) => ({
             propertyId,
             ruleId,
+          }))
+        )
+        .returning({ ruleId: propertyRulesTable.ruleId });
+    }
+
+    // Custom rules (custom rules are strings, if they are present insert them to the rules table and link them to the property)
+    if (customRules.length > 0) {
+      const customRuleIds = await db
+        .insert(rulesTable)
+        .values(
+          customRules.map((rule: string) => ({
+            name: rule,
+            description: "",
+          }))
+        )
+        .returning({ id: rulesTable.id });
+
+      insertedRules = await db
+        .insert(propertyRulesTable)
+        .values(
+          customRuleIds.map((ruleId: { id: number }) => ({
+            propertyId,
+            ruleId: ruleId.id,
           }))
         )
         .returning({ ruleId: propertyRulesTable.ruleId });

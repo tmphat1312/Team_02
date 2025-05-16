@@ -1,24 +1,23 @@
-import { Hono } from 'hono'
-import { logger } from 'hono/logger'
-import reservation from './routes/reservation'
-import { onError } from './middleware/on-error'
+import { Hono } from "hono";
 import { showRoutes } from "hono/dev";
-import reviewRoute from './routes/review'
-const app = new Hono()
+import { logger } from "hono/logger";
 
-app.use(logger())
+import { onError } from "./middleware/on-error";
+import reservation from "./routes/reservation";
+import route from "./routes/review";
 
-app.get('/', (c) => {
-  return c.text('Welcome to reservation service!')
-})
+const app = new Hono();
 
-app.route('/reservation',reservation);
-app.route('/reviews', reviewRoute);
+app.use(logger());
+
+app.route("/reservations", reservation);
+app.route("/reviews", route);
 
 app.onError(onError);
-showRoutes(app)
+
+showRoutes(app);
 
 export default {
   fetch: app.fetch,
-  port: Bun.env.PORT ?? 3006
-}
+  port: Bun.env.PORT ?? 3006,
+};

@@ -3,19 +3,19 @@ import { formatDistance } from "date-fns/formatDistance";
 import pluralize from "pluralize";
 import { twMerge } from "tailwind-merge";
 
-import { Review } from "@/app/typings/models";
+import { Review } from "@/typings/models";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export const formatPrice = (value: number) => {
-  const formatter = new Intl.NumberFormat("vi-VN", {
+  const formatter = new Intl.NumberFormat("en-US", {
     style: "decimal",
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: 0,
   });
-  return `₫${formatter.format(value)}`;
+  return `$${formatter.format(value)}`;
 };
 
 export function delay(ms: number) {
@@ -63,3 +63,10 @@ export function calculateAvgRating(review: Review) {
 export function makePluralNoun(word: string, count: number) {
   return pluralize(word, count, true);
 }
+
+export const kebabCaseToTitleCase = (str: string) => {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

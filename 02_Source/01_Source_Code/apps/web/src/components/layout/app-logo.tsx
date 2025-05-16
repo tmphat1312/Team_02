@@ -5,7 +5,7 @@ import { LogoCompact } from "@/components/icons/logo-compact";
 
 export function AppLogo() {
   return (
-    <Link href="/" className="flex items-center text-airbnb">
+    <Link href="/" className="flex items-center text-primary">
       <Logo className="hidden md:block" />
       <LogoCompact className="block md:hidden" />
     </Link>
