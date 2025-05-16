@@ -1,50 +1,41 @@
 "use client";
 
-import { addDays } from "date-fns/addDays";
 import { format } from "date-fns/format";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 
-import { Property } from "@/typings/models";
 import { Stack } from "@/components/layout/stack";
 import { NumberInput } from "@/components/number-input";
 import { TextAlert } from "@/components/typography/text-alert";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { delay, formatPrice, makePluralNoun } from "@/lib/utils";
+import { useUser } from "@/features/auth/hooks/use-user";
+import { http } from "@/lib/http";
+import { formatPrice, makePluralNoun } from "@/lib/utils";
+import { Property } from "@/typings/models";
 
 import { DatesPicker } from "./dates-picker";
+import { getQueryClient } from "@/lib/tanstack-query";
+import { propertyAvailabilityQueryOptions } from "../hooks/use-property-availability";
 
-type PropertyReservationProps = {
+const ServiceFee = 20;
+
+type Props = {
   item: Property;
 };
 
-const calculateTotalPrice = (pricePerNight: number, numberOfNights: number) => {
-  const totalPrice = pricePerNight * numberOfNights + SERVICE_FEE;
-  return totalPrice;
-};
+export function PropertyReservation({ item }: Props) {
+  const router = useRouter();
+  const queryClient = getQueryClient();
 
-const calculateNumberOfDates = (start: Date, end: Date) => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  const timeDiff = endDate.getTime() - startDate.getTime();
-  return Math.ceil(timeDiff / (1000 * 3600 * 24));
-};
+  const { user, isLoading } = useUser();
+  const isLoggedIn = !!user;
 
-const INITIAL_DATE = {
-  from: addDays(new Date(), 1),
-  to: addDays(new Date(), 6),
-};
-
-const SERVICE_FEE = 20;
-
-export function PropertyReservation({ item }: PropertyReservationProps) {
   const [noGuests, setNoGuests] = useState(1);
-  const [date, setDate] = useState<DateRange | undefined>(INITIAL_DATE);
+  const [date, setDate] = useState<DateRange | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
-  const from = date?.from || INITIAL_DATE.from;
-  const to = date?.to || INITIAL_DATE.to;
 
   const handleNoGuestsChange = (value: number) => {
     setNoGuests(value);
@@ -52,17 +43,30 @@ export function PropertyReservation({ item }: PropertyReservationProps) {
 
   const handleReserve = () => {
     startTransition(async () => {
-      await delay(2000);
-      console.log("Reserve clicked");
-      console.log("Selected dates:", date);
-      console.log("Number of guests:", noGuests);
-      console.log("Total price:", totalPrice);
+      if (!isLoggedIn) {
+        return router.push("/sign-in");
+      }
+
+      const payload = {
+        tenantId: user.id,
+        hostId: item.hostId,
+        propertyId: item.id,
+        totalPrice,
+        checkInDate: from,
+        checkOutDate: to,
+        numberOfGuests: noGuests,
+      };
+
+      await http.post("/reservations", payload);
+      queryClient.invalidateQueries(propertyAvailabilityQueryOptions(item.id));
       toast.success("Reservation successful!");
     });
   };
 
-  const isReserveDisabled = isPending || !from || !to;
-  const numberOfNights = calculateNumberOfDates(from, to);
+  const from = date?.from;
+  const to = date?.to;
+  const isReserveDisabled = isPending || isLoading || !from || !to;
+  const numberOfNights = from && to ? calculateNumberOfDates(from, to) : 1;
   const totalPrice = calculateTotalPrice(item.pricePerNight, numberOfNights);
   const numberOfNightsInText = makePluralNoun("night", numberOfNights);
 
@@ -76,18 +80,23 @@ export function PropertyReservation({ item }: PropertyReservationProps) {
       </header>
 
       <div className="border rounded-lg overflow-hidden mb-4 shadow">
-        <DatesPicker date={date} setDate={setDate} disabled={isPending}>
+        <DatesPicker
+          item={item}
+          date={date}
+          setDate={setDate}
+          disabled={isPending}
+        >
           <div className="p-3 border-r border-b">
             <div className="text-xs text-muted-foreground font-medium">
               CHECK-IN
             </div>
-            <div>{format(from, "dd/MM/y")}</div>
+            <div>{from ? format(from, "dd/MM/y") : "Pick a date"}</div>
           </div>
           <div className="p-3 border-b">
             <div className="text-xs text-muted-foreground font-medium">
               CHECKOUT
             </div>
-            <div>{format(to, "dd/MM/y")}</div>
+            <div>{to ? format(to, "dd/MM/y") : "Pick a date"}</div>
           </div>
         </DatesPicker>
         <div className="p-5">
@@ -124,7 +133,7 @@ export function PropertyReservation({ item }: PropertyReservationProps) {
         </Stack>
         <Stack className="justify-between">
           <span>Airbnb service fee</span>
-          <span>{formatPrice(SERVICE_FEE)}</span>
+          <span>{formatPrice(ServiceFee)}</span>
         </Stack>
       </Stack>
 
@@ -137,3 +146,15 @@ export function PropertyReservation({ item }: PropertyReservationProps) {
     </div>
   );
 }
+
+const calculateTotalPrice = (pricePerNight: number, numberOfNights: number) => {
+  const totalPrice = pricePerNight * numberOfNights + ServiceFee;
+  return totalPrice;
+};
+
+const calculateNumberOfDates = (start: Date, end: Date) => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const timeDiff = endDate.getTime() - startDate.getTime();
+  return Math.ceil(timeDiff / (1000 * 3600 * 24));
+};

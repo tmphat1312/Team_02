@@ -48,4 +48,4 @@ route.post("/", zValidator("json", reservationSchema), async (c) => {
   return created(c, newReservation);
 });
 
-export default route;
+export { route as reservationRoute };

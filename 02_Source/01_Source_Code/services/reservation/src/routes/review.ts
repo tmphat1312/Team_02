@@ -32,7 +32,7 @@ route.get(
   }
 );
 
-route.post("/", zValidator("json", reviewSchema)    , async (c) => {
+route.post("/", zValidator("json", reviewSchema), async (c) => {
   const review = c.req.valid("json");
 
   const [existingReview] = await db
@@ -57,4 +57,4 @@ route.post("/", zValidator("json", reviewSchema)    , async (c) => {
   return ok(c, newReview);
 });
 
-export default route;
+export { route as reviewRoute };

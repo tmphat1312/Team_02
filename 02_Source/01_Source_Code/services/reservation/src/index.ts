@@ -3,15 +3,17 @@ import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
 
 import { onError } from "./middleware/on-error";
-import reservation from "./routes/reservation";
-import route from "./routes/review";
+import { reservationRoute } from "./routes/reservation";
+import { reviewRoute } from "./routes/review";
+import { availabilityRoute } from "./routes/availability";
 
 const app = new Hono();
 
 app.use(logger());
 
-app.route("/reservations", reservation);
-app.route("/reviews", route);
+app.route("/reservations", reservationRoute);
+app.route("/reviews", reviewRoute);
+app.route("/availability", availabilityRoute);
 
 app.onError(onError);
 

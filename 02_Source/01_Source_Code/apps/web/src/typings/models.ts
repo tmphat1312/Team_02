@@ -170,3 +170,10 @@ export type PropertyWithReviews = Property & {
     numberOfReviews: number;
   };
 };
+
+export type ReservedDate = {
+  reservationId: number;
+  startDate: string;
+  endDate: string;
+  tenantId: string;
+};
