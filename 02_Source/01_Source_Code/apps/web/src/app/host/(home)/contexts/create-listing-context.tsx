@@ -9,7 +9,7 @@ const InitialState: CreateListingContextState = {
   description: "A beautiful house in the countryside",
   categories: [8, 6],
   price: 10,
-  address: "Cần Giờ, Ho Chi Minh City, Vietnam",
+  address: "Can Gio, Ho Chi Minh City, Vietnam",
   guests: 4,
   bedrooms: 2,
   beds: 2,

@@ -9,9 +9,9 @@ import { Stack } from "@/components/layout/stack";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import { useUser } from "@/features/auth/hooks/use-user";
 import { http } from "@/lib/http";
 
+import { useUserContext } from "@/features/auth/contexts/UserContext";
 import {
   CreateListingContextState,
   useCreateListingContext,
@@ -28,10 +28,8 @@ import { ImageForm } from "./steps/image-form";
 import { PriceForm } from "./steps/price-form";
 import { RuleForm } from "./steps/rule-form";
 import { TitleAndDescForm } from "./steps/title-and-desc-form";
-
-prefetchCategories();
-prefetchAmenities();
-prefetchCommonRules();
+import { useQueryClient } from "@tanstack/react-query";
+import { listingsQueryOptions } from "../../hooks/use-listings";
 
 const Steps = [
   {
@@ -84,8 +82,14 @@ const Steps = [
 const MaxSteps = Steps.length - 1;
 
 export function CreateListingForm() {
+  prefetchCategories();
+  prefetchAmenities();
+  prefetchCommonRules();
+
+  const host = useUserContext();
+  const queryClient = useQueryClient();
+
   const exitButtonRef = useRef<HTMLButtonElement>(null);
-  const { user } = useUser();
   const [currentStep, setCurrentStep] = useState(0);
   const [isPending, startTransition] = useTransition();
   const { state } = useCreateListingContext();
@@ -132,8 +136,11 @@ export function CreateListingForm() {
         await http.post("/properties", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            "x-user-id": user?.id,
+            "x-user-id": host.id,
           },
+        });
+        queryClient.invalidateQueries({
+          queryKey: listingsQueryOptions(host.id).queryKey,
         });
         toast.success("Listing saved and published successfully!");
         exitButtonRef.current?.click();

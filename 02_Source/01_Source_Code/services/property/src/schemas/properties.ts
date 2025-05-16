@@ -195,6 +195,8 @@ export const createPropertySchema = z.object({
       },
     })
   ),
+
+  customRules: z.array(zTextField("Custom rule")),
 });
 
 export type CreatePropertyInput = z.infer<typeof createPropertySchema>;

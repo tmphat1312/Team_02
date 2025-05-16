@@ -1,15 +1,21 @@
-import useSWR, { preload } from "swr";
+import { fetchCategories } from "@/features/category/data/fetch-categories";
+import { getQueryClient } from "@/lib/tanstack-query";
+import {
+  queryOptions as makeQueryOptions,
+  useQuery,
+} from "@tanstack/react-query";
 
-import { fetchCategories } from "@/features/listing/data/fetch-categories";
-
-const QueryKey = "categories";
-const fetcher = () => fetchCategories();
+const queryOptions = makeQueryOptions({
+  queryKey: ["categories"],
+  queryFn: () => fetchCategories(),
+});
 
 export function prefetchCategories() {
-  preload(QueryKey, fetcher);
+  const queryClient = getQueryClient();
+  queryClient.prefetchQuery(queryOptions);
 }
 
 export function useCategories() {
-  const query = useSWR(QueryKey, fetcher);
+  const query = useQuery(queryOptions);
   return query;
 }

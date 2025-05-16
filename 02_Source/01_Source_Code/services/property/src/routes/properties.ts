@@ -334,6 +334,9 @@ route.post(
       categories: JSON.parse((formData.getAll("categories") ?? []).toString()),
       amenities: JSON.parse((formData.getAll("amenities") ?? []).toString()),
       rules: JSON.parse((formData.getAll("rules") ?? []).toString()),
+      customRules: JSON.parse(
+        (formData.getAll("customRules") ?? []).toString()
+      ),
     };
 
     const parseResult = createPropertySchema.safeParse(formBody);
@@ -426,7 +429,7 @@ route.post(
     folder: "Properties",
   }),
   async (c) => {
-    const { categories, amenities, rules, ...rest } =
+    const { categories, amenities, rules, customRules, ...rest } =
       c.get("validatedProperty");
     const hostId = c.req.header("x-user-id")!;
 
@@ -496,6 +499,29 @@ route.post(
           rules.map((ruleId: number) => ({
             propertyId,
             ruleId,
+          }))
+        )
+        .returning({ ruleId: propertyRulesTable.ruleId });
+    }
+
+    // Custom rules (custom rules are strings, if they are present insert them to the rules table and link them to the property)
+    if (customRules.length > 0) {
+      const customRuleIds = await db
+        .insert(rulesTable)
+        .values(
+          customRules.map((rule: string) => ({
+            name: rule,
+            description: "",
+          }))
+        )
+        .returning({ id: rulesTable.id });
+
+      insertedRules = await db
+        .insert(propertyRulesTable)
+        .values(
+          customRuleIds.map((ruleId: { id: number }) => ({
+            propertyId,
+            ruleId: ruleId.id,
           }))
         )
         .returning({ ruleId: propertyRulesTable.ruleId });

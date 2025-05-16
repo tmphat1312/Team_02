@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { CreateListingForm } from "./create-listing/create-listing-form";
 import { CreateListingContextProvider } from "../contexts/create-listing-context";
-import { DialogDescription } from "@radix-ui/react-dialog";
+import { CreateListingForm } from "./create-listing/create-listing-form";
 
 export function CreateListingModal() {
   return (

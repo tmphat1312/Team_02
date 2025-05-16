@@ -6,7 +6,7 @@ import { Stack } from "@/components/layout/stack";
 import { PageHeading } from "@/components/typography/page-heading";
 import { Button } from "@/components/ui/button";
 
-import { ListingCardFallback } from "./components/listing-card";
+import { ListingFallback } from "./components/listing";
 
 export default function Loading() {
   return (
@@ -19,7 +19,7 @@ export default function Loading() {
       </Stack>
       <Grid className="grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
         {Array.from({ length: 8 }).map((_, index) => (
-          <ListingCardFallback key={index} />
+          <ListingFallback key={index} />
         ))}
       </Grid>
     </Page>

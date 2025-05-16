@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "../data/get-server-session";
+import { UserProvider } from "./UserProvider";
 
 export async function HostOnly({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
@@ -13,5 +14,5 @@ export async function HostOnly({ children }: { children: React.ReactNode }) {
     return redirect("/host/sign-up");
   }
 
-  return children;
+  return <UserProvider user={session.user}>{children}</UserProvider>;
 }

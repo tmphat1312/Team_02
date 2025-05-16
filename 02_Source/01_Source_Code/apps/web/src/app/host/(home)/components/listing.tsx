@@ -10,7 +10,7 @@ type Props = {
   item: PropertyWithReviews;
 };
 
-export function ListingCard({ item }: Props) {
+export function Listing({ item }: Props) {
   return (
     <article className="border shadow overflow-clip rounded-xl">
       <div className="relative aspect-[4/3]">
@@ -49,7 +49,7 @@ export function ListingCard({ item }: Props) {
   );
 }
 
-export function ListingCardFallback() {
+export function ListingFallback() {
   return (
     <div className="border shadow overflow-clip rounded-xl">
       <Skeleton className="aspect-[4/3] rounded-none" />

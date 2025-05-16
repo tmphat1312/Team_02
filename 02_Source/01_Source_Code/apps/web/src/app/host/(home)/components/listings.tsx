@@ -1,22 +1,29 @@
+"use client";
+
 import { Grid } from "@/components/layout/grid";
 import { TextAlert } from "@/components/typography/text-alert";
-import { PropertyWithReviews } from "@/typings/models";
+import { useUserContext } from "@/features/auth/contexts/UserContext";
+import { useQuery } from "@tanstack/react-query";
 
-import { ListingCard } from "./listing-card";
+import { listingsQueryOptions } from "../hooks/use-listings";
+import { Listing } from "./listing";
 
-type ListingsProps = {
-  items: PropertyWithReviews[];
-};
+export function Listings() {
+  const host = useUserContext();
+  const { data: listings } = useQuery(listingsQueryOptions(host.id));
 
-export function Listings({ items }: ListingsProps) {
-  if (items.length == 0) {
+  if (!listings) {
+    return null;
+  }
+
+  if (listings.length == 0) {
     return <TextAlert>You have not hosted any listings yet.</TextAlert>;
   }
 
   return (
     <Grid className="grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-      {items.map((listing) => (
-        <ListingCard key={listing.id} item={listing} />
+      {listings.map((listing) => (
+        <Listing key={listing.id} item={listing} />
       ))}
     </Grid>
   );

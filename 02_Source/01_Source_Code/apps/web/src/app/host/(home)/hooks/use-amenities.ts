@@ -1,15 +1,21 @@
-import useSWR, { preload } from "swr";
-
 import { fetchAmenities } from "@/features/listing/data/fetch-amenities";
+import { getQueryClient } from "@/lib/tanstack-query";
+import {
+  queryOptions as makeQueryOptions,
+  useQuery,
+} from "@tanstack/react-query";
 
-const QueryKey = "amenities";
-const fetcher = () => fetchAmenities();
+const queryOptions = makeQueryOptions({
+  queryKey: ["amenities"],
+  queryFn: () => fetchAmenities(),
+});
 
 export function prefetchAmenities() {
-  preload(QueryKey, fetcher);
+  const queryClient = getQueryClient();
+  queryClient.prefetchQuery(queryOptions);
 }
 
 export function useAmenities() {
-  const query = useSWR(QueryKey, fetcher);
+  const query = useQuery(queryOptions);
   return query;
 }
