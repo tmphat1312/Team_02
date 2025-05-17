@@ -1,10 +1,24 @@
 import { FilterButtons } from "@/components/filter-buttons";
 import { Page } from "@/components/layout/page";
 import { PageHeading } from "@/components/typography/page-heading";
+import { getUser } from "@/features/auth/data/get-user";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
-import { ReservationList } from "./components/reservation-list";
+import { Reservations } from "./components/reservations";
+import { makeTenantReservationsQueryOptions } from "./hooks/use-tenant-reservations";
 
-export default function TripsPage() {
+export default async function TripsPage() {
+  const queryClient = new QueryClient();
+  const tenant = await getUser();
+
+  await queryClient.prefetchQuery(
+    makeTenantReservationsQueryOptions(tenant.id)
+  );
+
   return (
     <Page>
       <PageHeading>Your Trips</PageHeading>
@@ -17,7 +31,9 @@ export default function TripsPage() {
         ]}
         className="mb-8"
       />
-      <ReservationList />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Reservations />
+      </HydrationBoundary>
     </Page>
   );
 }

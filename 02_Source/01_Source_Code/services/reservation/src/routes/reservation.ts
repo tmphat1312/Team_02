@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -29,7 +29,12 @@ route.get(
     const whereClause = and(
       hostId ? eq(reservationTable.hostId, hostId) : undefined,
       tenantId ? eq(reservationTable.tenantId, tenantId) : undefined,
-      propertyId ? eq(reservationTable.propertyId, propertyId) : undefined
+      propertyId
+        ? and(
+            not(eq(reservationTable.status, "Canceled")),
+            eq(reservationTable.propertyId, propertyId)
+          )
+        : undefined
     );
 
     const results = await db.select().from(reservationTable).where(whereClause);

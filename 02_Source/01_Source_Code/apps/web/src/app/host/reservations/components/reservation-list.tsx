@@ -1,6 +1,6 @@
 "use client";
 
-import { Reservation } from "@/typings/models";
+import { ReservationMock } from "@/typings/models";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,7 +17,7 @@ import { useQueryState } from "nuqs";
 import { Stack } from "@/components/layout/stack";
 import { Grid } from "@/components/layout/grid";
 
-const reservations: Reservation[] = [
+const reservations: ReservationMock[] = [
   // UPCOMING
   {
     id: 1,
@@ -487,7 +487,7 @@ export function ReservationList() {
   );
 }
 
-function ReservationCard({ item }: { item: Reservation }) {
+function ReservationCard({ item }: { item: ReservationMock }) {
   return (
     <article
       className={cn(

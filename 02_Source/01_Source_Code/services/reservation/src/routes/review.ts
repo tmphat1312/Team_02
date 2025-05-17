@@ -20,14 +20,16 @@ route.get(
           message: "propertyId is required",
         })
         .transform((val) => parseInt(val)),
+      tenantId: z.string().optional(),
     })
   ),
   async (c) => {
-    const { propertyId } = c.req.valid("query");
-    const results = await db
-      .select()
-      .from(reviewTable)
-      .where(eq(reviewTable.propertyId, propertyId));
+    const { propertyId, tenantId } = c.req.valid("query");
+    const whereClause = and(
+      eq(reviewTable.propertyId, propertyId),
+      tenantId ? eq(reviewTable.tenantId, tenantId) : undefined
+    );
+    const results = await db.select().from(reviewTable).where(whereClause);
     return ok(c, results);
   }
 );

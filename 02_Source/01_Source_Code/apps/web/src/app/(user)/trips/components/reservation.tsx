@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { BookX, Calendar, Coins, Ellipsis, MapPin, Star } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,11 +8,6 @@ import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn, formatPrice, makePluralNoun } from "@/lib/utils";
 import { Trip } from "@/typings/models";
@@ -21,20 +16,21 @@ type Props = {
   item: Trip;
 };
 
-export function ReservationCard({ item }: Props) {
+export function Reservation({ item }: Props) {
   return (
     <Card
       className={cn(
-        "p-0 overflow-clip block @container",
-        item.status === "cancelled" && "border-s-8 border-s-destructive/20",
-        item.status === "completed" && "border-s-8 border-s-muted",
-        item.status === "upcoming" && "border-s-8 border-s-secondary"
+        "p-0 overflow-clip block @container border-e-8 border-b-4",
+        item.status === "Cancelled" && "border-destructive/20",
+        item.status === "Paid" && "border-green-600",
+        item.status === "Confirmed" && "border-secondary",
+        item.status === "Pending" && "border-muted"
       )}
     >
       <div className="@lg:flex">
         <Image
           src={item.property.imageUrls[0]}
-          alt={item.property.name}
+          alt={item.property.title}
           width={240}
           height={240}
           className="object-cover w-full max-h-60 @lg:size-60"
@@ -48,7 +44,7 @@ export function ReservationCard({ item }: Props) {
                 className="hover:underline"
               >
                 <h2 className="@lg:text-xl font-semibold text-pretty">
-                  {item.property.name}
+                  {item.property.title}
                 </h2>
               </Link>
               <p className="text-muted-foreground flex items-center mt-1 gap-1">
@@ -58,7 +54,7 @@ export function ReservationCard({ item }: Props) {
             </section>
             <Avatar className="size-10 hidden @lg:block">
               <AvatarImage
-                src={item.property.host.image}
+                src={item.property.host.image || ""}
                 alt={item.property.host.name}
               />
               <AvatarFallback>
@@ -102,96 +98,96 @@ export function ReservationCard({ item }: Props) {
           <p className="font-semibold">{formatPrice(item.totalPrice)}</p>
         </div>
 
-        {item.status === "upcoming" && <UpcomingActions />}
-        {item.status === "completed" && <CompletedActions />}
-        {item.status === "cancelled" && <CancelledActions />}
+        {item.status === "Pending" && <PendingActions />}
+        {item.status === "Confirmed" && <ConfirmedActions />}
+        {item.status === "Paid" && <PaidActions trip={item} />}
+        {item.status === "Cancelled" && <CancelledActions />}
       </Stack>
     </Card>
+  );
+}
+
+function PendingActions() {
+  return (
+    <Stack className="gap-3">
+      <span className="text-muted-foreground bg-muted rounded-md py-2 px-4 font-medium text-sm">
+        Waiting for confirmation
+      </span>
+      <CancelButton />
+    </Stack>
   );
 }
 
 function CancelledActions() {
   return (
     <span className="text-destructive bg-destructive/10 rounded-lg py-2 px-4 shadow font-medium text-sm">
-      Refund processed
+      Trip cancelled
     </span>
   );
 }
 
-function CompletedActions() {
+function ConfirmedActions() {
   const handleReview = () => {
     // Logic to message the host
     console.log("Message host clicked");
   };
 
   return (
-    <Button
-      variant="outline"
-      className="rounded-lg gap-2"
-      onClick={handleReview}
-    >
-      <Star className="size-4" />
-      Leave a review
-    </Button>
+    <Stack className="gap-3">
+      <Button variant="secondary" onClick={handleReview}>
+        Pay now
+      </Button>
+      <CancelButton />
+    </Stack>
   );
 }
 
-function UpcomingActions() {
-  const handlePayNow = () => {
-    // navigate to the payment page
+function PaidActions({ trip }: { trip: Trip }) {
+  const isCompleted = new Date(trip.checkInDate) < new Date();
+  const isReviewed = trip.review !== null;
+
+  if (isReviewed) {
+    return (
+      <span className="text-muted-foreground bg-muted rounded-lg py-2 px-4 shadow font-medium text-sm">
+        Review left
+      </span>
+    );
+  }
+
+  const handleReview = () => {
+    // Logic to leave a review
+    console.log("Leave a review clicked");
   };
+
+  if (isCompleted) {
+    return (
+      <Stack className="gap-3">
+        <Button variant="outline" onClick={handleReview}>
+          Leave a review
+        </Button>
+      </Stack>
+    );
+  }
+
+  return (
+    <Stack className="gap-3">
+      <span className="text-green-600 bg-green-600/10 rounded-lg py-2 px-4 shadow font-medium text-sm">
+        Trip paid
+      </span>
+      <CancelButton />
+    </Stack>
+  );
+}
+
+function CancelButton() {
   const handleCancel = () => {
-    // navigate to the cancellation page
+    // Logic to cancel
+    console.log("Cancel clicked");
   };
 
   return (
-    <div className="">
-      <div className="hidden gap-3 sm:flex">
-        <Button
-          variant="secondary"
-          className="rounded-lg gap-2"
-          onClick={handlePayNow}
-        >
-          <Coins className="size-4" />
-          Pay now
-        </Button>
-        <Button
-          variant="destructive"
-          className="rounded-lg gap-2"
-          onClick={handleCancel}
-        >
-          <BookX className="size-4" />
-          Cancel
-        </Button>
-      </div>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="rounded-lg gap-2 mt-4 sm:hidden">
-            <Ellipsis className="size-4" />
-            More actions
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="max-w-50" side="top">
-          <div className="flex flex-col gap-2">
-            <Button
-              variant="secondary"
-              className="rounded-lg gap-2"
-              onClick={handlePayNow}
-            >
-              <Coins className="size-4" />
-              Pay now
-            </Button>
-            <Button
-              variant="destructive"
-              className="rounded-lg gap-2"
-              onClick={handleCancel}
-            >
-              <BookX className="size-4" />
-              Cancel
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
-    </div>
+    <Button variant="destructive" onClick={handleCancel}>
+      Cancel
+    </Button>
   );
 }

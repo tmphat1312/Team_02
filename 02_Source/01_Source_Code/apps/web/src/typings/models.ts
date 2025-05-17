@@ -1,3 +1,5 @@
+type Nullable<T> = T | null;
+
 export type Category = {
   id: number;
   name: string;
@@ -92,52 +94,29 @@ export type User = {
   updatedAt: Date;
 };
 
-export type UserWallet = {
+export type Reservation = {
   id: number;
-  userId: string;
-  balance: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type DepositHistory = {
-  id: number;
-  userId: string;
-  amount: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type PaymentHistory = {
-  id: number;
-  userId: string;
-  amount: number;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type Trip = {
-  id: number;
+  tenantId: string;
+  hostId: string;
   propertyId: number;
-  status: "upcoming" | "completed" | "cancelled";
-  totalPrice: number;
-  property: {
-    name: string;
-    address: string;
-    hostId: string;
-    imageUrls: string[];
-    host: {
-      name: string;
-      image: string;
-    };
-  };
+  status: "Pending" | "Confirmed" | "Paid" | "Cancelled";
   checkInDate: string;
   checkOutDate: string;
   numberOfGuests: number;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+  note: Nullable<string>;
 };
 
-export type Reservation = {
+export type Trip = Reservation & {
+  property: Property & {
+    host: User;
+  };
+  review: Nullable<Review>;
+};
+
+export type ReservationMock = {
   id: number;
   propertyId: number;
   status: "upcoming" | "completed" | "cancelled";

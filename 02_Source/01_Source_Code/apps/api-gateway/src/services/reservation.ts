@@ -15,7 +15,7 @@ route.post("/reservations", only(["tenant", "host"]), proxy);
 route.get("/reviews*", proxy);
 route.post("/reviews", only(["tenant", "host"]), proxy);
 
-// availability route
+// availability route\
 route.get("/availability*", proxy);
 
 export const reservationService = route;
