@@ -1,6 +1,7 @@
 @import url('leaflet/dist/leaflet.css'); /* this css should be put on the top */
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 @custom-variant dark (&:is(.dark *));
 

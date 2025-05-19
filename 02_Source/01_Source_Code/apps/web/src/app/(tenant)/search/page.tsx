@@ -11,9 +11,10 @@ import { useAccommodations } from "./hooks/useAccommodation";
 import SearchBar from "./components/SearchBar";
 import AccommodationList from "./components/AccommodationList";
 import AccommodationCard from "./components/AccommodationCard";
-const LeafletMap = dynamic(() => import("./components/LeafletMap"), {
-  ssr: false,
-});
+// const LeafletMap = dynamic(() => import("./components/LeafletMap"), {
+//   ssr: false,
+// });
+import MapboxMap from "./components/MapBoxMap";
 
 export default function SearchPage() {
   const [selectedAcc, setSelectedAcc] = useState<Accommodation | null>(null);
@@ -115,7 +116,14 @@ export default function SearchPage() {
         )}
 
         {/* Mapview */}
-        <LeafletMap
+        {/* <LeafletMap
+          accommodations={accommodations}
+          onChange={handleMapChange}
+          setSelectedAcc={setSelectedAcc}
+          centerPoint={center}
+          setCenterPoint={setCenter}
+        /> */}
+        <MapboxMap
           accommodations={accommodations}
           onChange={handleMapChange}
           setSelectedAcc={setSelectedAcc}

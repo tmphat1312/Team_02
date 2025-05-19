@@ -21,6 +21,7 @@
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.487.0",
+    "mapbox-gl": "^3.11.1",
     "next": "15.2.2",
     "primereact": "^10.9.4",
     "react": "^19.0.0",
