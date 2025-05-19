@@ -13,6 +13,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn, formatPrice, makePluralNoun } from "@/lib/utils";
 import { Trip } from "@/typings/models";
 import { usePayReservation } from "@/app/(user)/trips/hooks/use-pay-reservation";
+import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
+import { ReviewDialog } from "./review-dialog";
 
 type Props = {
   item: Trip;
@@ -40,7 +42,7 @@ export function Reservation({ item }: Props) {
         />
 
         <div className="p-4 grow space-y-4">
-          <Stack className="items-start justify-between">
+          <Stack className="items-start justify-between gap-1">
             <section>
               <Link
                 href={`/properties/${item.propertyId}`}
@@ -61,7 +63,7 @@ export function Reservation({ item }: Props) {
                 alt={item.property.host.name}
               />
               <AvatarFallback>
-                {item.property.host.name.charAt(0).toUpperCase()}
+                <DefaultUserAvatar className="text-gray-600/50" />
               </AvatarFallback>
             </Avatar>
           </Stack>
@@ -155,19 +157,8 @@ function PaidActions({ trip }: { trip: Trip }) {
     );
   }
 
-  const handleReview = () => {
-    // Logic to leave a review
-    console.log("Leave a review clicked");
-  };
-
   if (isCompleted) {
-    return (
-      <Stack className="gap-3">
-        <Button variant="outline" onClick={handleReview}>
-          Leave a review
-        </Button>
-      </Stack>
-    );
+    return <ReviewDialog trip={trip} />;
   }
 
   return (

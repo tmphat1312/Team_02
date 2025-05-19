@@ -10,9 +10,9 @@ export function PropertyRules({ items }: PropertyRulesProps) {
   return (
     <section>
       <PageSubHeading>Things to know</PageSubHeading>
-      <Grid className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+      <Grid className="grid-cols-3 gap-x-3 gap-y-2">
         {items.map((rule) => (
-          <div key={rule.id} className="p-2 border-b flex items-center">
+          <div key={rule.id} className="p-2 flex items-center">
             {rule.name}
           </div>
         ))}

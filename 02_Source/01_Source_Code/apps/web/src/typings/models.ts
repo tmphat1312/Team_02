@@ -42,7 +42,7 @@ export type Property = {
   numberOfBathrooms: number;
   createdAt: string;
   updatedAt: string;
-  rating: number;
+  rating: Nullable<number>;
 };
 
 export type Review = {

@@ -20,11 +20,13 @@ export function Room({ item }: RoomProps) {
       <PropertyImageCarousel item={item} />
       <Link href={`/properties/${item.id}`} target="_blank">
         <article>
-          <section className="flex justify-between gap-1">
+          <section className="flex justify-between gap-1 items-start">
             <h3 className="font-semibold">{item.address}</h3>
             <Stack className="gap-1">
               <Star className="fill-current size-3" />
-              <span className="text-sm">{item.rating ?? "New"}</span>
+              <span className="text-sm">
+                {item.rating?.toFixed(1) ?? "New"}
+              </span>
             </Stack>
           </section>
           <TextAlert className="truncate">{item.title}</TextAlert>

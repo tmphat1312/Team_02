@@ -15,7 +15,7 @@ export function Reservations() {
   const { data: trips } = useTenantReservations(tenant.id);
   const [activeTab] = useQueryState(
     "tab",
-    parseAsStringEnum(["all", "upcoming", "completed", "cancelled"])
+    parseAsStringEnum(["all", "upcoming", "completed", "canceled"])
   );
 
   const isLoading = !trips;
@@ -36,7 +36,7 @@ export function Reservations() {
 
   return (
     <Grid className="grid-cols-1 lg:grid-cols-2 gap-6">
-      {filteredTrips.map((trip) => (
+      {filteredTrips.toReversed().map((trip) => (
         <Reservation key={trip.id} item={trip} />
       ))}
     </Grid>
@@ -50,11 +50,13 @@ function tripFilter(trip: Trip, activeTab: string | null) {
   if (activeTab === null || activeTab === "all") {
     return true;
   }
-  if (activeTab === "cancelled") {
-    return trip.status === "Canceled";
+  if (activeTab === "canceled") {
+    return ["Canceled", "Refunded"].includes(trip.status);
   }
   if (activeTab === "upcoming") {
-    return checkInDate > today;
+    return (
+      !["Canceled", "Refunded"].includes(trip.status) && checkInDate > today
+    );
   }
   if (activeTab === "completed") {
     return checkInDate <= today;

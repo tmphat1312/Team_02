@@ -1,11 +1,41 @@
 import useSWRInfinite from "swr/infinite";
 
+import { fetchPropertyReview } from "@/features/review/data/fetch-property-review";
 import { http } from "@/lib/http";
+import { calculateAvgRating } from "@/lib/utils";
+import { Property } from "@/typings/models";
 
 import { PAGE_SIZE } from "../config/settings";
 import { useFilterValues } from "./use-filter-values";
 
-const fetcher = (path: string) => http.get(path).then((res) => res.data);
+const fetcher = async (path: string) => {
+  const { data: httpData } = await http.get(path);
+  const properties = httpData.data;
+
+  const propertyWithRatingPromises = properties.map(
+    async (property: Property): Promise<Property> => {
+      const reviews = await fetchPropertyReview({
+        propertyId: property.id,
+      });
+      const rating =
+        reviews.length > 0
+          ? reviews.reduce(
+              (acc, review) => acc + calculateAvgRating(review),
+              0
+            ) / reviews.length
+          : null;
+      return {
+        ...property,
+        rating,
+      };
+    }
+  );
+  const propertiesWithRating = await Promise.all(propertyWithRatingPromises);
+  return {
+    data: propertiesWithRating,
+    metadata: httpData.metadata,
+  };
+};
 
 const fetchKey = ({
   categoryId,

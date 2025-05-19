@@ -13,7 +13,7 @@ export default async function TripsPage() {
           { value: null, label: "All" },
           { value: "upcoming", label: "Upcoming" },
           { value: "completed", label: "Completed" },
-          { value: "cancelled", label: "Canceled" },
+          { value: "canceled", label: "Canceled" },
         ]}
         className="mb-8"
       />

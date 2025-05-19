@@ -18,7 +18,10 @@ import { Property } from "@/typings/models";
 
 import { DatesPicker } from "./dates-picker";
 import { getQueryClient } from "@/lib/tanstack-query";
-import { propertyAvailabilityQueryOptions } from "../hooks/use-property-availability";
+import {
+  propertyAvailabilityQueryOptions,
+  usePropertyAvailability,
+} from "../hooks/use-property-availability";
 
 const ServiceFee = 20;
 
@@ -32,6 +35,14 @@ export function PropertyReservation({ item }: Props) {
 
   const { user, isLoading } = useUser();
   const isLoggedIn = !!user;
+
+  const { data: reservedDates } = usePropertyAvailability(item.id);
+  const myReservedDates =
+    reservedDates && isLoggedIn
+      ? reservedDates.filter(
+          (d) => d.tenantId === user.id && new Date(d.startDate) > new Date()
+        )
+      : [];
 
   const [noGuests, setNoGuests] = useState(1);
   const [date, setDate] = useState<DateRange | undefined>(undefined);
@@ -110,6 +121,18 @@ export function PropertyReservation({ item }: Props) {
           />
         </div>
       </div>
+
+      {myReservedDates.length > 0 && (
+        <Stack orientation="vertical" className="mb-4 ps-2">
+          {myReservedDates.map((date) => (
+            <TextAlert key={date.reservationId}>
+              Reserved from&nbsp;
+              <strong>{format(date.startDate, "dd/MM/y")}</strong> to
+              <strong> {format(date.endDate, "dd/MM/y")}</strong>
+            </TextAlert>
+          ))}
+        </Stack>
+      )}
 
       <Button
         className="w-full mb-4"

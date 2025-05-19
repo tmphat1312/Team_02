@@ -17,7 +17,7 @@ route.post("/reservations/:reservationId/refund", only(["host"]), proxy);
 
 // review route
 route.get("/reviews*", proxy);
-route.post("/reviews", only(["tenant", "host"]), proxy);
+route.post("/reviews", only(["user"]), proxy);
 
 // availability route
 route.get("/availability*", proxy);
