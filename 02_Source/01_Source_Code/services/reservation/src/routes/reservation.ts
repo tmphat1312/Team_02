@@ -53,4 +53,100 @@ route.post("/", zValidator("json", reservationSchema), async (c) => {
   return created(c, newReservation);
 });
 
+route.post(
+  "/:reservationId/cancel",
+  zValidator(
+    "param",
+    z.object({
+      reservationId: z
+        .string({
+          required_error: "reservationId is required",
+          invalid_type_error: "reservationId must be a string",
+        })
+        .transform((val) => parseInt(val)),
+    })
+  ),
+  async (c) => {
+    const { reservationId } = c.req.valid("param");
+    const [updatedReservation] = await db
+      .update(reservationTable)
+      .set({ status: "Canceled" })
+      .where(eq(reservationTable.id, reservationId))
+      .returning();
+    return ok(c, updatedReservation);
+  }
+);
+
+route.post(
+  "/:reservationId/confirm",
+  zValidator(
+    "param",
+    z.object({
+      reservationId: z
+        .string({
+          required_error: "reservationId is required",
+          invalid_type_error: "reservationId must be a string",
+        })
+        .transform((val) => parseInt(val)),
+    })
+  ),
+  async (c) => {
+    const { reservationId } = c.req.valid("param");
+    const [updatedReservation] = await db
+      .update(reservationTable)
+      .set({ status: "Confirmed" })
+      .where(eq(reservationTable.id, reservationId))
+      .returning();
+    return ok(c, updatedReservation);
+  }
+);
+
+route.post(
+  "/:reservationId/pay",
+  zValidator(
+    "param",
+    z.object({
+      reservationId: z
+        .string({
+          required_error: "reservationId is required",
+          invalid_type_error: "reservationId must be a string",
+        })
+        .transform((val) => parseInt(val)),
+    })
+  ),
+  async (c) => {
+    const { reservationId } = c.req.valid("param");
+    const [updatedReservation] = await db
+      .update(reservationTable)
+      .set({ status: "Paid" })
+      .where(eq(reservationTable.id, reservationId))
+      .returning();
+    return ok(c, updatedReservation);
+  }
+);
+
+route.post(
+  "/:reservationId/refund",
+  zValidator(
+    "param",
+    z.object({
+      reservationId: z
+        .string({
+          required_error: "reservationId is required",
+          invalid_type_error: "reservationId must be a string",
+        })
+        .transform((val) => parseInt(val)),
+    })
+  ),
+  async (c) => {
+    const { reservationId } = c.req.valid("param");
+    const [updatedReservation] = await db
+      .update(reservationTable)
+      .set({ status: "Refunded" })
+      .where(eq(reservationTable.id, reservationId))
+      .returning();
+    return ok(c, updatedReservation);
+  }
+);
+
 export { route as reservationRoute };

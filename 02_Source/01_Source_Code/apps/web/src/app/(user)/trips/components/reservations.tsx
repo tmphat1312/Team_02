@@ -51,7 +51,7 @@ function tripFilter(trip: Trip, activeTab: string | null) {
     return true;
   }
   if (activeTab === "cancelled") {
-    return trip.status === "Cancelled";
+    return trip.status === "Canceled";
   }
   if (activeTab === "upcoming") {
     return checkInDate > today;

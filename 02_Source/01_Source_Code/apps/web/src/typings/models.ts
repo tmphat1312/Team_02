@@ -99,7 +99,7 @@ export type Reservation = {
   tenantId: string;
   hostId: string;
   propertyId: number;
-  status: "Pending" | "Confirmed" | "Paid" | "Cancelled";
+  status: "Pending" | "Confirmed" | "Paid" | "Canceled" | "Refunded";
   checkInDate: string;
   checkOutDate: string;
   numberOfGuests: number;
@@ -113,6 +113,12 @@ export type Trip = Reservation & {
   property: Property & {
     host: User;
   };
+  review: Nullable<Review>;
+};
+
+export type ManagedReservation = Reservation & {
+  property: Property;
+  tenant: User;
   review: Nullable<Review>;
 };
 

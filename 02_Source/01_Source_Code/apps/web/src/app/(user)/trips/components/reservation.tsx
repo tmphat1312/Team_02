@@ -3,6 +3,7 @@ import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useCancelReservation } from "@/app/(user)/trips/hooks/use-cancel-reservation";
 import { Grid } from "@/components/layout/grid";
 import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,6 +12,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { cn, formatPrice, makePluralNoun } from "@/lib/utils";
 import { Trip } from "@/typings/models";
+import { usePayReservation } from "@/app/(user)/trips/hooks/use-pay-reservation";
 
 type Props = {
   item: Trip;
@@ -21,19 +23,20 @@ export function Reservation({ item }: Props) {
     <Card
       className={cn(
         "p-0 overflow-clip block @container border-e-8 border-b-4",
-        item.status === "Cancelled" && "border-destructive/20",
-        item.status === "Paid" && "border-green-600",
-        item.status === "Confirmed" && "border-secondary",
-        item.status === "Pending" && "border-muted"
+        item.status === "Pending" && "border-border",
+        item.status === "Confirmed" && "border-secondary/70",
+        item.status === "Paid" && "border-green-600/50",
+        item.status === "Canceled" && "border-destructive/20",
+        item.status === "Refunded" && "border-destructive/20"
       )}
     >
-      <div className="@lg:flex">
+      <div className="flex">
         <Image
           src={item.property.imageUrls[0]}
           alt={item.property.title}
           width={240}
           height={240}
-          className="object-cover w-full max-h-60 @lg:size-60"
+          className="object-cover size-60"
         />
 
         <div className="p-4 grow space-y-4">
@@ -43,7 +46,7 @@ export function Reservation({ item }: Props) {
                 href={`/properties/${item.propertyId}`}
                 className="hover:underline"
               >
-                <h2 className="@lg:text-xl font-semibold text-pretty">
+                <h2 className="text-xl font-semibold text-pretty">
                   {item.property.title}
                 </h2>
               </Link>
@@ -52,7 +55,7 @@ export function Reservation({ item }: Props) {
                 {item.property.address}
               </p>
             </section>
-            <Avatar className="size-10 hidden @lg:block">
+            <Avatar className="size-10">
               <AvatarImage
                 src={item.property.host.image || ""}
                 alt={item.property.host.name}
@@ -63,7 +66,7 @@ export function Reservation({ item }: Props) {
             </Avatar>
           </Stack>
 
-          <Grid className="grid-cols-1 @lg:grid-cols-2 gap-4">
+          <Grid className="grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-muted-foreground">Check-in</p>
               <p className="font-medium flex items-center gap-1">
@@ -98,46 +101,44 @@ export function Reservation({ item }: Props) {
           <p className="font-semibold">{formatPrice(item.totalPrice)}</p>
         </div>
 
-        {item.status === "Pending" && <PendingActions />}
-        {item.status === "Confirmed" && <ConfirmedActions />}
+        {item.status === "Pending" && <PendingActions trip={item} />}
+        {item.status === "Confirmed" && <ConfirmedActions trip={item} />}
         {item.status === "Paid" && <PaidActions trip={item} />}
-        {item.status === "Cancelled" && <CancelledActions />}
+        {item.status === "Canceled" && (
+          <span className="text-destructive bg-destructive/10 py-2 px-4 shadow font-medium text-sm">
+            Trip cancelled
+          </span>
+        )}
+        {item.status === "Refunded" && (
+          <span className="text-destructive bg-destructive/10 py-2 px-4 shadow font-medium text-sm">
+            Trip cancelled & refunded
+          </span>
+        )}
       </Stack>
     </Card>
   );
 }
 
-function PendingActions() {
+function PendingActions({ trip }: { trip: Trip }) {
   return (
     <Stack className="gap-3">
-      <span className="text-muted-foreground bg-muted rounded-md py-2 px-4 font-medium text-sm">
+      <span className="text-muted-foreground bg-muted py-2 px-4 font-medium text-sm">
         Waiting for confirmation
       </span>
-      <CancelButton />
+      <CancelButton trip={trip} />
     </Stack>
   );
 }
 
-function CancelledActions() {
-  return (
-    <span className="text-destructive bg-destructive/10 rounded-lg py-2 px-4 shadow font-medium text-sm">
-      Trip cancelled
-    </span>
-  );
-}
-
-function ConfirmedActions() {
-  const handleReview = () => {
-    // Logic to message the host
-    console.log("Message host clicked");
-  };
+function ConfirmedActions({ trip }: { trip: Trip }) {
+  const { mutate: pay, isPending: isPaying } = usePayReservation(trip.id);
 
   return (
     <Stack className="gap-3">
-      <Button variant="secondary" onClick={handleReview}>
+      <Button variant="secondary" onClick={() => pay()} disabled={isPaying}>
         Pay now
       </Button>
-      <CancelButton />
+      <CancelButton trip={trip} />
     </Stack>
   );
 }
@@ -148,7 +149,7 @@ function PaidActions({ trip }: { trip: Trip }) {
 
   if (isReviewed) {
     return (
-      <span className="text-muted-foreground bg-muted rounded-lg py-2 px-4 shadow font-medium text-sm">
+      <span className="text-muted-foreground bg-muted py-2 px-4 shadow font-medium text-sm">
         Review left
       </span>
     );
@@ -171,22 +172,25 @@ function PaidActions({ trip }: { trip: Trip }) {
 
   return (
     <Stack className="gap-3">
-      <span className="text-green-600 bg-green-600/10 rounded-lg py-2 px-4 shadow font-medium text-sm">
+      <span className="text-green-600 bg-green-600/10 py-2 px-4 shadow font-medium text-sm">
         Trip paid
       </span>
-      <CancelButton />
+      <CancelButton trip={trip} />
     </Stack>
   );
 }
 
-function CancelButton() {
-  const handleCancel = () => {
-    // Logic to cancel
-    console.log("Cancel clicked");
-  };
+function CancelButton({ trip }: { trip: Trip }) {
+  const { mutate: cancel, isPending: isCancelling } = useCancelReservation(
+    trip.id
+  );
 
   return (
-    <Button variant="destructive" onClick={handleCancel}>
+    <Button
+      variant="destructive"
+      onClick={() => cancel()}
+      disabled={isCancelling}
+    >
       Cancel
     </Button>
   );
