@@ -10,6 +10,7 @@ export function AuthLayout() {
   }
 
   if (error) {
+    // TODO: handle error
     return <div>No error occurred</div>;
   }
 

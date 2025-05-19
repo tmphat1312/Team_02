@@ -1,11 +1,11 @@
-export function Header() {
+type HeaderProps = {
+  children?: React.ReactNode;
+};
+
+export function Header({ children }: HeaderProps) {
   return (
-    <div className="container mx-auto">
-      <header className="flex justify-between items-center py-4">
-        <div>Logo</div>
-        <div>Search</div>
-        <div>Profile</div>
-      </header>
-    </div>
+    <header className="border-b sticky top-0 z-50 bg-background">
+      {children}
+    </header>
   );
 }
