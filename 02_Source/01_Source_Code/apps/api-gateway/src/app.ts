@@ -10,6 +10,7 @@ import { propertyService } from "./services/property.js";
 import { userService } from "./services/user.js";
 import { registerServices } from "./utils/register-services.js";
 import { reservationService } from "./services/reservation.js";
+import { notificationService } from "./services/notification.js";
 
 const app = new Hono();
 
@@ -18,7 +19,14 @@ app.use("*", corsMiddleware);
 
 registerServices({
   app,
-  services: [iamService, propertyService, internalService, userService, reservationService],
+  services: [
+    iamService,
+    propertyService,
+    internalService,
+    userService,
+    reservationService,
+    notificationService,
+  ],
 });
 
 showRoutes(app);

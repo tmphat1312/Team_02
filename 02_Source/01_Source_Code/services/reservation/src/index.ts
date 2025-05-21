@@ -6,6 +6,7 @@ import { onError } from "./middleware/on-error";
 import { reservationRoute } from "./routes/reservation";
 import { reviewRoute } from "./routes/review";
 import { availabilityRoute } from "./routes/availability";
+import { env } from "./env";
 
 const app = new Hono();
 
@@ -21,5 +22,5 @@ showRoutes(app);
 
 export default {
   fetch: app.fetch,
-  port: Bun.env.PORT ?? 3006,
+  port: env.PORT ?? 3000,
 };

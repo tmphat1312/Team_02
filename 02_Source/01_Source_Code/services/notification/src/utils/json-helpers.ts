@@ -1,5 +1,4 @@
 import { Context } from "hono";
-import { ContentfulStatusCode } from "hono/utils/http-status";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { ErrorCode } from "../constants/error-codes";
@@ -40,44 +39,6 @@ export const created = (c: Context, data: DataResponse) => {
   const error: ErrorResponse = null;
   const metadata: MetadataResponse = {};
   return c.json({ data, error, metadata }, StatusCodes.CREATED);
-};
-
-export const noContent = (c: Context) => {
-  const data: DataResponse = null;
-  const error: ErrorResponse = null;
-  const metadata: MetadataResponse = {};
-  return c.json(
-    { data, error, metadata },
-    StatusCodes.NO_CONTENT as ContentfulStatusCode
-  );
-};
-
-export const unauthorized = (
-  c: Context,
-  errorMsg?: string,
-  errorCode?: string
-) => {
-  const data: DataResponse = null;
-  const error: ErrorResponse = {
-    code: errorCode || ErrorCode.UNAUTHORIZED,
-    message: errorMsg || ReasonPhrases.UNAUTHORIZED,
-    status: StatusCodes.UNAUTHORIZED,
-    statusText: ReasonPhrases.UNAUTHORIZED,
-  };
-  const metadata: MetadataResponse = {};
-  return c.json({ data, error, metadata }, StatusCodes.UNAUTHORIZED);
-};
-
-export const notFound = (c: Context, errorMsg?: string, errorCode?: string) => {
-  const data: DataResponse = null;
-  const error: ErrorResponse = {
-    code: errorCode || ErrorCode.NOT_FOUND,
-    message: errorMsg || ReasonPhrases.NOT_FOUND,
-    status: StatusCodes.NOT_FOUND,
-    statusText: ReasonPhrases.NOT_FOUND,
-  };
-  const metadata: MetadataResponse = {};
-  return c.json({ data, error, metadata }, StatusCodes.NOT_FOUND);
 };
 
 export const badRequest = (

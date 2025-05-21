@@ -70,6 +70,7 @@ export function PropertyReservation({ item }: Props) {
 
       await http.post("/reservations", payload);
       queryClient.invalidateQueries(propertyAvailabilityQueryOptions(item.id));
+      setDate(undefined);
       toast.success("Reservation successful!");
     });
   };

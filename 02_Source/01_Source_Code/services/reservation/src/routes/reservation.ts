@@ -7,6 +7,7 @@ import { reservationTable } from "../db/schema";
 import { created, ok } from "../utils/json-helpers";
 import { reservationSchema } from "../utils/validation";
 import { zValidator } from "../utils/validator-wrapper";
+import { $notification } from "../lib/notification";
 
 const route = new Hono();
 
@@ -43,12 +44,18 @@ route.get(
 );
 
 route.post("/", zValidator("json", reservationSchema), async (c) => {
-  // TODO: Check overlapping reservations
-
   const [newReservation] = await db
     .insert(reservationTable)
     .values(c.req.valid("json"))
     .returning();
+
+  await $notification("@post/notifications", {
+    body: {
+      userId: newReservation.hostId,
+      title: "New Reservation",
+      message: `You have a new reservation waiting for confirmation.`,
+    },
+  });
 
   return created(c, newReservation);
 });

@@ -162,3 +162,15 @@ export type ReservedDate = {
   endDate: string;
   tenantId: string;
 };
+
+export type Notification = {
+  id: number;
+  userId: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+  updatedAt: string;
+  sendAt: string;
+  readAt: Nullable<string>;
+};

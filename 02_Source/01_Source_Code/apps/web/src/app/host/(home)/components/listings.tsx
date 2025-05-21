@@ -6,14 +6,20 @@ import { useUserContext } from "@/features/auth/contexts/UserContext";
 import { useQuery } from "@tanstack/react-query";
 
 import { listingsQueryOptions } from "../hooks/use-listings";
-import { Listing } from "./listing";
+import { Listing, ListingFallback } from "./listing";
 
 export function Listings() {
   const host = useUserContext();
   const { data: listings } = useQuery(listingsQueryOptions(host.id));
 
   if (!listings) {
-    return null;
+    return (
+      <Grid className="grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <ListingFallback key={index} />
+        ))}
+      </Grid>
+    );
   }
 
   if (listings.length == 0) {
