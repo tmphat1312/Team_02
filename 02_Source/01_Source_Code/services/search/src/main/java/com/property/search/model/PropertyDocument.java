@@ -69,6 +69,9 @@ public class PropertyDocument {
     @Field(type = FieldType.Nested)
     private List<AmenityInfo> amenities;
 
+    @Field(type = FieldType.Nested)
+    private List<PropertyImage> propertyImages;
+
     @Field(type = FieldType.Keyword)
     private String propertyType;
 
@@ -135,6 +138,10 @@ public class PropertyDocument {
 
     public void setAmenities(List<AmenityInfo> amenities) {
         this.amenities = amenities;
+    }
+
+    public void setPropertyImages(List<PropertyImage> propertyImages) {
+        this.propertyImages = propertyImages;
     }
 
     public void setPropertyType(String propertyType) {

@@ -2,6 +2,7 @@ package com.property.search.service;
 
 import com.property.search.model.AmenityInfo;
 import com.property.search.model.PropertyDocument;
+import com.property.search.model.PropertyImage;
 import com.property.search.repository.PropertySearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,10 +33,12 @@ public class DataSyncService {
     @Transactional
     public void syncProperties() {
         String sql = "SELECT p.*, " +
-                    "STRING_AGG(DISTINCT CONCAT(pa.\"amenityId\"::text, ':', a.name, ':', a.description, ':', a.\"imageUrl\"), '||') as amenity_data " +
+                    "STRING_AGG(DISTINCT CONCAT(pa.\"amenityId\"::text, ':', a.name, ':', a.description, ':', a.\"imageUrl\"), '||') as amenity_data, " +
+                    "STRING_AGG(DISTINCT CONCAT(pi.id::text, ':', pi.\"imageUrl\", ':', pi.\"createdAt\", ':', pi.\"updatedAt\"), '||') as image_data " +
                     "FROM properties p " +
                     "LEFT JOIN \"property_amenities\" pa ON p.id = pa.\"propertyId\" " +
                     "LEFT JOIN amenities a ON pa.\"amenityId\" = a.id " +
+                    "LEFT JOIN property_images pi ON p.id = pi.\"propertyId\" " +
                     "GROUP BY p.id";
 
         List<Map<String, Object>> properties = jdbcTemplate.queryForList(sql);
@@ -89,6 +92,25 @@ public class DataSyncService {
                     }
                 }
 
+                // Handle property images
+                List<PropertyImage> propertyImages = new ArrayList<>();
+                String imageDataStr = (String) property.get("image_data");
+                
+                if (imageDataStr != null && !imageDataStr.isEmpty()) {
+                    String[] imageDataArray = imageDataStr.split("\\|\\|");
+                    for (String imageData : imageDataArray) {
+                        String[] parts = imageData.split(":", 4);
+                        if (parts.length == 4) {
+                            propertyImages.add(PropertyImage.builder()
+                                .id(parts[0])
+                                .imageUrl(parts[1])
+                                .createdAt(parts[2])
+                                .updatedAt(parts[3])
+                                .build());
+                        }
+                    }
+                }
+
                 // Handle location point
                 GeoPoint locationPoint = null;
                 Object latObj = property.get("latitude");
@@ -133,6 +155,7 @@ public class DataSyncService {
                 }
                 document.setIsActive((Boolean) property.get("isAvailable"));
                 document.setAmenities(amenities);
+                document.setPropertyImages(propertyImages);
 
                 // Save to Elasticsearch
                 propertySearchRepository.save(document);
