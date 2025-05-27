@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,6 +84,11 @@ public class AsyncDataSyncService {
 
             // Set default value for isActive if null
             if (property.getIsActive() == null) property.setIsActive(true);
+
+            // Preserve property images if they exist
+            if (property.getPropertyImages() == null) {
+                property.setPropertyImages(new ArrayList<>());
+            }
 
             return property;
         } catch (Exception e) {

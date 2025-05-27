@@ -1,11 +1,12 @@
 package com.property.search.model;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
 @Builder
@@ -13,14 +14,14 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @AllArgsConstructor
 public class AmenityInfo {
     @Field(type = FieldType.Keyword)
-    private String id;
+    public String id;
 
     @Field(type = FieldType.Text)
-    private String name;
+    public String name;
 
     @Field(type = FieldType.Text)
-    private String description;
+    public String description;
 
     @Field(type = FieldType.Keyword)
-    private String imageUrl;
+    public String imageUrl;
 } 

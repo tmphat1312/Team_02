@@ -155,4 +155,28 @@ public class PropertyDocument {
     public String getTitle() {
         return this.title;
     }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public Integer getGuests() {
+        return this.guests;
+    }
+
+    public Boolean getIsActive() {
+        return this.isActive;
+    }
+
+    public List<PropertyImage> getPropertyImages() {
+        return this.propertyImages;
+    }
 }
