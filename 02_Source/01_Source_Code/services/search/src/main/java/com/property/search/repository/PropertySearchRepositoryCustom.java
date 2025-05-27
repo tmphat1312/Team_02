@@ -12,7 +12,8 @@ public interface PropertySearchRepositoryCustom {
             String query,
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            String location,
+            Double longitude,
+            Double latitude,
             String propertyType,
             List<String> amenityNames,
             PageRequest pageRequest);

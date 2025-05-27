@@ -25,10 +25,11 @@ public class PropertySearchController {
             @RequestParam(value = "q", required = false) String q,
             @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
             @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
-            @RequestParam(value = "location", required = false) String location,
+            @RequestParam(value = "longitude") Double longitude,
+            @RequestParam(value = "latitude") Double latitude,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             @RequestParam(value = "amenityNames", required = false) List<String> amenityNames,
-            @RequestParam(value = "radiusKm", required = false) Double radiusKm,
+            @RequestParam(value = "radiusKm") Double radiusKm,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
 
@@ -37,11 +38,12 @@ public class PropertySearchController {
 
         // Call service to search
         Page<PropertyDocument> results = propertySearchService.searchProperties(
-                q, minPrice, maxPrice, location, propertyType, amenityNames, radiusKm, pageable);
+                q, minPrice, maxPrice, longitude, latitude, propertyType, amenityNames, radiusKm, pageable);
         System.out.println("q: " + q);
         System.out.println("minPrice: " + minPrice);
         System.out.println("maxPrice: " + maxPrice);
-        System.out.println("location: " + location);
+        System.out.println("longitude: " + longitude);
+        System.out.println("latitude: " + latitude);
         System.out.println("propertyType: " + propertyType);
         System.out.println("amenityNames: " + amenityNames);
         System.out.println("radiusKm: " + radiusKm);

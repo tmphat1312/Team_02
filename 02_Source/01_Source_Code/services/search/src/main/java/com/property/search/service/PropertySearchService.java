@@ -34,33 +34,22 @@ public class PropertySearchService {
             String query,
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            String location,
+            Double longitude,
+            Double latitude,
             String propertyType,
             List<String> amenityNames,
             Double radiusKm,
             PageRequest pageRequest) {
         
-        
         Page<PropertyDocument> properties = propertySearchRepository.searchProperties(
-                query, minPrice, maxPrice, location, propertyType, amenityNames, pageRequest);
+                query, minPrice, maxPrice, longitude, latitude, propertyType, amenityNames, pageRequest);
         
-        
-        if (radiusKm == null || location == null || location.isEmpty()) {
+        if (radiusKm == null || longitude == null || latitude == null) {
             return properties;
         }
-        
-        
-        Point searchPoint = geocodingService.getCoordinates(location);
-        if (searchPoint == null) {
-            
-            System.out.println("Geocoding failed for location: " + location);
-            return properties;
-        }
-        
-        System.out.println("Search coordinates: lat=" + searchPoint.getY() + ", lon=" + searchPoint.getX());
         
         // Create GeoPoint for calculations
-        GeoPoint searchLocation = new GeoPoint(searchPoint.getY(), searchPoint.getX());
+        GeoPoint searchLocation = new GeoPoint(latitude, longitude);
         
         // Filter results by distance
         List<PropertyDocument> filteredProperties = properties.getContent().stream()
@@ -72,6 +61,7 @@ public class PropertySearchService {
                 
                 GeoPoint propertyLocation = property.getLocationPoint();
                 Point propertyPoint = new Point(propertyLocation.getLon(), propertyLocation.getLat());
+                Point searchPoint = new Point(longitude, latitude);
                 
                 // Calculate distance using Haversine formula
                 double distance = GeoUtils.calculateDistance(searchPoint, propertyPoint);

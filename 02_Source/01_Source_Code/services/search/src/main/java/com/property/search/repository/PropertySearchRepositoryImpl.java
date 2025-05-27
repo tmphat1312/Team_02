@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
@@ -31,7 +33,8 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
             String query,
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            String location,
+            Double longitude,
+            Double latitude,
             String propertyType,
             List<String> amenityNames,
             PageRequest pageRequest) {
@@ -52,9 +55,10 @@ public class PropertySearchRepositoryImpl implements PropertySearchRepositoryCus
             criteria.and("pricePerNight").lessThanEqual(maxPrice);
         }
 
-        // Add location filter
-        if (location != null && !location.isEmpty()) {
-            criteria.and("location").contains(location);
+        // Add location point filter if coordinates are provided
+        if (longitude != null && latitude != null) {
+            GeoJsonPoint point = GeoJsonPoint.of(longitude, latitude);
+            criteria.and("locationPoint").within(point);
         }
 
         // Add property type filter
