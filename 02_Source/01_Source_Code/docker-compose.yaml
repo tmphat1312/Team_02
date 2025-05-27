@@ -55,27 +55,18 @@ services:
     networks:
       - app-network
 
-  elasticsearch:
-    image: elasticsearch:8.12.2
-    container_name: rento-elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
+  search:
+    build:
+      context: ./services/search
+      dockerfile: Dockerfile
+    image: rento-search
+    container_name: rento-search
     ports:
-      - "9200:9200"
+      - "8082:8082"
     networks:
       - app-network
-
-volumes:
-  elasticsearch-data:
-    driver: local
+    depends_on:
+      - property-service
 
 networks:
   app-network:
