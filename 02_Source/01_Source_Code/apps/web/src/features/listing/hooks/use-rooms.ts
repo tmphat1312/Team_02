@@ -45,6 +45,9 @@ const fetchKey = ({
   noBathroomsMin,
   noBedroomsMin,
   noBedsMin,
+  noGuestsMin,
+  lat,
+  lng,
   page,
   pageSize,
 }: {
@@ -55,6 +58,9 @@ const fetchKey = ({
   noBathroomsMin: number | null;
   noBedroomsMin: number | null;
   noBedsMin: number | null;
+  noGuestsMin: number | null;
+  lat: number | null;
+  lng: number | null;
   page: number;
   pageSize: number;
 }) => {
@@ -69,6 +75,9 @@ const fetchKey = ({
   if (noBedroomsMin)
     searchParams.append("noBedroomsMin", noBedroomsMin.toString());
   if (noBedsMin) searchParams.append("noBedsMin", noBedsMin.toString());
+  if (noGuestsMin) searchParams.append("noGuestsMin", noGuestsMin.toString());
+  if (lat) searchParams.append("lat", lat.toString());
+  if (lng) searchParams.append("lng", lng.toString());
 
   searchParams.append("page", page.toString());
   searchParams.append("pageSize", pageSize.toString());
@@ -86,6 +95,9 @@ export function useRooms() {
       noBathroomsMin,
       noBedroomsMin,
       noBedsMin,
+      lat,
+      lng,
+      noGuestsMin,
     },
   ] = useFilterValues();
   const { data, mutate, size, setSize, isValidating, isLoading } =
@@ -99,6 +111,9 @@ export function useRooms() {
           noBathroomsMin,
           noBedroomsMin,
           noBedsMin,
+          noGuestsMin,
+          lat,
+          lng,
           page: index + 1,
           pageSize: PAGE_SIZE,
         }),

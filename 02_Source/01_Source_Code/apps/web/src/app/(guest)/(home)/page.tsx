@@ -12,13 +12,16 @@ import { FiltersDialog } from "./components/filters/filter-dialog";
 import { FilterDialogContent } from "./components/filters/filter-dialog-content";
 import { Filters } from "./components/filters/filters";
 import { RoomList, RoomListFallback } from "./components/room-list";
+import { SearchLayout } from "./components/search-layout";
+import { SearchBar } from "./components/search/search-bar";
 
-export default function Home() {
+export default async function Home() {
   const categoriesPromise = fetchCategories();
   const amenitiesPromise = fetchAmenities();
 
   return (
     <Page className="pt-0 pb-8">
+      <SearchBar />
       <Filters>
         <Suspense fallback={<CategoryListFallback />}>
           <CategoryList categoriesPromise={categoriesPromise} />
@@ -27,9 +30,11 @@ export default function Home() {
           <FilterDialogContent amenitiesPromise={amenitiesPromise} />
         </FiltersDialog>
       </Filters>
-      <Suspense fallback={<RoomListFallback />}>
-        <RoomList />
-      </Suspense>
+      <SearchLayout>
+        <Suspense fallback={<RoomListFallback />}>
+          <RoomList />
+        </Suspense>
+      </SearchLayout>
     </Page>
   );
 }
