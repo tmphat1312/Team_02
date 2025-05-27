@@ -72,30 +72,44 @@ const MapboxMap = ({
     }
   }, [centerPoint]);
 
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Clear existing markers
-    const markers = document.getElementsByClassName("mapbox-marker");
-    while (markers[0]) {
-      markers[0].parentNode?.removeChild(markers[0]);
-    }
+    // Remove existing markers from the map
+    markersRef.current.forEach((marker) => marker.remove());
+    markersRef.current = [];
 
     // Add markers for accommodations
     accommodations.forEach((acc) => {
       const markerElement = document.createElement("div");
-      markerElement.className = "mapbox-marker";
-      markerElement.style.backgroundColor = "#ff0000";
-      markerElement.style.width = "20px";
-      markerElement.style.height = "20px";
-      markerElement.style.borderRadius = "50%";
+      markerElement.className = "mapbox-marker hover:z-9999";
+      markerElement.style.backgroundColor = "#fff";
+      markerElement.style.color = "#000000";
+      markerElement.style.width = "60px";
+      markerElement.style.height = "28px";
+      markerElement.style.borderRadius = "16px";
       markerElement.style.cursor = "pointer";
+      markerElement.style.zIndex = "1000";
+      markerElement.style.display = "flex";
+      markerElement.style.alignItems = "center";
+      markerElement.style.justifyContent = "center";
+      markerElement.style.fontWeight = "bold";
+      markerElement.style.fontSize = "14px";
+      markerElement.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
+
+      // Display price (adjust property name as needed)
+      markerElement.textContent = acc.pricePerNight
+        ? `$${acc.pricePerNight}`
+        : "N/A";
 
       markerElement.addEventListener("click", () => setSelectedAcc(acc));
 
-      new mapboxgl.Marker(markerElement)
-        .setLngLat([acc.longitude, acc.latitude])
+      const marker = new mapboxgl.Marker(markerElement)
+        .setLngLat([acc.locationPoint.lon, acc.locationPoint.lat])
         .addTo(mapRef.current!);
+
+      markersRef.current.push(marker);
     });
   }, [accommodations]);
 

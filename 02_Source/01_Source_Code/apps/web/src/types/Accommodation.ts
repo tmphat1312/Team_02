@@ -1,13 +1,29 @@
 export default interface Accommodation {
   id: number;
   title: string;
-  short_description: string;
-  address: string;
-  cover_img_src: string;
-  price: number;
-  num_of_bedroom: number;
-  num_of_bed: number;
-  max_guests: number;
-  latitude: number;
-  longitude: number;
+  description: string;
+  location: string;
+  locationPoint: {
+    lat: number;
+    lon: number;
+  }
+  pricePerNight: number;
+  area: number;
+  bedrooms: number;
+  bathrooms: number;
+  beds: number;
+  guests: number;
+  amenities: Amenity[];
+  propertyType: string;
+  propertyImages: PropertyImage[];
+}
+
+export interface Amenity {
+  name: string;
+  description: string;
+  image: string;
+}
+
+export interface PropertyImage {
+  imageUrl: string;
 }

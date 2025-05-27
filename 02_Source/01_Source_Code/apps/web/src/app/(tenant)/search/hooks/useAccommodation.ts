@@ -34,7 +34,8 @@ const fetchKey = ({
   page: number;
   pageSize: number;
 }) =>
-  `/api/accommodations/nearby?lat=${lat}&lng=${lng}&radius=${radius}&page=${page-1}&size=${pageSize}`;
+  // `/api/accommodations/nearby?lat=${lat}&lng=${lng}&radius=${radius}&page=${page-1}&size=${pageSize}`;
+`/api/properties/search?lat=${lat}&lng=${lng}&radiusKm=${radius}&page=${page-1}&size=${pageSize}`;
 
 export function useAccommodations({
   lat,

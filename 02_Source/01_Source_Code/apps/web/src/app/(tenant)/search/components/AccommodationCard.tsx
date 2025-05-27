@@ -13,7 +13,7 @@ export default function AccommodationCard({ accommodation }: Props) {
       {/* Image */}
       <div className="w-full">
         <img
-          src={accommodation.cover_img_src || "https://via.placeholder.com/150"}
+          src={(accommodation.propertyImages?.length > 0 && accommodation.propertyImages[0].imageUrl) || "https://via.placeholder.com/150"}
           alt={accommodation.title}
           width={150}
           height={150}
@@ -24,13 +24,13 @@ export default function AccommodationCard({ accommodation }: Props) {
       {/* Details */}
       <div className="w-full p-2">
         <h3 className="text-sm font-semibold">{accommodation.title}</h3>
-        <p className="text-sm text-gray-600">{accommodation.address}</p>
+        <p className="text-sm text-gray-600">{accommodation.location}</p>
         <p className="text-sm font-bold text-blue-600">
-          ${accommodation.price}
+          ${accommodation.pricePerNight}
         </p>
         <p className="text-xs text-gray-500">
-          {accommodation.num_of_bedroom} bedrooms · {accommodation.num_of_bed}{" "}
-          beds · {accommodation.max_guests} guests
+          {accommodation.bedrooms} bedrooms · {accommodation.beds}{" "}
+          beds · {accommodation.guests} guests
         </p>
       </div>
     </Link>

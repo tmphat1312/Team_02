@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import { useState, useRef } from "react";
+// import dynamic from "next/dynamic";
 import Accommodation from "@/types/Accommodation";
 import Coordinates from "@/types/Coordinates";
 import { BeatLoader } from "react-spinners";
@@ -42,7 +42,7 @@ export default function SearchPage() {
 
   // Handle map changes
   const handleMapChange = (lat: number, lng: number, newRadius: number) => {
-    setCenter({ lat, lng }); // Update the center coordinates
+    setCenter({ lat, lng });
     setRadius(newRadius);
   };
 

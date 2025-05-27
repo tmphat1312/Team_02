@@ -14,6 +14,9 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX_STYLE_URL: type("string | undefined").pipe(
       (v) => v ?? "mapbox://styles/mapbox/streets-v11"
     ),
+    NEXT_PUBLIC_SEARCH_SERVICE_API: type("string | undefined").pipe(
+      (v) => v ?? "http://localhost:8082"
+    ),
   },
   runtimeEnv: {
     NEXT_PUBLIC_API_GATEWAY_URL: process.env.NEXT_PUBLIC_API_GATEWAY_URL,
@@ -21,5 +24,7 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN:
       process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     NEXT_PUBLIC_MAPBOX_STYLE_URL: process.env.NEXT_PUBLIC_MAPBOX_STYLE_URL,
+    NEXT_PUBLIC_SEARCH_SERVICE_API:
+      process.env.NEXT_PUBLIC_SEARCH_SERVICE_API,
   },
 });
