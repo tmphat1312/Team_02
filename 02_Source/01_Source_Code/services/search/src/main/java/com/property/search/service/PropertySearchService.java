@@ -40,19 +40,19 @@ public class PropertySearchService {
             Double radiusKm,
             PageRequest pageRequest) {
         
-        // First get all properties matching the search criteria
+        
         Page<PropertyDocument> properties = propertySearchRepository.searchProperties(
                 query, minPrice, maxPrice, location, propertyType, amenityNames, pageRequest);
         
-        // If no radius filter, return all results
+        
         if (radiusKm == null || location == null || location.isEmpty()) {
             return properties;
         }
         
-        // Get coordinates for the location search
+        
         Point searchPoint = geocodingService.getCoordinates(location);
         if (searchPoint == null) {
-            // If geocoding fails, return unfiltered results
+            
             System.out.println("Geocoding failed for location: " + location);
             return properties;
         }

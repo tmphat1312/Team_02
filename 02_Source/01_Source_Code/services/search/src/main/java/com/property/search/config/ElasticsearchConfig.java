@@ -17,23 +17,25 @@ import org.slf4j.LoggerFactory;
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchConfig.class);
 
-    @Value("${spring.elasticsearch.uris:http://localhost:9200}")
-    private String elasticsearchUri;
+    @Value("${spring.elasticsearch.uris}")
+    private String elasticsearchUrl;
 
-    @Value("${spring.elasticsearch.connection-timeout:5000}")
-    private long connectionTimeout;
+    @Value("${spring.elasticsearch.username}")
+    private String username;
 
-    @Value("${spring.elasticsearch.socket-timeout:5000}")
-    private long socketTimeout;
+    @Value("${spring.elasticsearch.password}")
+    private String password;
 
     @Override
     @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public ClientConfiguration clientConfiguration() {
-        logger.info("Attempting to connect to Elasticsearch at {}", elasticsearchUri);
+        logger.info("Attempting to connect to Elasticsearch at {}", elasticsearchUrl);
         return ClientConfiguration.builder()
-            .connectedTo(elasticsearchUri)
-            .withConnectTimeout(connectionTimeout)
-            .withSocketTimeout(socketTimeout)
-            .build();
+                .connectedTo(elasticsearchUrl.replace("https://", ""))
+                .usingSsl()
+                .withBasicAuth(username, password)
+                .withSocketTimeout(5000)
+                .withConnectTimeout(5000)
+                .build();
     }
 }

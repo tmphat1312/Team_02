@@ -9,14 +9,28 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   elasticsearch:
-    uris: localhost:9200
+    uris: https://67912903224c4a45bc255ec063468186.ap-southeast-1.aws.found.io:443
+    username: minhnguyet
+    password: Learning-purpose-0
     connection-timeout: 5000
     socket-timeout: 5000
+    ssl:
+      verification-mode: none
+    restclient:
+      sniffer:
+        interval: 60000
+        delay-after-failure: 30000
 
   data:
     elasticsearch:
       repositories:
         enabled: true
+      client:
+        endpoints: https://67912903224c4a45bc255ec063468186.ap-southeast-1.aws.found.io:443
+        username: minhnguyet
+        password: Learning-purpose-0
+        ssl:
+          verification-mode: none
 
   jpa:
     hibernate:
