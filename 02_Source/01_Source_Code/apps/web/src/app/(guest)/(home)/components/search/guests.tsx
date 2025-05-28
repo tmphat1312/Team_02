@@ -9,10 +9,16 @@ import { Button } from "@/components/ui/button";
 import { makePluralNoun } from "@/lib/utils";
 
 import { useSearchContext } from "./search-context";
-import { parseAsFloat, parseAsInteger, useQueryState } from "nuqs";
+import {
+  parseAsFloat,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "nuqs";
 
 export function Guests() {
   const [, setNoGuestsMin] = useQueryState("noGuestsMin", parseAsInteger);
+  const [, setSearch] = useQueryState("search", parseAsString.withDefault(""));
   const [, setLat] = useQueryState("lat", parseAsFloat);
   const [, setLng] = useQueryState("lng", parseAsFloat);
   const {
@@ -24,9 +30,10 @@ export function Guests() {
     setSearchOpen,
     lat,
     lng,
+    searchValue,
   } = useSearchContext();
 
-  const isDisabled = lat === null || lng === null;
+  const isDisabled = (lat === null || lng === null) && guests === 0;
 
   return (
     <div className="relative">
@@ -69,6 +76,7 @@ export function Guests() {
             setNoGuestsMin(guests == 0 ? null : guests);
             setLat(lat);
             setLng(lng);
+            setSearch(searchValue);
           }}
           disabled={isDisabled}
         >

@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPin, MousePointer2, X } from "lucide-react";
-import { useDeferredValue } from "react";
+import React, { useDeferredValue } from "react";
 
 import { Loader } from "@/components/icons/loader";
 import { Stack } from "@/components/layout/stack";
@@ -19,6 +19,10 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-red-500" />,
     color: "bg-red-50",
+    coordinates: {
+      longitude: 108.212,
+      latitude: 16.068,
+    },
   },
   {
     id: 2,
@@ -26,6 +30,10 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-green-500" />,
     color: "bg-green-50",
+    coordinates: {
+      longitude: 105.8542,
+      latitude: 21.0285,
+    },
   },
   {
     id: 3,
@@ -33,6 +41,10 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-yellow-500" />,
     color: "bg-yellow-50",
+    coordinates: {
+      longitude: 106.6297,
+      latitude: 10.8231,
+    },
   },
   {
     id: 4,
@@ -40,6 +52,10 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-purple-500" />,
     color: "bg-purple-50",
+    coordinates: {
+      longitude: 109.1967,
+      latitude: 12.2388,
+    },
   },
   {
     id: 5,
@@ -47,6 +63,10 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-orange-500" />,
     color: "bg-orange-50",
+    coordinates: {
+      longitude: 103.984,
+      latitude: 10.2899,
+    },
   },
   {
     id: 6,
@@ -54,8 +74,12 @@ const SuggestedLocation = [
     description: "Must-visit destination",
     icon: <MapPin className="text-pink-500" />,
     color: "bg-pink-50",
+    coordinates: {
+      longitude: 108.437,
+      latitude: 11.9405,
+    },
   },
-];
+] as const;
 
 export function Location() {
   const {
@@ -122,34 +146,50 @@ export function Location() {
 function Suggested() {
   const { setSearchValue, setSuggestedOpen, setLng, setLat } =
     useSearchContext();
+  const [isGeolocationSupported] = React.useState(() => {
+    return "geolocation" in navigator;
+  });
+
+  const handleGetNearby = async () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLat(latitude);
+        setLng(longitude);
+        setSuggestedOpen(false);
+        setSearchValue("Nearby");
+      },
+      (error) => {
+        console.error("Error getting geolocation:", error);
+      }
+    );
+  };
+
   return (
     <ul className="min-h-60 max-h-100 overflow-y-auto scroll-pt-4">
-      <li className="hover:bg-muted rounded-lg">
-        <button
-          className="cursor-pointer w-full p-2"
-          onClick={() => {
-            setSuggestedOpen(false);
-            setSearchValue("Nearby");
-            setLng(106.49361);
-            setLat(10.589728);
-          }}
-        >
-          <Stack className="gap-4">
-            <div className="size-14 rounded-lg grid place-content-center bg-blue-50">
-              <MousePointer2 className="text-blue-500 scale-x-[-1]" />
-            </div>
-            <Stack
-              orientation="vertical"
-              className="items-start text-sm gap-0.5"
-            >
-              <span className="font-semibold">Nearby</span>
-              <span className="text-muted-foreground">
-                Find what&apos;s around you
-              </span>
+      {isGeolocationSupported && (
+        <li className="hover:bg-muted rounded-lg">
+          <button
+            className="cursor-pointer w-full p-2"
+            onClick={handleGetNearby}
+          >
+            <Stack className="gap-4">
+              <div className="size-14 rounded-lg grid place-content-center bg-blue-50">
+                <MousePointer2 className="text-blue-500 scale-x-[-1]" />
+              </div>
+              <Stack
+                orientation="vertical"
+                className="items-start text-sm gap-0.5"
+              >
+                <span className="font-semibold">Nearby</span>
+                <span className="text-muted-foreground">
+                  Find what&apos;s around you
+                </span>
+              </Stack>
             </Stack>
-          </Stack>
-        </button>
-      </li>
+          </button>
+        </li>
+      )}
       {SuggestedLocation.map((location) => (
         <li key={location.id} className="hover:bg-muted rounded-lg">
           <button
@@ -157,6 +197,8 @@ function Suggested() {
             onClick={() => {
               setSuggestedOpen(false);
               setSearchValue(location.name);
+              setLng(location.coordinates.longitude);
+              setLat(location.coordinates.latitude);
             }}
           >
             <Stack className="gap-4">
@@ -192,6 +234,45 @@ function Searched() {
     queryFn: () => getGeoTextSuggestions(deferred),
   });
 
+  const handleGetNearby = async () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLat(latitude);
+        setLng(longitude);
+        setSuggestedOpen(false);
+        setSearchValue("Nearby");
+      },
+      (error) => {
+        console.error("Error getting geolocation:", error);
+      }
+    );
+  };
+
+  if (searchValue == "Nearby") {
+    return (
+      <div className="hover:bg-muted rounded-lg">
+        <button className="cursor-pointer w-full p-2" onClick={handleGetNearby}>
+          <Stack className="gap-4">
+            <div
+              className={`size-14 rounded-lg grid place-content-center bg-stone-100 shrink-0`}
+            >
+              <MapPin className="text-stone-500" />
+            </div>
+            <Stack
+              orientation="vertical"
+              className="text-sm gap-0.5 items-start"
+            >
+              <span className="font-semibold text-sm text-start">
+                Use your current location
+              </span>
+            </Stack>
+          </Stack>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <ul className="min-h-60 max-h-100 overflow-y-auto scroll-pt-4">
       {isLoading || !suggestions ? (
@@ -209,7 +290,6 @@ function Searched() {
                   <button
                     className="cursor-pointer w-full p-2"
                     onClick={async () => {
-                      setSearchValue(s.address);
                       setSuggestedOpen(false);
                       const { coordinates } = await retrieveCoordinates(
                         s.mapbox_id

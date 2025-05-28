@@ -1,23 +1,27 @@
 "use client";
 
-import { parseAsFloat, parseAsInteger, useQueryState } from "nuqs";
+import { parseAsFloat, parseAsString, useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 
 import { env } from "@/env";
+import { useRooms } from "@/features/listing/hooks/use-rooms";
 import { getGeocoding } from "@/features/map/data/get-geocoding";
 import { mapboxgl } from "@/lib/mapbox";
-import { useRooms } from "@/features/listing/hooks/use-rooms";
 import { cn, formatPrice } from "@/lib/utils";
 
 export function Map() {
   const [lat, setLat] = useQueryState("lat", parseAsFloat);
   const [lng, setLng] = useQueryState("lng", parseAsFloat);
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault("")
+  );
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map>(null);
   const markerRef = useRef<mapboxgl.Marker>(null);
 
-  const [zoom] = useState(10);
+  const [zoom, setZoom] = useState(10);
 
   const { isEmpty, isLoadingMore, properties } = useRooms();
 
@@ -43,7 +47,6 @@ export function Map() {
     });
 
     const geolocate = new mapboxgl.GeolocateControl();
-
     geolocate.on("geolocate", async (e) => {
       if (!mapRef.current) return;
 
@@ -57,6 +60,9 @@ export function Map() {
         center: [e.coords.longitude, e.coords.latitude],
         essential: true,
       });
+      setLng(e.coords.longitude);
+      setLat(e.coords.latitude);
+      setSearch(null);
     });
 
     mapRef.current.addControl(geolocate, "top-right");
@@ -77,6 +83,13 @@ export function Map() {
       );
       setLng(coordinates.lng);
       setLat(coordinates.lat);
+      setSearch(null);
+    });
+
+    // on zoom change, update the zoom level in the URL
+    mapRef.current.on("zoom", () => {
+      const currentZoom = mapRef.current?.getZoom();
+      setZoom(currentZoom || zoom);
     });
 
     markerRef.current = new mapboxgl.Marker()
@@ -88,9 +101,9 @@ export function Map() {
       markerRef.current?.remove();
 
       mapRef.current = null;
-      mapContainerRef.current = null;
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   useEffect(() => {
     if (!mapRef.current || isEmpty || isLoadingMore) return;
