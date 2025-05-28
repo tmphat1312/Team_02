@@ -1,0 +1,29 @@
+/* Make Galleria arrows smaller */
+.custom-galleria-arrows .p-galleria-item-prev,
+.custom-galleria-arrows .p-galleria-item-next {
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 1rem !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  line-height: 24px !important;
+}
+.custom-galleria-arrows .p-galleria-item-prev .pi,
+.custom-galleria-arrows .p-galleria-item-next .pi {
+  font-size: 1rem !important;
+}
+
+/* Hide arrows by default */
+.custom-galleria-arrows .p-galleria-item-prev,
+.custom-galleria-arrows .p-galleria-item-next {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+/* Show arrows on card hover */
+.cursor-pointer:hover .custom-galleria-arrows .p-galleria-item-prev,
+.cursor-pointer:hover .custom-galleria-arrows .p-galleria-item-next {
+  opacity: 1;
+  pointer-events: auto;
+}

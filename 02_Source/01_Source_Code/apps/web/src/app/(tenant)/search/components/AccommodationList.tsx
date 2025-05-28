@@ -4,7 +4,7 @@ import Accommodation from "@/types/Accommodation";
 
 export default function AccommodationList({ items }: { items: Accommodation[] }){
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid lg:grid-cols-3 grid-cols-2 gap-4">
       {items.length > 0 &&
         items.map((accommodation) => (
           <AccommodationCard

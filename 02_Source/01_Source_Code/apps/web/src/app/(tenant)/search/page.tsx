@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-// import dynamic from "next/dynamic";
 import Accommodation from "@/types/Accommodation";
 import Coordinates from "@/types/Coordinates";
 import { BeatLoader } from "react-spinners";
@@ -11,10 +10,10 @@ import { useAccommodations } from "./hooks/useAccommodation";
 import SearchBar from "./components/SearchBar";
 import AccommodationList from "./components/AccommodationList";
 import AccommodationCard from "./components/AccommodationCard";
-// const LeafletMap = dynamic(() => import("./components/LeafletMap"), {
-//   ssr: false,
-// });
 import MapboxMap from "./components/MapBoxMap";
+import { useFilter } from "./hooks/useFilter";
+import FilterPopup from "./components/FilterPopup";
+import { PropertyFilterOptions } from "@/types/PropertyFilterOptions";
 
 export default function SearchPage() {
   const [selectedAcc, setSelectedAcc] = useState<Accommodation | null>(null);
@@ -23,13 +22,22 @@ export default function SearchPage() {
     lng: 106.629401,
   }); // default coordinates
   const [radius, setRadius] = useState<number>(500);
+  const [filterVisible, setFilterVisible] = useState(false);
+  const { filters, updateFilters, clearFilters } = useFilter();
   const pageSize = 20;
   const { accommodations, pagination, isLoading, setPage } = useAccommodations({
     lat: center.lat,
     lng: center.lng,
     radius,
     pageSize,
+    filters,
   });
+
+  const handleApplyFilters = (newFilters: PropertyFilterOptions) => {
+    updateFilters(newFilters);
+    setFilterVisible(false);
+    console.log("Filters applied:", filters);
+  };
 
   const onPageChange = (event: {
     first: number;
@@ -51,8 +59,40 @@ export default function SearchPage() {
       {/* Left panel: display the list of accommodations */}
       <div className="h-full w-3/5 py-4">
         {/* Search bar */}
-        <div className="flex">
+        <div className="flex gap-2">
           <SearchBar onSelect={setCenter} />
+          <button
+            onClick={() => setFilterVisible(true)}
+            className="relative mb-2 px-2 py-2 bg-gray-100 rounded"
+          >
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                />
+              </svg>
+            </div>
+
+            {((filters.minPrice && filters.minPrice > 0) ||
+              !!filters.propertyType ||
+              filters.amenityNames.length > 0) && (
+              <span className="top-0 right-0 translate-x-1/2 -translate-y-1/2 absolute ml-1 h-4 w-4 p-1 text-sm bg-green-600 rounded-full text-white flex items-center justify-center">
+                {/* Show count of active filters */}
+                {+!!filters.minPrice +
+                  +!!filters.propertyType +
+                  filters.amenityNames.length}
+              </span>
+            )}
+          </button>
         </div>
 
         {isLoading ? (
@@ -81,10 +121,10 @@ export default function SearchPage() {
         ) : (
           <div>
             <h2 className="text-lg font-semibold my-2">Accommodations</h2>
-            {pagination.totalPages > 1 && accommodations.length > 0 && (
+            {accommodations.length > 0 && (
               <p className="my-2">
-                {pagination.totalItems > 100 && <span>Over </span>}{" "}
-                {pagination.totalItems} results
+                {accommodations.length > 100 && <span>Over </span>}{" "}
+                {accommodations.length} results
               </p>
             )}
             <AccommodationList items={accommodations} />
@@ -105,7 +145,7 @@ export default function SearchPage() {
       </div>
 
       {/* Right panel */}
-      <div className="sticky top-0 w-2/5 h-[100vh]">
+      <div className="sticky border top-0 w-2/5 h-[100vh]">
         {/* Loading animation */}
         {isLoading && (
           <div className="absolute top-1/4 left-0 w-full flex items-center justify-center z-9999">
@@ -115,14 +155,6 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* Mapview */}
-        {/* <LeafletMap
-          accommodations={accommodations}
-          onChange={handleMapChange}
-          setSelectedAcc={setSelectedAcc}
-          centerPoint={center}
-          setCenterPoint={setCenter}
-        /> */}
         <MapboxMap
           accommodations={accommodations}
           onChange={handleMapChange}
@@ -151,6 +183,15 @@ export default function SearchPage() {
           </div>
         )}
       </div>
+
+      {/* Filter popup */}
+      <FilterPopup
+        filters={filters}
+        visible={filterVisible}
+        onApply={handleApplyFilters}
+        onClear={clearFilters}
+        onClose={() => setFilterVisible(false)}
+      />
     </div>
   );
 }
