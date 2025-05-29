@@ -1308,26 +1308,6 @@
     "ruleId": 12
   },
   {
-    "propertyId": 46,
-    "ruleId": 19
-  },
-  {
-    "propertyId": 46,
-    "ruleId": 22
-  },
-  {
-    "propertyId": 46,
-    "ruleId": 26
-  },
-  {
-    "propertyId": 46,
-    "ruleId": 30
-  },
-  {
-    "propertyId": 46,
-    "ruleId": 36
-  },
-  {
     "propertyId": 47,
     "ruleId": 1
   },
@@ -1382,18 +1362,6 @@
   {
     "propertyId": 48,
     "ruleId": 11
-  },
-  {
-    "propertyId": 48,
-    "ruleId": 16
-  },
-  {
-    "propertyId": 48,
-    "ruleId": 21
-  },
-  {
-    "propertyId": 48,
-    "ruleId": 25
   },
   {
     "propertyId": 49,
@@ -1416,14 +1384,6 @@
     "ruleId": 12
   },
   {
-    "propertyId": 49,
-    "ruleId": 17
-  },
-  {
-    "propertyId": 49,
-    "ruleId": 29
-  },
-  {
     "propertyId": 50,
     "ruleId": 2
   },
@@ -1456,15 +1416,599 @@
     "ruleId": 12
   },
   {
-    "propertyId": 50,
+    "propertyId": 51,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 51,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 52,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 53,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 42
+  },
+  {
+    "propertyId": 54,
+    "ruleId": 43
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 55,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 56,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 57,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 58,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 58,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 58,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 58,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 58,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 59,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 60,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 44
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 45
+  },
+  {
+    "propertyId": 61,
+    "ruleId": 46
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 62,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 63,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 64,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 65,
+    "ruleId": 47
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 19
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 22
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 26
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 30
+  },
+  {
+    "propertyId": 66,
+    "ruleId": 36
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 67,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 16
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 21
+  },
+  {
+    "propertyId": 68,
+    "ruleId": 25
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 1
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 4
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 5
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 7
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 8
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 9
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 17
+  },
+  {
+    "propertyId": 69,
+    "ruleId": 29
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 2
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 3
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 6
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 10
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 11
+  },
+  {
+    "propertyId": 70,
+    "ruleId": 12
+  },
+  {
+    "propertyId": 70,
     "ruleId": 15
   },
   {
-    "propertyId": 50,
+    "propertyId": 70,
     "ruleId": 20
   },
   {
-    "propertyId": 50,
+    "propertyId": 70,
     "ruleId": 33
   }
 ]

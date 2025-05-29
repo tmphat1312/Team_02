@@ -106,5 +106,29 @@
   {
     "name": "Lights out after midnight.",
     "description": ""
+  },
+  {
+    "name": "Don't adjust the wall-mounted art.",
+    "description": ""
+  },
+  {
+    "name": "Shake out sand before entering. There's a brush and towel by the door for your feet.",
+    "description": ""
+  },
+  {
+    "name": "Beach gear stays outside. We've set up a spot by the door for sandy items.",
+    "description": ""
+  },
+  {
+    "name": "Only use bath towels indoors. We've provided beach towels for your outdoor adventures, so the bath ones can stay fresh longer.",
+    "description": ""
+  },
+  {
+    "name": "Don't remove cushions from the patio set. They're tied down to stay safe in the wind — please keep them in place.",
+    "description": ""
+  },
+  {
+    "name": "Windows open = music low. We love that you're enjoying the vibes — just a heads-up that sound carries easily in this neighborhood.",
+    "description": ""
   }
 ]
