@@ -13,7 +13,7 @@ export default async function ProfilePage() {
     <Page>
       <Grid className="items-start gap-8 grid-cols-[18rem_1fr]">
         <ProfileCard user={user} />
-        <ProfileContent user={user} />
+        <ProfileContent />
       </Grid>
     </Page>
   );

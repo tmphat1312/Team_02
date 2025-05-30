@@ -1,19 +1,33 @@
+"use client";
+
 import { format } from "date-fns";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { useCancelReservation } from "@/app/(user)/trips/hooks/use-cancel-reservation";
+import { usePayReservation } from "@/app/(user)/trips/hooks/use-pay-reservation";
+import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { Grid } from "@/components/layout/grid";
 import { Stack } from "@/components/layout/stack";
+import { TextAlert } from "@/components/typography/text-alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { useUserWallet } from "@/features/payment/hooks/use-user-wallet";
 import { cn, formatPrice, makePluralNoun } from "@/lib/utils";
 import { Trip } from "@/typings/models";
-import { usePayReservation } from "@/app/(user)/trips/hooks/use-pay-reservation";
-import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { ReviewDialog } from "./review-dialog";
 
 type Props = {
@@ -134,12 +148,76 @@ function PendingActions({ trip }: { trip: Trip }) {
 
 function ConfirmedActions({ trip }: { trip: Trip }) {
   const { mutate: pay, isPending: isPaying } = usePayReservation(trip.id);
+  const { isLoading: isLoadingWallet, data } = useUserWallet();
+
+  const userWallet = data || {
+    balance: 0,
+    id: "",
+    userId: "",
+  };
+  const deposit = Math.ceil(trip.totalPrice * 0.1);
+  const remaining = trip.totalPrice - deposit;
 
   return (
     <Stack className="gap-3">
-      <Button variant="secondary" onClick={() => pay()} disabled={isPaying}>
-        Pay now
-      </Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="secondary">Pay now</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Make Full Payment</DialogTitle>
+            <DialogDescription>
+              Send host the remaining of{" "}
+              <strong>{formatPrice(remaining)}</strong> for your reservation. A
+              deposit of <strong>{formatPrice(deposit)}</strong> has already
+              been paid.
+            </DialogDescription>
+          </DialogHeader>
+          <Stack orientation="vertical" className="gap-3.5 py-4">
+            <Stack orientation="vertical" className="gap-1">
+              <TextAlert className="text-center">Your balance</TextAlert>
+              <Stack className="gap-2 text-xl justify-center">
+                <span>{formatPrice(userWallet.balance)}</span>
+                <span>-</span>
+                <span className="text-green-600 font-semibold">
+                  {formatPrice(remaining)}
+                </span>
+                <span>=</span>
+                <span className="text-red-600 font-semibold">
+                  {formatPrice(userWallet.balance - remaining)}
+                </span>
+              </Stack>
+            </Stack>
+            <Stack orientation="vertical" className="gap-1">
+              <TextAlert>Remaining:</TextAlert>
+              <Stack className="justify-between">
+                <span>
+                  {formatPrice(trip.totalPrice)} - {formatPrice(deposit)}{" "}
+                  (Deposit)
+                </span>
+                <span>= {formatPrice(remaining)}</span>
+              </Stack>
+            </Stack>
+          </Stack>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              variant={"secondary"}
+              onClick={() => {
+                pay();
+              }}
+              disabled={
+                isPaying || isLoadingWallet || userWallet.balance < remaining
+              }
+            >
+              Pay
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <CancelButton trip={trip} />
     </Stack>
   );

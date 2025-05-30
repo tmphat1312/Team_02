@@ -122,33 +122,6 @@ export type ManagedReservation = Reservation & {
   review: Nullable<Review>;
 };
 
-export type ReservationMock = {
-  id: number;
-  propertyId: number;
-  status: "upcoming" | "completed" | "cancelled";
-  totalPrice: number;
-  property: {
-    name: string;
-    address: string;
-    hostId: string;
-    imageUrls: string[];
-  };
-  tenant: {
-    id: string;
-    name: string;
-    image: string;
-  };
-  checkInDate: string;
-  checkOutDate: string;
-  numberOfGuests: number;
-  review?: {
-    rating: number;
-  } | null;
-  payment?: {
-    status: "deposit-paid" | "full-paid" | "refunded";
-  };
-};
-
 export type PropertyWithReviews = Property & {
   reviews: {
     rating: number;
@@ -173,4 +146,34 @@ export type Notification = {
   updatedAt: string;
   sendAt: string;
   readAt: Nullable<string>;
+};
+
+export type UserWallet = {
+  id: number;
+  userId: string;
+  balance: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UserDepositHistory = {
+  id: number;
+  userId: string;
+  amount: number;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UserPaymentHistory = {
+  id: number;
+  fromUserId: string;
+  toUserId: string;
+  amount: number;
+  serviceFee: number;
+  date: string;
+  reservationId: number;
+  status: "DEPOSIT-PAID" | "FULL-PAID" | "REFUNDED";
+  createdAt: string;
+  updatedAt: string;
 };

@@ -13,6 +13,9 @@ export function usePayReservation(reservationId: number) {
       queryClient.invalidateQueries({
         queryKey: ["tenant-reservations"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["user-wallet"],
+      });
     },
   });
   return mutation;

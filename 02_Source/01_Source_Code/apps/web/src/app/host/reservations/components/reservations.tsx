@@ -1,17 +1,30 @@
 "use client";
 
+import { format } from "date-fns";
+import { parseAsStringEnum, useQueryState } from "nuqs";
+
 import { Stack } from "@/components/layout/stack";
 import { TextAlert } from "@/components/typography/text-alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/features/auth/contexts/UserContext";
 import { cn, formatPrice, makePluralNoun } from "@/lib/utils";
 import { ManagedReservation } from "@/typings/models";
-import { format } from "date-fns";
-import { useHostReservations } from "../hooks/use-host-reservations";
-import { Button } from "@/components/ui/button";
-import { parseAsStringEnum, useQueryState } from "nuqs";
+
 import { useConfirmReservation } from "../hooks/use-confirm-reservation";
+import { useHostReservations } from "../hooks/use-host-reservations";
 import { useRefundReservation } from "../hooks/use-refund-reservation";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { useUserWallet } from "@/features/payment/hooks/use-user-wallet";
 
 export function Reservations() {
   const host = useUserContext();
@@ -82,6 +95,13 @@ function ReservationCard({ item }: { item: ManagedReservation }) {
   const { mutate: refund, isPending: isRefunding } = useRefundReservation(
     item.id
   );
+  const { data } = useUserWallet();
+  const userWallet = data || {
+    balance: 0,
+    id: "",
+    userId: "",
+  };
+  const refundingAmount = Math.ceil(item.totalPrice * 0.1);
   return (
     <article
       className={cn(
@@ -148,13 +168,60 @@ function ReservationCard({ item }: { item: ManagedReservation }) {
             </span>
           )}
           {item.status === "Canceled" && (
-            <Button
-              variant={"destructive"}
-              disabled={isRefunding}
-              onClick={() => refund()}
-            >
-              Refund
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive">Refund</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Make Full Payment</DialogTitle>
+                  <DialogDescription>
+                    You will refund the deposit of the trip. The amount will be
+                    deducted from your wallet balance. Please ensure you have
+                    enough balance to cover the refund.
+                  </DialogDescription>
+                </DialogHeader>
+                <Stack orientation="vertical" className="gap-3.5 py-4">
+                  <Stack orientation="vertical" className="gap-1">
+                    <TextAlert className="text-center">Your balance</TextAlert>
+                    <Stack className="gap-2 text-xl justify-center">
+                      <span>{formatPrice(userWallet.balance)}</span>
+                      <span>-</span>
+                      <span className="text-green-600 font-semibold">
+                        {formatPrice(refundingAmount)}
+                      </span>
+                      <span>=</span>
+                      <span className="text-red-600 font-semibold">
+                        {formatPrice(userWallet.balance - refundingAmount)}
+                      </span>
+                    </Stack>
+                  </Stack>
+                  <Stack orientation="vertical" className="gap-1">
+                    <TextAlert>Refunding Amount (Deposit):</TextAlert>
+                    <Stack className="justify-between">
+                      <span>10% of {formatPrice(item.totalPrice)}</span>
+                      <span>= {formatPrice(refundingAmount)}</span>
+                    </Stack>
+                  </Stack>
+                </Stack>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    variant={"destructive"}
+                    onClick={() => {
+                      refund();
+                    }}
+                    disabled={
+                      isRefunding || userWallet.balance < refundingAmount
+                    }
+                  >
+                    Refund
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           )}
           {item.status === "Refunded" && (
             <span className="text-sm inline-flex items-center bg-destructive/70 text-white p-2">
