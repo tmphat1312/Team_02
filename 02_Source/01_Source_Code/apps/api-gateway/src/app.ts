@@ -11,6 +11,7 @@ import { userService } from "./services/user.js";
 import { registerServices } from "./utils/register-services.js";
 import { reservationService } from "./services/reservation.js";
 import { notificationService } from "./services/notification.js";
+import { paymentService } from "./services/payment.js";
 
 const app = new Hono();
 
@@ -26,6 +27,7 @@ registerServices({
     userService,
     reservationService,
     notificationService,
+    paymentService,
   ],
 });
 
