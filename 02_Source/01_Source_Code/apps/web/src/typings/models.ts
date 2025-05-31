@@ -177,3 +177,21 @@ export type UserPaymentHistory = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type HostNumbers = {
+  hostId: string;
+  numberOfListings: number;
+  numberOfReservations: number;
+  totalRevenue: number;
+  numberOfListingsByMonth: { month: string; value: number }[];
+  numberOfReservationsByMonth: { month: string; value: number }[];
+  revenueByMonth: { month: string; value: number }[];
+};
+
+export type HostListingRevenue = {
+  id: number;
+  listingId: number;
+  title: string;
+  numberOfReservations: number;
+  totalRevenue: number;
+  };
