@@ -3,15 +3,15 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ep-silent-fire-a1gvyuvl-pooler.ap-southeast-1.aws.neon.tech/rento-property?sslmode=require
-    username: rento-property_owner
-    password: npg_Sn1LWwU4lCQA
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   elasticsearch:
-    uris: https://67912903224c4a45bc255ec063468186.ap-southeast-1.aws.found.io:443
-    username: minhnguyet
-    password: Learning-purpose-0
+    uris: ${ELASTIC_URI}
+    username: ${ELASTIC_USERNAME}
+    password: ${ELASTIC_PASSWORD}
     connection-timeout: 5000
     socket-timeout: 5000
     ssl:
@@ -26,9 +26,9 @@ spring:
       repositories:
         enabled: true
       client:
-        endpoints: https://67912903224c4a45bc255ec063468186.ap-southeast-1.aws.found.io:443
-        username: minhnguyet
-        password: Learning-purpose-0
+        endpoints: ${ELASTIC_URI}
+        username: ${ELASTIC_USERNAME}
+        password: ${ELASTIC_PASSWORD}
         ssl:
           verification-mode: none
 
