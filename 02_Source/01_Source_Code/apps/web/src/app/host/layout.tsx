@@ -1,11 +1,21 @@
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  // This layout is used for the host app to check for authentication
-  // This layout is for host only
-  // It is not used for tenant apps
+import { Container } from "@/components/layout/container";
+import { Footer } from "@/components/layout/footer";
+import { HostHeader } from "@/components/layout/host-header";
+import { GridWindow } from "@/components/layout/window";
+import { HostOnly } from "@/features/auth/components/host-only";
 
-  return children;
+export default async function HostLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <HostOnly>
+      <GridWindow>
+        <HostHeader />
+        <Container>{children}</Container>
+        <Footer />
+      </GridWindow>
+    </HostOnly>
+  );
 }

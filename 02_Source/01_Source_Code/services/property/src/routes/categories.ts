@@ -1,6 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 
+import { ErrorCode } from "../constants/error-codes";
+
 import { db } from "../db";
 import { categoriesTable } from "../db/schema";
 
@@ -21,12 +23,14 @@ route.get("/", transformPaginationQuery, async (c) => {
   const { page, pageSize } = c.var.pagination;
   const offset = calculateOffset({ page, pageSize });
 
+  const order = c.req.query("order") ?? "desc";
+
   const getCategoriesQuery = db
     .select()
     .from(categoriesTable)
     .limit(pageSize)
     .offset(offset)
-    .orderBy(desc(categoriesTable.id));
+    .orderBy(order === "asc" ? categoriesTable.id : desc(categoriesTable.id));
   const countCategoriesQuery = db.$count(categoriesTable);
 
   const [categories, totalItems] = await Promise.all([
@@ -61,7 +65,11 @@ route.post(
       .where(eq(categoriesTable.name, name));
 
     if (existingCategory) {
-      return badRequest(c, `Category with name "${name}" already exists.`);
+      return badRequest(
+        c,
+        `Category with name "${name}" already exists.`,
+        ErrorCode.CATEGORY_ALREADY_EXISTS
+      );
     }
 
     await next();
