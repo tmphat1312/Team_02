@@ -1,11 +1,41 @@
 import useSWRInfinite from "swr/infinite";
 
+import { fetchPropertyReview } from "@/features/review/data/fetch-property-review";
 import { http } from "@/lib/http";
+import { calculateAvgRating } from "@/lib/utils";
+import { Property } from "@/typings/models";
 
 import { PAGE_SIZE } from "../config/settings";
 import { useFilterValues } from "./use-filter-values";
 
-const fetcher = (path: string) => http.get(path).then((res) => res.data);
+const fetcher = async (path: string) => {
+  const { data: httpData } = await http.get(path);
+  const properties = httpData.data;
+
+  const propertyWithRatingPromises = properties.map(
+    async (property: Property): Promise<Property> => {
+      const reviews = await fetchPropertyReview({
+        propertyId: property.id,
+      });
+      const rating =
+        reviews.length > 0
+          ? reviews.reduce(
+              (acc, review) => acc + calculateAvgRating(review),
+              0
+            ) / reviews.length
+          : null;
+      return {
+        ...property,
+        rating,
+      };
+    }
+  );
+  const propertiesWithRating = await Promise.all(propertyWithRatingPromises);
+  return {
+    data: propertiesWithRating,
+    metadata: httpData.metadata,
+  };
+};
 
 const fetchKey = ({
   categoryId,
@@ -15,6 +45,9 @@ const fetchKey = ({
   noBathroomsMin,
   noBedroomsMin,
   noBedsMin,
+  noGuestsMin,
+  lat,
+  lng,
   page,
   pageSize,
 }: {
@@ -25,6 +58,9 @@ const fetchKey = ({
   noBathroomsMin: number | null;
   noBedroomsMin: number | null;
   noBedsMin: number | null;
+  noGuestsMin: number | null;
+  lat: number | null;
+  lng: number | null;
   page: number;
   pageSize: number;
 }) => {
@@ -39,6 +75,9 @@ const fetchKey = ({
   if (noBedroomsMin)
     searchParams.append("noBedroomsMin", noBedroomsMin.toString());
   if (noBedsMin) searchParams.append("noBedsMin", noBedsMin.toString());
+  if (noGuestsMin) searchParams.append("noGuestsMin", noGuestsMin.toString());
+  if (lat) searchParams.append("lat", lat.toString());
+  if (lng) searchParams.append("lng", lng.toString());
 
   searchParams.append("page", page.toString());
   searchParams.append("pageSize", pageSize.toString());
@@ -56,6 +95,9 @@ export function useRooms() {
       noBathroomsMin,
       noBedroomsMin,
       noBedsMin,
+      lat,
+      lng,
+      noGuestsMin,
     },
   ] = useFilterValues();
   const { data, mutate, size, setSize, isValidating, isLoading } =
@@ -69,6 +111,9 @@ export function useRooms() {
           noBathroomsMin,
           noBedroomsMin,
           noBedsMin,
+          noGuestsMin,
+          lat,
+          lng,
           page: index + 1,
           pageSize: PAGE_SIZE,
         }),

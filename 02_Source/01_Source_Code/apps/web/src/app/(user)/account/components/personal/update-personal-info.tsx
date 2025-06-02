@@ -17,13 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useUserContext } from "@/features/auth/contexts/UserContext";
 import { auth } from "@/lib/auth";
-import { User } from "@/typings/models";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type Props = {
-  user: User;
-};
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -33,7 +29,8 @@ const formSchema = z.object({
   address: z.string().optional(),
 });
 
-export function UpdatePersonalInfo({ user }: Props) {
+export function UpdatePersonalInfo() {
+  const user = useUserContext();
   const [isPending, startTransition] = React.useTransition();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

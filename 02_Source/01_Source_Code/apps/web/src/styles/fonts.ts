@@ -1,14 +1,10 @@
-import { Figtree } from "next/font/google";
+import { Nunito } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 
-const figtree = Figtree({
-  variable: "--font-figtree",
+const nutito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
 });
 
-export const fontClasses = cn(
-  figtree.variable,
-  figtree.className,
-  "antialiased"
-);
+export const fontClasses = cn(nutito.variable, nutito.className, "antialiased");

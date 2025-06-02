@@ -1,3 +1,5 @@
+type Nullable<T> = T | null;
+
 export type Category = {
   id: number;
   name: string;
@@ -40,7 +42,7 @@ export type Property = {
   numberOfBathrooms: number;
   createdAt: string;
   updatedAt: string;
-  rating: number;
+  rating: Nullable<number>;
 };
 
 export type Review = {
@@ -92,76 +94,32 @@ export type User = {
   updatedAt: Date;
 };
 
-export type UserWallet = {
-  id: number;
-  userId: string;
-  balance: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type DepositHistory = {
-  id: number;
-  userId: string;
-  amount: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type PaymentHistory = {
-  id: number;
-  userId: string;
-  amount: number;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type Trip = {
-  id: number;
-  propertyId: number;
-  status: "upcoming" | "completed" | "cancelled";
-  totalPrice: number;
-  property: {
-    name: string;
-    address: string;
-    hostId: string;
-    imageUrls: string[];
-    host: {
-      name: string;
-      image: string;
-    };
-  };
-  checkInDate: string;
-  checkOutDate: string;
-  numberOfGuests: number;
-};
-
 export type Reservation = {
   id: number;
+  tenantId: string;
+  hostId: string;
   propertyId: number;
-  status: "upcoming" | "completed" | "cancelled";
-  totalPrice: number;
-  property: {
-    name: string;
-    address: string;
-    hostId: string;
-    imageUrls: string[];
-  };
-  tenant: {
-    id: string;
-    name: string;
-    image: string;
-  };
+  status: "Pending" | "Confirmed" | "Paid" | "Canceled" | "Refunded";
   checkInDate: string;
   checkOutDate: string;
   numberOfGuests: number;
-  review?: {
-    rating: number;
-  } | null;
-  payment?: {
-    status: "deposit-paid" | "full-paid" | "refunded";
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+  note: Nullable<string>;
+};
+
+export type Trip = Reservation & {
+  property: Property & {
+    host: User;
   };
+  review: Nullable<Review>;
+};
+
+export type ManagedReservation = Reservation & {
+  property: Property;
+  tenant: User;
+  review: Nullable<Review>;
 };
 
 export type PropertyWithReviews = Property & {
@@ -170,3 +128,70 @@ export type PropertyWithReviews = Property & {
     numberOfReviews: number;
   };
 };
+
+export type ReservedDate = {
+  reservationId: number;
+  startDate: string;
+  endDate: string;
+  tenantId: string;
+};
+
+export type Notification = {
+  id: number;
+  userId: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+  updatedAt: string;
+  sendAt: string;
+  readAt: Nullable<string>;
+};
+
+export type UserWallet = {
+  id: number;
+  userId: string;
+  balance: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UserDepositHistory = {
+  id: number;
+  userId: string;
+  amount: number;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UserPaymentHistory = {
+  id: number;
+  fromUserId: string;
+  toUserId: string;
+  amount: number;
+  serviceFee: number;
+  date: string;
+  reservationId: number;
+  status: "DEPOSIT-PAID" | "FULL-PAID" | "REFUNDED";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type HostNumbers = {
+  hostId: string;
+  numberOfListings: number;
+  numberOfReservations: number;
+  totalRevenue: number;
+  numberOfListingsByMonth: { month: string; value: number }[];
+  numberOfReservationsByMonth: { month: string; value: number }[];
+  revenueByMonth: { month: string; value: number }[];
+};
+
+export type HostListingRevenue = {
+  id: number;
+  listingId: number;
+  title: string;
+  numberOfReservations: number;
+  totalRevenue: number;
+  };

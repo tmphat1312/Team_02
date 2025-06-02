@@ -9,9 +9,17 @@ const proxy = proxyMiddleware({
 
 // reservation route
 route.get("/reservations*", only(["tenant", "host", "admin"]), proxy);
-route.post("/reservations", only(["tenant", "host"]), proxy);
+route.post("/reservations", only(["user"]), proxy);
+route.post("/reservations/:reservationId/confirm", only(["host"]), proxy);
+route.post("/reservations/:reservationId/cancel", only(["user"]), proxy);
+route.post("/reservations/:reservationId/pay", only(["user"]), proxy);
+route.post("/reservations/:reservationId/refund", only(["host"]), proxy);
 
 // review route
 route.get("/reviews*", proxy);
-route.post("/reviews", only(["tenant", "host"]), proxy);
+route.post("/reviews", only(["user"]), proxy);
+
+// availability route
+route.get("/availability*", proxy);
+
 export const reservationService = route;

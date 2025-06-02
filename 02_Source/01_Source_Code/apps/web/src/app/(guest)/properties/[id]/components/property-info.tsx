@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { calculateRelativeTime, makePluralNoun } from "@/lib/utils";
 import { PageSubHeading } from "@/components/typography/page-sub-heading";
 import { PropertyAmenities } from "./property-amenities";
+import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 
 type PropertyInfoProps = React.ComponentProps<"div"> & {
   item: Property;
@@ -64,7 +65,9 @@ export function PropertyInfo({
       <Stack className="gap-4 py-6 border-b">
         <Avatar className="size-10">
           <AvatarImage src={host.image ?? undefined} alt={host.name} />
-          <AvatarFallback>JD</AvatarFallback>
+          <AvatarFallback>
+            <DefaultUserAvatar className="text-gray-600/90" />
+          </AvatarFallback>
         </Avatar>
         <section>
           <h3 className="font-medium">Hosted by {host.name}</h3>

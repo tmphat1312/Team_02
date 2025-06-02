@@ -5,8 +5,10 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
+    "@better-fetch/fetch": "^1.1.18",
     "@hono/zod-validator": "^0.4.3",
     "@neondatabase/serverless": "^1.0.0",
+    "@t3-oss/env-core": "^0.13.4",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.42.0",
     "hono": "^4.7.7",

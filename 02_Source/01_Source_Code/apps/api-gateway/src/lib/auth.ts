@@ -4,7 +4,7 @@ import { admin } from "better-auth/plugins";
 import { pool } from "./db.js";
 import { mailClient } from "./email.js";
 
-export const ROLES = ["tenant", "admin", "host"] as const;
+export const ROLES = ["tenant", "admin", "host", "user"] as const;
 
 export const auth = betterAuth({
   emailVerification: {
