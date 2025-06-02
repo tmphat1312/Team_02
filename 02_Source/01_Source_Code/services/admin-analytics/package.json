@@ -1,0 +1,24 @@
+{
+  "type": "module",
+  "scripts": {
+    "compile": "tsc",
+    "start": "npm run compile && node ./dist/index.js",
+    "dev": "tsx --watch ./src/index.ts"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.12.1",
+    "@graphql-tools/load-files": "^7.0.1",
+    "@t3-oss/env-core": "^0.13.6",
+    "dotenv": "^16.5.0",
+    "graphql": "^16.11.0",
+    "pg": "^8.16.0",
+    "std-env": "^3.9.0",
+    "zod": "^3.25.47"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "@types/pg": "^8.15.4",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
