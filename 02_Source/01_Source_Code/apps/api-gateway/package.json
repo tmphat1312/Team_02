@@ -3,11 +3,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=.env ./src/server",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "tsc && pm2 start dist/server.js -i max --name api-gateway"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
-    "api-gateway": "file:",
     "better-auth": "^1.2.4",
     "consola": "^3.4.1",
     "dotenv": "^16.5.0",
@@ -20,6 +20,7 @@
     "@types/node": "^20.11.17",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.11",
+    "pm2": "^6.0.6",
     "tsx": "^4.7.1",
     "typescript": "^5.8.2"
   }
