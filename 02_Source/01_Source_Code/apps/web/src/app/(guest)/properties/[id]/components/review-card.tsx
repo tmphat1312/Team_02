@@ -9,6 +9,7 @@ import {
 } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 
 export function ReviewCard({ item }: { item: ReviewWithTenant }) {
   return (
@@ -17,7 +18,7 @@ export function ReviewCard({ item }: { item: ReviewWithTenant }) {
         <Avatar className="size-12">
           <AvatarImage src={item.tenant.image || ""} alt={item.tenant.name} />
           <AvatarFallback>
-            {item.tenant.name.charAt(0).toUpperCase()}
+            <DefaultUserAvatar className="text-gray-600/50" />
           </AvatarFallback>
         </Avatar>
         <section>

@@ -47,9 +47,12 @@ route.get("/", transformPaginationQuery, async (c) => {
   // Input processing
   const priceMin = c.req.query("priceMin");
   const priceMax = c.req.query("priceMax");
+  const lat = parseFloat(c.req.query("lat") ?? "");
+  const lng = parseFloat(c.req.query("lng") ?? "");
   const noBedroomsMin = parseInt(c.req.query("noBedroomsMin") ?? "");
   const noBedsMin = parseInt(c.req.query("noBedsMin") ?? "");
   const noBathroomsMin = parseInt(c.req.query("noBathroomsMin") ?? "");
+  const noGuestsMin = parseInt(c.req.query("noGuestsMin") ?? "");
 
   const categoryIdStr = c.req.query("categoryId");
   const categoryId = categoryIdStr ? parseInt(categoryIdStr) : 0;
@@ -121,6 +124,21 @@ route.get("/", transformPaginationQuery, async (c) => {
     if (!isNaN(noBathroomsMin)) {
       filters.push(
         gte(propertiesWithImagesView.numberOfBathrooms, noBathroomsMin)
+      );
+    }
+
+    if (!isNaN(noGuestsMin)) {
+      filters.push(gte(propertiesWithImagesView.numberOfGuests, noGuestsMin));
+    }
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+      filters.push(
+        and(
+          gte(propertiesWithImagesView.latitude, lat - 0.1),
+          lte(propertiesWithImagesView.latitude, lat + 0.1),
+          gte(propertiesWithImagesView.longitude, lng - 0.1),
+          lte(propertiesWithImagesView.longitude, lng + 0.1)
+        )
       );
     }
 

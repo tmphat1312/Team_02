@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const HostNavigationLinks = [
   { href: "/host", label: "Listings" },
   { href: "/host/reservations", label: "Reservations" },
+  { href: "/host/revenue", label: "Revenue" },
 ];
 
 export function HostNavigation() {

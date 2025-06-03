@@ -1,3 +1,4 @@
+import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,7 +21,9 @@ export function ProfileCard({ user }: Props) {
         <Stack orientation="vertical" className="items-center">
           <Avatar className="mb-4 size-24">
             <AvatarImage src={user.image || ""} alt={user.name} />
-            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+            <AvatarFallback>
+              <DefaultUserAvatar className="text-gray-600/50" />
+            </AvatarFallback>
           </Avatar>
           <CardTitle className="text-xl">{user.name}</CardTitle>
           <CardDescription>Member since {year}</CardDescription>

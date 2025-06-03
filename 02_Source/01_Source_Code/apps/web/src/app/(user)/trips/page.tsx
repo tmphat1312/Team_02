@@ -2,9 +2,9 @@ import { FilterButtons } from "@/components/filter-buttons";
 import { Page } from "@/components/layout/page";
 import { PageHeading } from "@/components/typography/page-heading";
 
-import { ReservationList } from "./components/reservation-list";
+import { Reservations } from "./components/reservations";
 
-export default function TripsPage() {
+export default async function TripsPage() {
   return (
     <Page>
       <PageHeading>Your Trips</PageHeading>
@@ -13,11 +13,11 @@ export default function TripsPage() {
           { value: null, label: "All" },
           { value: "upcoming", label: "Upcoming" },
           { value: "completed", label: "Completed" },
-          { value: "cancelled", label: "Cancelled" },
+          { value: "canceled", label: "Canceled" },
         ]}
         className="mb-8"
       />
-      <ReservationList />
+      <Reservations />
     </Page>
   );
 }

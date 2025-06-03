@@ -1,5 +1,6 @@
 "use client";
 
+import { addDays } from "date-fns";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 
@@ -10,12 +11,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { Property } from "@/typings/models";
+import { usePropertyAvailability } from "../hooks/use-property-availability";
 
-type DatesPickerProps = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   date: DateRange | undefined;
   setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
   disabled?: boolean;
+  item: Property;
 };
+
+const Tomorrow = addDays(new Date(), 1);
 
 export function DatesPicker({
   className,
@@ -23,13 +29,24 @@ export function DatesPicker({
   setDate,
   children,
   disabled,
-}: DatesPickerProps & React.HTMLAttributes<HTMLDivElement>) {
+  item,
+}: Props) {
+  const { data: reservedDates } = usePropertyAvailability(item.id);
+  const isPickerDisabled = disabled || !reservedDates;
+
+  const disabledDateRange = reservedDates
+    ? reservedDates.map((d) => ({
+        from: new Date(d.startDate),
+        to: new Date(d.endDate),
+      }))
+    : [];
+
   return (
     <div className={cn(className)}>
       <Popover>
         <PopoverTrigger
           className="grid grid-cols-2 w-full disabled:opacity-60"
-          disabled={disabled}
+          disabled={isPickerDisabled}
         >
           {children}
         </PopoverTrigger>
@@ -41,7 +58,7 @@ export function DatesPicker({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
-            disabled={{ before: new Date() }}
+            disabled={[{ before: Tomorrow }, ...disabledDateRange]}
           />
         </PopoverContent>
       </Popover>

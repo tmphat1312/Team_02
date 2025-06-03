@@ -7,16 +7,11 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { User } from "@/typings/models";
 import { UpdateLogin } from "./login/update-login";
-import { UpdateUserWallet } from "./payment/update-user-wallet";
+import { UserPayment } from "./payment/user-payment";
 import { UpdatePersonalInfo } from "./personal/update-personal-info";
 
-type Props = {
-  user: User;
-};
-
-export function ProfileContent({ user }: Props) {
+export function ProfileContent() {
   return (
     <Card>
       <CardHeader>
@@ -34,13 +29,13 @@ export function ProfileContent({ user }: Props) {
           </TabsList>
 
           <TabsContent value="personal-info">
-            <UpdatePersonalInfo user={user} />
+            <UpdatePersonalInfo />
           </TabsContent>
           <TabsContent value="login-security">
-            <UpdateLogin user={user} />
+            <UpdateLogin />
           </TabsContent>
           <TabsContent value="payments">
-            <UpdateUserWallet user={user} />
+            <UserPayment />
           </TabsContent>
         </Tabs>
       </CardContent>
