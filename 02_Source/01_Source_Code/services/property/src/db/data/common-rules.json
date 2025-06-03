@@ -8,127 +8,51 @@
     "description": "Check-in is only allowed before 10 PM for security and operational reasons."
   },
   {
-    "name": "Late check-out requires prior approval.",
-    "description": "Late check-out is subject to availability and must be approved in advance."
-  },
-  {
-    "name": "Pets are not allowed on the premises.",
-    "description": "For health and safety reasons, pets are not allowed on site."
-  },
-  {
-    "name": "Smoking is prohibited inside the building.",
-    "description": "Smoking indoors is prohibited to maintain a clean and safe environment."
-  },
-  {
-    "name": "Quiet hours are from 10 PM to 8 AM.",
-    "description": "To ensure a peaceful environment, guests must keep noise levels low during these hours."
+    "name": "Guests must check out before 11 AM.",
+    "description": "Check-out must be completed before 11 AM to allow time for cleaning and preparation for the next guest."
   },
   {
     "name": "Valid ID is required at check-in.",
     "description": "Guests must present a valid ID for verification at the time of check-in."
   },
   {
-    "name": "Alcohol consumption is only allowed in designated areas.",
-    "description": "Alcohol is only permitted in specific areas for guest safety and compliance with local regulations."
-  },
-  {
-    "name": "Guests must wear proper attire in public areas.",
-    "description": "For the comfort and respect of all guests, appropriate attire must be worn in shared spaces."
-  },
-  {
-    "name": "Children must be supervised at all times.",
-    "description": "For the safety of children, they must be supervised by an adult in all areas."
+    "name": "Late check-out requires prior approval.",
+    "description": "Late check-out is subject to availability and must be approved in advance."
   },
   {
     "name": "Additional guests beyond the reservation are not allowed.",
     "description": "To ensure safety and comfort, only the number of guests specified in the reservation are permitted."
   },
   {
-    "name": "Parking is available on a first-come, first-served basis.",
-    "description": "Parking spots are limited and cannot be guaranteed. Availability is on a first-come, first-served basis."
+    "name": "Smoking is prohibited inside the building.",
+    "description": "Smoking indoors is prohibited to maintain a clean and safe environment."
   },
   {
-    "name": "Cancellation must be made 48 hours in advance.",
-    "description": "To avoid penalties, cancellations must be done at least 48 hours before the scheduled arrival."
-  },
-  {
-    "name": "Noise complaints may result in eviction.",
-    "description": "Excessive noise may lead to immediate eviction from the premises to ensure a peaceful environment."
-  },
-  {
-    "name": "A security deposit is required at check-in.",
-    "description": "A refundable security deposit is collected at check-in to cover potential damages or violations of rules."
-  },
-  {
-    "name": "Guests must adhere to local COVID-19 guidelines.",
-    "description": "All guests are required to follow local COVID-19 health and safety regulations."
-  },
-  {
-    "name": "Cooking is allowed only in designated kitchen areas.",
-    "description": "Cooking is strictly prohibited in non-designated areas to prevent fire hazards and maintain cleanliness."
-  },
-  {
-    "name": "Guests must notify management of any damage or issues.",
-    "description": "Any damages or issues must be reported to management immediately for prompt resolution."
-  },
-  {
-    "name": "The pool is open from 8 AM to 10 PM.",
-    "description": "For safety reasons, the pool is available for use only during these hours."
-  },
-  {
-    "name": "No outside food or beverages allowed in the restaurant.",
-    "description": "To comply with health regulations, outside food and beverages are not permitted in the restaurant."
-  },
-  {
-    "name": "All guests must sign a waiver for activities.",
-    "description": "Guests participating in activities must sign a waiver to acknowledge risk and safety guidelines."
-  },
-  {
-    "name": "Rooms must be vacated by 11 AM on the check-out date.",
-    "description": "To accommodate incoming guests, rooms must be vacated by 11 AM on the day of check-out."
-  },
-  {
-    "name": "The gym is open from 6 AM to 9 PM.",
-    "description": "For guest convenience, the gym is open during these hours only."
-  },
-  {
-    "name": "No illegal substances allowed on the premises.",
-    "description": "The use of illegal substances is strictly prohibited and may result in immediate eviction."
-  },
-  {
-    "name": "Guests must respect the privacy of others.",
-    "description": "To ensure comfort and respect for all guests, privacy must be maintained at all times."
-  },
-  {
-    "name": "Unregistered visitors are not allowed in guest rooms.",
-    "description": "To ensure safety and privacy, only registered guests are permitted in the rooms."
-  },
-  {
-    "name": "In case of emergency, guests must follow staff instructions.",
-    "description": "During emergencies, guests must follow the instructions of staff to ensure safety."
-  },
-  {
-    "name": "Laundry services are available between 9 AM and 7 PM.",
-    "description": "Laundry services are only available during these hours."
-  },
-  {
-    "name": "Minors must be accompanied by a guardian to enter the pool.",
-    "description": "For safety, minors must be supervised by a guardian when using the pool."
-  },
-  {
-    "name": "Guests are responsible for their own valuables.",
-    "description": "Management is not responsible for any lost or stolen items. Guests should secure their valuables."
-  },
-  {
-    "name": "Rooms are cleaned only upon request.",
-    "description": "For environmental reasons, rooms are cleaned upon guest request only."
+    "name": "Pets are not allowed on the premises.",
+    "description": "For health and safety reasons, pets are not allowed on site."
   },
   {
     "name": "Weapons are not permitted on the premises.",
     "description": "To ensure safety, weapons of any kind are prohibited on the premises."
   },
   {
-    "name": "Guests must dispose of trash in designated bins.",
-    "description": "To maintain cleanliness, all trash must be disposed of in the appropriate bins."
+    "name": "No illegal substances allowed on the premises.",
+    "description": "The use of illegal substances is strictly prohibited and may result in immediate eviction."
+  },
+  {
+    "name": "Guests must notify management of any damage or issues.",
+    "description": "Any damages or issues must be reported to management immediately for prompt resolution."
+  },
+  {
+    "name": "Guests are responsible for their own valuables.",
+    "description": "Management is not responsible for any lost or stolen items. Guests should secure their valuables."
+  },
+  {
+    "name": "All guests must sign a waiver for activities.",
+    "description": "Guests participating in activities must sign a waiver to acknowledge risk and safety guidelines."
+  },
+  {
+    "name": "In case of emergency, guests must follow staff instructions.",
+    "description": "During emergencies, guests must follow the instructions of staff to ensure safety."
   }
 ]

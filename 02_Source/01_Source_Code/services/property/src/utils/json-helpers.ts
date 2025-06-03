@@ -2,11 +2,14 @@ import { Context } from "hono";
 import { ContentfulStatusCode } from "hono/utils/http-status";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { ErrorCode } from "../constants/error-codes";
+
 export type DataResponse = unknown;
 
 export type ErrorResponse = {
+  code: string;
   message: string;
-  statusCode: number;
+  status: number;
   statusText: string;
 } | null;
 
@@ -49,44 +52,76 @@ export const noContent = (c: Context) => {
   );
 };
 
-export const unauthorized = (c: Context, errorMsg?: string) => {
+export const unauthorized = (
+  c: Context,
+  errorMsg?: string,
+  errorCode?: string
+) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
+    code: errorCode || ErrorCode.UNAUTHORIZED,
     message: errorMsg || ReasonPhrases.UNAUTHORIZED,
-    statusCode: StatusCodes.UNAUTHORIZED,
+    status: StatusCodes.UNAUTHORIZED,
     statusText: ReasonPhrases.UNAUTHORIZED,
   };
   const metadata: MetadataResponse = {};
   return c.json({ data, error, metadata }, StatusCodes.UNAUTHORIZED);
 };
 
-export const notFound = (c: Context, errorMsg?: string) => {
+export const notFound = (c: Context, errorMsg?: string, errorCode?: string) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
+    code: errorCode || ErrorCode.NOT_FOUND,
     message: errorMsg || ReasonPhrases.NOT_FOUND,
-    statusCode: StatusCodes.NOT_FOUND,
+    status: StatusCodes.NOT_FOUND,
     statusText: ReasonPhrases.NOT_FOUND,
   };
   const metadata: MetadataResponse = {};
   return c.json({ data, error, metadata }, StatusCodes.NOT_FOUND);
 };
 
-export const badRequest = (c: Context, errorMsg?: string) => {
+export const badRequest = (
+  c: Context,
+  errorMsg?: string,
+  errorCode?: string
+) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
+    code: errorCode || ErrorCode.BAD_REQUEST,
     message: errorMsg || ReasonPhrases.BAD_REQUEST,
-    statusCode: StatusCodes.BAD_REQUEST,
+    status: StatusCodes.BAD_REQUEST,
     statusText: ReasonPhrases.BAD_REQUEST,
   };
   const metadata: MetadataResponse = {};
   return c.json({ data, error, metadata }, StatusCodes.BAD_REQUEST);
 };
 
-export const internalServerError = (c: Context, errorMsg?: string) => {
+export const forbidden = (
+  c: Context,
+  errorMsg?: string,
+  errorCode?: string
+) => {
   const data: DataResponse = null;
   const error: ErrorResponse = {
+    code: errorCode || ErrorCode.FORBIDDEN,
+    message: errorMsg || ReasonPhrases.FORBIDDEN,
+    status: StatusCodes.FORBIDDEN,
+    statusText: ReasonPhrases.FORBIDDEN,
+  };
+  const metadata: MetadataResponse = {};
+  return c.json({ data, error, metadata }, StatusCodes.FORBIDDEN);
+};
+
+export const internalServerError = (
+  c: Context,
+  errorMsg?: string,
+  errorCode?: string
+) => {
+  const data: DataResponse = null;
+  const error: ErrorResponse = {
+    code: errorCode || ErrorCode.INTERNAL_SERVER_ERROR,
     message: errorMsg || ReasonPhrases.INTERNAL_SERVER_ERROR,
-    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    status: StatusCodes.INTERNAL_SERVER_ERROR,
     statusText: ReasonPhrases.INTERNAL_SERVER_ERROR,
   };
   const metadata: MetadataResponse = {};

@@ -29,6 +29,7 @@
     "@heroui/react": "^2.7.5",
     "@heroui/system": "^2.4.12",
     "@heroui/theme": "^2.4.12",
+    "admin": "file:",
     "axios": "^1.8.4",
     "better-auth": "^1.2.4",
     "framer-motion": "^12.6.2",
