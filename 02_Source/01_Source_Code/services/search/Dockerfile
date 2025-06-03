@@ -1,19 +1,14 @@
-FROM eclipse-temurin:17-jdk-alpine
+# Use the official OpenJDK base image for Java 22
+FROM eclipse-temurin:22-jdk
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
+# Copy the application's build file and dependencies
+# Assumes the project is built into a JAR file (using a build tool like Maven or Gradle)
+COPY target/property-search-service-1.0-SNAPSHOT.jar /app/app.jar
 
-# Download dependencies
-RUN ./mvnw dependency:go-offline
-
-# Copy source code
-COPY src/ src/
-
-# Build the application
-RUN ./mvnw package -DskipTests
-
+# Expose the port the application will run on (default for Jakarta EE: 8080)
+EXPOSE 8082
 # Run the application
-ENTRYPOINT ["java", "-jar", "target/search-0.0.1-SNAPSHOT.jar"] 
+CMD ["java", "-jar", "/app/app.jar"]
