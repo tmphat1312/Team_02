@@ -13,12 +13,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "amenities")
 @AllArgsConstructor
-@NoArgsConstructor
-public class Amenity {
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    @Column(name = "imageUrl")
-    private String imageUrl;
+public class Amenity extends CatalogItem {
 }
