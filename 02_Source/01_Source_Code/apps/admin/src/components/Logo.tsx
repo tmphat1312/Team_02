@@ -1,12 +1,5 @@
+import logoWithText from '../assets/logo-with-text.png';
+
 export function Logo() {
-  return (
-    <div className="text-indigo-500" aria-hidden aria-label="Rento Logo">
-      <div className="font-mono text-4xl font-bold italic tracking-widest">
-        Rento
-      </div>
-      <div className="font-mono text-sm italic">
-        Right place, right destination.
-      </div>
-    </div>
-  );
+  return <img src={logoWithText} alt="Rento Logo" className="h-32 w-auto" />;
 }

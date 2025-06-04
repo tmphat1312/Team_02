@@ -98,16 +98,16 @@ services:
     env_file:
       - ./services/verification/.env
 
-  admin:
-    build:
-      context: ./apps/admin
-      dockerfile: Dockerfile
-    ports:
-      - "3001:80"
-    container_name: admin-app
-    restart: unless-stopped
-    env_file:
-      - ./apps/admin/.env
+  # admin:
+  #   build:
+  #     context: ./apps/admin
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3001:80"
+  #   container_name: admin-app
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ./apps/admin/.env
 
 networks:
   default:
