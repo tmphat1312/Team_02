@@ -20,7 +20,12 @@ export function Room({ item }: RoomProps) {
   const { isMapOpen } = useIsMapOpen();
 
   return (
-    <div className={cn(isMapOpen ? "text-sm" : "text-base")}>
+    <div
+      className={cn(
+        "motion-preset-blur-right  ",
+        isMapOpen ? "text-sm" : "text-base"
+      )}
+    >
       <PropertyImageCarousel item={item} />
       <Link href={`/properties/${item.id}`} target="_blank">
         <article>
@@ -54,7 +59,7 @@ export function Room({ item }: RoomProps) {
 export function RoomFallback() {
   const { isMapOpen } = useIsMapOpen();
   return (
-    <div className="space-y-2 group">
+    <div className="space-y-2 group motion-preset-expand ">
       <Skeleton className="w-full rounded-xl aspect-square" />
       <div>
         <Skeleton className={cn("w-2/3 mb-1", isMapOpen ? "h-5" : "h-6")} />
