@@ -77,7 +77,9 @@ export function PropertyInfo({
 
       <div
         className="py-6 border-b max-w-none prose"
-        dangerouslySetInnerHTML={{ __html: item.description }}
+        dangerouslySetInnerHTML={{
+          __html: item.description.replaceAll("\n", "<br />"),
+        }}
       />
 
       <PropertyAmenities amenities={amenities} />
