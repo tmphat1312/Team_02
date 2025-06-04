@@ -1,19 +1,26 @@
-FROM node:18
+FROM node:22-alpine AS base
 
-# Set working directory
-WORKDIR /usr/src/app
+FROM base AS builder
 
-# Copy package.json and package-lock.json first (for better caching)
-COPY package*.json ./
+RUN apk add --no-cache gcompat
+WORKDIR /app
 
-# Install dependencies
-RUN npm install --only=production
+COPY package*.json tsconfig.json ./
+COPY src ./src
 
-# Copy the rest of the application files
-COPY . .
+RUN npm ci && npm prune --production
 
-# Expose gRPC port
-EXPOSE 50051
+FROM base AS runner
+WORKDIR /app
 
-# Command to run the gRPC server
-CMD ["node", "server.js"]
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 hono
+
+COPY --from=builder --chown=hono:nodejs /app/node_modules /app/node_modules
+COPY --from=builder --chown=hono:nodejs /app/src /app/src
+COPY --from=builder --chown=hono:nodejs /app/package.json /app/package.json
+
+USER hono
+EXPOSE 8005/tcp
+
+CMD ["npx", "tsx", "src/index.ts"]

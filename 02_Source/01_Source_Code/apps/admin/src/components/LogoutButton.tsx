@@ -6,6 +6,8 @@ import { LogOutIcon } from 'lucide-react';
 
 import { authClient } from '../lib/auth-client';
 
+// TODO: move to auth feature
+
 export function LogoutButton({
   className,
   ...props

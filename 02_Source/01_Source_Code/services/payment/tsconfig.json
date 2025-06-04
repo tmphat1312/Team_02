@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "removeComments": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
+    "skipLibCheck": true
+  },
+  "exclude": ["**/node_modules"]
+}

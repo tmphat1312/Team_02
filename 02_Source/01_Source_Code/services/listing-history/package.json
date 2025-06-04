@@ -1,0 +1,17 @@
+{
+  "main": "api.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "node --watch api.js"
+  },
+  "dependencies": {
+    "better-call": "^1.0.9",
+    "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.5.0",
+    "emittery": "^1.1.0",
+    "lowdb": "^7.0.1",
+    "std-env": "^3.9.0",
+    "zod": "^3.25.7"
+  }
+}

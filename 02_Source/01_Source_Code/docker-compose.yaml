@@ -1,59 +1,115 @@
 version: '3.8'
 
 services:
-  web:
+  admin-analytics:
     build:
-      context: ./apps/web
+      context: ./services/admin-analytics
       dockerfile: Dockerfile
-    image: rento-web
-    container_name: rento-web
-    env_file: ./apps/web/docker.env
     ports:
-      - "3000:3000"
-    networks:
-      - app-network
-    depends_on:
-      - api-gateway
+      - "8001:8001"
+    container_name: admin-analytics
+    restart: unless-stopped
+    env_file:
+      - ./services/admin-analytics/.env
+
+  listing-history:
+    build:
+      context: ./services/listing-history
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    container_name: listing-history
+    restart: unless-stopped
+    env_file:
+      - ./services/listing-history/.env
+
+  notification:
+    build:
+      context: ./services/notification
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"
+    container_name: notification
+    restart: unless-stopped
+    env_file:
+      - ./services/notification/.env
+
+  payment:
+    build:
+      context: ./services/payment
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    container_name: payment-service
+    restart: unless-stopped
+    env_file:
+      - ./services/payment/.env
+
+  property:
+    build:
+      context: ./services/property
+      dockerfile: Dockerfile
+    ports:
+      - "8006:8006"
+    container_name: property-service
+    restart: unless-stopped
+    env_file:
+      - ./services/property/.env
+
+  reporting:
+    build:
+      context: ./services/reporting
+      dockerfile: Dockerfile
+    ports:
+      - "8007:8007"
+    container_name: reporting-service
+    restart: unless-stopped
+    env_file:
+      - ./services/reporting/.env
+
+  reservation:
+    build:
+      context: ./services/reservation
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8008"
+    container_name: reservation
+    restart: unless-stopped
+    env_file:
+      - ./services/reservation/.env
+
+  supporting:
+    build:
+      context: ./services/supporting
+      dockerfile: Dockerfile
+    ports:
+      - "8009:8009"
+    container_name: supporting
+    restart: unless-stopped
+    env_file:
+      - ./services/supporting/.env
+
+  verification:
+    build:
+      context: ./services/verification
+      dockerfile: Dockerfile
+    ports:
+      - "8010:8010"
+    container_name: verification-service
+    restart: unless-stopped
+    env_file:
+      - ./services/verification/.env
 
   admin:
     build:
       context: ./apps/admin
       dockerfile: Dockerfile
-    image: rento-admin
-    container_name: rento-admin
-    env_file: ./apps/admin/docker.env
     ports:
-      - "5173:80"
-    networks:
-      - app-network
-    depends_on:
-      - api-gateway
-
-  api-gateway:
-    build:
-      context: ./apps/api-gateway
-      dockerfile: Dockerfile
-    image: rento-api-gateway
-    container_name: rento-api-gateway
-    ports:
-      - "3001:3001"
-    env_file: ./apps/api-gateway/docker.env
-    depends_on:
-      - property-service
-    networks:
-      - app-network
-
-  property-service:
-    build:
-      context: ./services/property
-      dockerfile: Dockerfile
-    image: rento-property-service
-    container_name: rento-property-service
-    env_file: ./services/property/docker.env
-    ports:
-      - "3005:3005"
-    networks:
-      - app-network
+      - "3001:80"
+    container_name: admin-app
+    restart: unless-stopped
+    env_file:
+      - ./apps/admin/.env
 
   search:
     build:
@@ -69,5 +125,6 @@ services:
       - property-service
 
 networks:
-  app-network:
+  default:
+    name: services-network
     driver: bridge

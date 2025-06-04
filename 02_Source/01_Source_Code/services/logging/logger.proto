@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package logging;
+
+message LogRequest {
+  string message = 1;
+  string context = 2; // Optional context (e.g., service name, user ID, etc.)
+}
+
+message LogResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+service Logger {
+  rpc LogError (LogRequest) returns (LogResponse);
+  rpc LogWarning (LogRequest) returns (LogResponse);
+  rpc LogInfo (LogRequest) returns (LogResponse);
+}
