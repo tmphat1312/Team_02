@@ -3,4 +3,5 @@ export type PropertyFilterOptions = {
   maxPrice?: number;
   propertyType?: string;
   amenityNames: string[];
+  categoryNames: string[];
 };

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { PropertyFilterOptions } from "@/types/PropertyFilterOptions";
 import { Slider } from "primereact/slider";
-import { useAmenities } from "../hooks/useAmenities";
+import { OptionItem, usePaginatedOptions } from "../hooks/usePaginatedOptions";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
+import { FilterOptionItems } from "./shared/FilterOptionItems";
 
 interface Props {
   onApply: (filters: PropertyFilterOptions) => void;
@@ -13,7 +14,6 @@ interface Props {
   visible: boolean;
 }
 
-const propertyTypes = ["Apartment", "House", "Villa"];
 const MIN_PRICE = 0;
 const MAX_PRICE = 10000;
 
@@ -27,12 +27,20 @@ export default function FilterPopup({
   const [localFilters, setLocalFilters] =
     useState<PropertyFilterOptions>(filters);
   const {
-    amenities,
+    options: amenities,
     loading: amenitiesLoading,
     error: amenitiesError,
-    fetchedAll,
-    showAllAmenities,
-  } = useAmenities();
+    fetchedAll: fetchedAllAmenities,
+    showAllOptions: showAllAmenities,
+  } = usePaginatedOptions<OptionItem>("/api/amenities");
+
+  const {
+    options: categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+    fetchedAll: fetchedAllCategories,
+    showAllOptions: showAllCategories,
+  } = usePaginatedOptions<OptionItem>("/api/categories");
 
   useEffect(() => {
     setLocalFilters(filters);
@@ -53,16 +61,13 @@ export default function FilterPopup({
     }
   };
 
-  const handleChange = (changed: Partial<PropertyFilterOptions>) => {
-    setLocalFilters((prev) => ({ ...prev, ...changed }));
-  };
-
   const handleClear = () => {
     setLocalFilters({
       minPrice: undefined,
       maxPrice: undefined,
       propertyType: undefined,
       amenityNames: [],
+      categoryNames: [],
     });
     onClear();
   };
@@ -82,21 +87,30 @@ export default function FilterPopup({
           </button>
         </div>
         <div className="overflow-y-auto max-h-[60vh]">
-          {/* Properties type */}
+          {/*  Categories filter */}
           <div className="mb-3">
-            <label className="font-semibold">Property Type</label>
-            <select
-              value={localFilters.propertyType ?? ""}
-              onChange={(e) => handleChange({ propertyType: e.target.value })}
-              className="w-full border rounded p-1"
-            >
-              <option value="">Any</option>
-              {propertyTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
+            <label className="font-semibold">Categories</label>
+            <FilterOptionItems
+              options={categories}
+              selectedNames={localFilters.categoryNames ?? []}
+              onToggle={(name) => {
+                setLocalFilters((prev) => {
+                  const selected = prev.categoryNames?.includes(name);
+                  return {
+                    ...prev,
+                    categoryNames: selected
+                      ? (prev.categoryNames ?? []).filter((c) => c !== name)
+                      : [...(prev.categoryNames ?? []), name],
+                  };
+                });
+              }}
+              loading={categoriesLoading}
+              error={categoriesError}
+              fetchedAll={fetchedAllCategories}
+              onShowAll={showAllCategories}
+              showAllThreshold={8}
+              label="Show all categories"
+            />
           </div>
 
           {/* Price range */}
@@ -122,55 +136,27 @@ export default function FilterPopup({
           {/* Amenities filter */}
           <div className="mb-3">
             <label className="font-semibold">Amenities</label>
-            <div className="flex flex-wrap gap-2">
-              {amenitiesLoading && <span>Loading amenities...</span>}
-              {amenitiesError && (
-                <span className="text-red-500">{amenitiesError}</span>
-              )}
-              {!amenitiesLoading &&
-                !amenitiesError &&
-                amenities.map((am) => {
-                  const selected = localFilters.amenityNames?.includes(am.name);
-                  return (
-                    <button
-                      type="button"
-                      key={am.id}
-                      onClick={() => {
-                        setLocalFilters((prev) => ({
-                          ...prev,
-                          amenityNames: selected
-                            ? (prev.amenityNames ?? []).filter(
-                                (a) => a !== am.name
-                              )
-                            : [...(prev.amenityNames ?? []), am.name],
-                        }));
-                      }}
-                      className={`flex items-center gap-1 border rounded px-2 py-1 cursor-pointer transition-colors duration-150 focus:outline-none ${
-                        selected
-                          ? "border-orange-500 ring-1 ring-orange-400 bg-orange-50"
-                          : "border-gray-300 bg-white hover:border-orange-300"
-                      }`}
-                      style={{ borderWidth: 2 }}
-                    >
-                      <img
-                        src={am.imageUrl}
-                        alt={am.name}
-                        className="w-6 h-6 object-cover rounded"
-                      />
-                      <span>{am.name}</span>
-                    </button>
-                  );
-                })}
-              {!fetchedAll && amenities.length <= 8 && (
-                <button
-                  type="button"
-                  onClick={showAllAmenities}
-                  className="ml-2 px-2 py-1 text-md bg-gray-300 rounded border"
-                >
-                  Show all &rarr;
-                </button>
-              )}
-            </div>
+            <FilterOptionItems
+              options={amenities}
+              selectedNames={localFilters.amenityNames ?? []}
+              onToggle={(name) => {
+                setLocalFilters((prev) => {
+                  const selected = prev.amenityNames?.includes(name);
+                  return {
+                    ...prev,
+                    amenityNames: selected
+                      ? (prev.amenityNames ?? []).filter((a) => a !== name)
+                      : [...(prev.amenityNames ?? []), name],
+                  };
+                });
+              }}
+              loading={amenitiesLoading}
+              error={amenitiesError}
+              fetchedAll={fetchedAllAmenities}
+              onShowAll={showAllAmenities}
+              showAllThreshold={8}
+              label="Show all"
+            />
           </div>
         </div>
         {/* Action buttons */}
