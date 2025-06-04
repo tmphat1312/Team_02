@@ -4,10 +4,10 @@ import {
   depositHistoryTable,
   paymentHistoryTable,
   userWalletsTable,
-} from "db/schema.js";
+} from "./db/schema.js";
 import { and, desc, eq, or } from "drizzle-orm";
 import http from "http";
-import { db } from "lib/db.js";
+import { db } from "./lib/db.js";
 import { ProductCode } from "vnpay";
 import { z } from "zod";
 
@@ -104,7 +104,7 @@ const getVNPayReturn = createEndpoint(
       await tx
         .update(userWalletsTable)
         .set({
-          balance: wallet!.balance +  amountInUSD,
+          balance: wallet!.balance + amountInUSD,
         })
         .where(eq(userWalletsTable.userId, userId));
       await tx.insert(depositHistoryTable).values({

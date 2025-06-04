@@ -12,6 +12,6 @@ const packageDefinition = loadSync(projectConfig.protoPath, {
 const { Logger } = loadPackageDefinition(packageDefinition).logging;
 
 export const client = new Logger(
-  "localhost:50051",
+  "localhost:8003",
   credentials.createInsecure()
 );

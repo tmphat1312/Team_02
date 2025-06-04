@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { createEndpoint, createRouter } from "better-call";
 import { toNodeHandler } from "better-call/node";
 import { createServer } from "http";

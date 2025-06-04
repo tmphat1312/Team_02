@@ -2,7 +2,8 @@
   "name": "reservation",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "start": "bun run src/index.ts"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.18",

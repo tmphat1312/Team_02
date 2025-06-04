@@ -15,5 +15,5 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app .
 
 USER bun
-EXPOSE 5001/tcp
+EXPOSE 8010/tcp
 ENTRYPOINT [ "bun", "run", "start" ]

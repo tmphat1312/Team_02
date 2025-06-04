@@ -4,7 +4,7 @@ import { toNodeHandler } from "better-call/node";
 import http from "http";
 
 import { env } from "./env.js";
-import { paymentClient, propertyClient, reservationClient } from "lib/db.js";
+import { paymentClient, propertyClient, reservationClient } from "./lib/db.js";
 import { z } from "zod";
 
 const port = env.PORT;

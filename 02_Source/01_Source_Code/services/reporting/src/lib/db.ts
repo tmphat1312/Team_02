@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-import { env } from "env.js";
+import { env } from "../env.js";
 
 export const propertyClient = new Pool({
   connectionString: env.PROPERTY_DB_URL,

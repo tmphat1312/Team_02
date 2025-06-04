@@ -19,7 +19,7 @@ const { Logger } = loadPackageDefinition(packageDefinition).logging;
 const server = new Server();
 server.addService(Logger.service, LoggerService);
 server.bindAsync(
-  "127.0.0.1:50051",
+  "127.0.0.1:8003",
   ServerCredentials.createInsecure(),
   (_, port) => {
     console.log(`Server running at :${port}`);

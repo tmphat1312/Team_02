@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "tsx --watch index.ts"
+    "dev": "tsx --watch ./src/index.ts",
+    "start": "tsx ./src/index.ts"
   },
   "dependencies": {
     "@t3-oss/env-core": "^0.13.6",
@@ -13,6 +14,7 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^22.15.24",
-    "@types/pg": "^8.15.2"
+    "@types/pg": "^8.15.2",
+    "typescript": "^5.8.3"
   }
 }

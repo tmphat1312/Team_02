@@ -1,5 +1,5 @@
 import { VNPay, VnpCurrCode, VnpLocale } from "vnpay";
-import { env } from "../env";
+import { env } from "../env.js";
 
 export const vnpay = new VNPay({
   tmnCode: env.VNPAY_TMN_CODE,

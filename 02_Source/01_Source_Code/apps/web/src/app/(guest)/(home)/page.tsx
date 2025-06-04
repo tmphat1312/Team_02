@@ -15,13 +15,17 @@ import { RoomList, RoomListFallback } from "./components/room-list";
 import { SearchLayout } from "./components/search-layout";
 import { SearchBar } from "./components/search/search-bar";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const categoriesPromise = fetchCategories();
   const amenitiesPromise = fetchAmenities();
 
   return (
     <Page className="pt-0 pb-8">
-      <SearchBar />
+      <Suspense fallback={null}>
+        <SearchBar />
+      </Suspense>
       <Filters>
         <Suspense fallback={<CategoryListFallback />}>
           <CategoryList categoriesPromise={categoriesPromise} />
@@ -30,11 +34,13 @@ export default async function Home() {
           <FilterDialogContent amenitiesPromise={amenitiesPromise} />
         </FiltersDialog>
       </Filters>
-      <SearchLayout>
-        <Suspense fallback={<RoomListFallback />}>
-          <RoomList />
-        </Suspense>
-      </SearchLayout>
+      <Suspense fallback={null}>
+        <SearchLayout>
+          <Suspense fallback={<RoomListFallback />}>
+            <RoomList />
+          </Suspense>
+        </SearchLayout>
+      </Suspense>
     </Page>
   );
 }

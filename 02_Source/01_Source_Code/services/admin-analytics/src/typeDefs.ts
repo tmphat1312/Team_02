@@ -1,3 +1,4 @@
+export const typeDefs = `#graphql
 type Numbers {
   total: Int!
   newThisMonth: Int!
@@ -47,3 +48,4 @@ type Query {
   numbers: NumbersResult!
   chart: ChartData!
 }
+`;

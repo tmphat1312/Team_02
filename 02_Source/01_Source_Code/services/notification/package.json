@@ -1,6 +1,7 @@
 {
   "name": "notification",
   "scripts": {
+    "build": "tsc",
     "start": "tsx src/index.ts",
     "dev": "tsx --watch src/index.ts",
     "db:push": "drizzle-kit push",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/node": "latest",
     "@types/nodemailer": "^6.4.17",
-    "tsx": "^4.19.4"
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   }
 }

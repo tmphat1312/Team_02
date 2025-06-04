@@ -5,6 +5,8 @@ import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
 export const env = createEnv({
+  clientPrefix: "ENV_PUBLIC_",
+  client: {},
   server: {
     PORT: z.coerce.number().default(3000),
     HOST: z.string().default("http://localhost"),

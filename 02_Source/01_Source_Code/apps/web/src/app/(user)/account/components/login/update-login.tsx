@@ -2,7 +2,6 @@
 
 import { Stack } from "@/components/layout/stack";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/typings/models";
 
 import { DeleteAccount } from "./delete-account";
 import { UpdateEmail } from "./update-email";

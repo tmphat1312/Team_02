@@ -28,7 +28,7 @@ export function SaveButton({ item }: SaveButtonProps) {
       await addWishlist({
         name: item.title,
         imageUrl: item.imageUrls[0],
-        rating: item.rating,
+        rating: 0, // TODO: Remove rating from wishlist
         propertyId: item.id,
       });
     });
