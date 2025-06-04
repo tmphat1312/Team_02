@@ -14,7 +14,7 @@ export function HostNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-6">
+    <nav className="flex items-center gap-6 relative translate-x-24">
       {HostNavigationLinks.map((link) => (
         <Link
           key={link.href}
