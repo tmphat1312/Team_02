@@ -18,7 +18,8 @@ export function ProtectedLayout() {
   }
 
   if (data.user.role !== 'admin') {
-    return <div>You are not authorized to access this site.</div>;
+    authClient.signOut();
+    return <Navigate to="/login" replace={true} />;
   }
 
   return <Outlet />;
