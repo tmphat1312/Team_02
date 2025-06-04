@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   admin-analytics:
@@ -110,19 +110,6 @@ services:
     restart: unless-stopped
     env_file:
       - ./apps/admin/.env
-
-  search:
-    build:
-      context: ./services/search
-      dockerfile: Dockerfile
-    image: rento-search
-    container_name: rento-search
-    ports:
-      - "8082:8082"
-    networks:
-      - app-network
-    depends_on:
-      - property-service
 
 networks:
   default:
