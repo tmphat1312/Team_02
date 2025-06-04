@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "build-and-preview": "npm run build && npm run preview"
   },
   "simple-git-hooks": {
     "pre-commit": "cd 02_Source/01_Source_Code/apps/admin && npx lint-staged"

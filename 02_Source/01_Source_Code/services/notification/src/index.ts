@@ -1,21 +1,40 @@
-import { Hono } from 'hono'
-import { showRoutes } from "hono/dev";
+//#region imports
+import { Hono } from "hono";
+import { serve } from "@hono/node-server";
 import { logger } from "hono/logger";
-import { consola } from "consola";
-import { notificationRoute } from './routes/notification';
+import { showRoutes } from "hono/dev";
 
+import { env } from "./env";
+import { onError } from "./middlewares/on-error";
+import { notificationRoute } from "./routes/notification";
+//#endregion
 
+const app = new Hono();
 
-const app = new Hono()
+app.use(logger());
 
-app.use(logger(consola.info));
+app.route("/notifications", notificationRoute);
 
-app.route('/notifications', notificationRoute);
+app.onError(onError);
 
 showRoutes(app);
 
-export default {
-  fetch: app.fetch,
-  port: Bun.env.PORT || 5003,
-};
+const server = serve(
+  {
+    fetch: app.fetch,
+    port: env.PORT,
+  },
+  (info) => {
+    console.log(`Server is running on port ${info.port}`);
+  }
+);
 
+//#region graceful shutdown
+process.on("SIGINT", () => {
+  server.close();
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  server.close();
+});
+//#endregion

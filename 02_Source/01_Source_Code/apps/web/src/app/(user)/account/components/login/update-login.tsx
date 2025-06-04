@@ -2,18 +2,15 @@
 
 import { Stack } from "@/components/layout/stack";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/typings/models";
 
 import { DeleteAccount } from "./delete-account";
 import { UpdateEmail } from "./update-email";
 import { UpdatePassword } from "./update-password";
 import { VerifyEmail } from "./verify-email";
+import { useUserContext } from "@/features/auth/contexts/UserContext";
 
-type Props = {
-  user: User;
-};
-
-export function UpdateLogin({ user }: Props) {
+export function UpdateLogin() {
+  const user = useUserContext();
   return (
     <Stack orientation="vertical" className="gap-6">
       <section>

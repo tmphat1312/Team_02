@@ -1,110 +1,134 @@
 [
   {
-    "name": "Shoes off inside, please!",
-    "description": "We kindly ask all guests to take off their shoes at the door. It helps us keep the home clean and cozy, especially with little ones crawling around!"
+    "name": "Shoes off inside, please! It helps us keep the home clean and cozy, especially with little ones crawling around!",
+    "description": ""
   },
   {
-    "name": "Dirty laundry goes in the basket.",
-    "description": "We've provided a laundry basket for used clothes — please use it to help us keep things tidy and organized."
+    "name": "Dirty laundry goes in the basket. We've provided a laundry basket for used clothes.",
+    "description": ""
   },
   {
-    "name": "Plant care while you're here.",
-    "description": "We'd really appreciate it if you could give the houseplants a light watering every other day. It's a small gesture that helps keep them happy and green."
+    "name": "Plant care while you're here. We'd really appreciate it if you could give the houseplants a light watering every other day.",
+    "description": ""
   },
   {
-    "name": "No laundry noise after 9 PM.",
-    "description": "The washing machine can get pretty loud, and we like to keep evenings peaceful for everyone in the building. Please finish any laundry before 9 PM."
+    "name": "No laundry noise after 9 PM. The washing machine can get pretty loud.",
+    "description": ""
   },
   {
-    "name": "Grill hours: 10 AM - 8 PM only.",
-    "description": "Feel free to enjoy the barbecue, but for safety and neighborhood peace, please only use it during this time."
+    "name": "Grill hours: 10 AM - 8 PM only. Feel free to enjoy the barbecue, but for safety and neighborhood peace, please only use it during this time.",
+    "description": ""
   },
   {
-    "name": "Help us recycle.",
-    "description": "We sort waste diligently. Please separate recyclables (plastic, glass, paper) from regular trash. There are clearly labeled bins to help you out."
+    "name": "Please separate recyclables (plastic, glass, paper) from regular trash. There are clearly labeled bins to help you out.",
+    "description": ""
   },
   {
-    "name": "Cooking is allowed only in designated kitchen areas.",
-    "description": "Cooking is strictly prohibited in non-designated areas to prevent fire hazards and maintain cleanliness. No hot plates in bedrooms or hallways."
+    "name": "Cooking is allowed only in designated kitchen areas. No hot plates in bedrooms or hallways.",
+    "description": ""
   },
   {
     "name": "Do not park in front of neighboring houses.",
-    "description": "Please avoid parking directly in front of their driveways or gates."
+    "description": ""
   },
   {
     "name": "Quiet hours are serious — please be respectful.",
-    "description": "Excessive noise may lead to immediate eviction from the premises to ensure a peaceful environment."
+    "description": ""
   },
   {
     "name": "Close balcony doors when it rains.",
-    "description": "Please make sure the balcony doors are shut when it rains to avoid water seeping in."
+    "description": ""
   },
   {
-    "name": "No frying, please!",
-    "description": "We've had some issues with lingering cooking smells and oil stains. Please avoid frying inside — lighter cooking is welcome!"
+    "name": "No frying, please! We've had some issues with lingering cooking smells and oil stains.",
+    "description": ""
   },
   {
-    "name": "Close windows when using AC.",
-    "description": "To help the air conditioner work efficiently."
+    "name": "Close windows when using AC to help it work efficiently.",
+    "description": ""
   },
   {
-    "name": "Guests must not use host's personal belongings.",
-    "description": "Some items in the home are for personal use only (they're labeled). Please don't use them during your stay."
+    "name": "Some items in the home are for personal use only (they're labeled). Please don't use them during your stay.",
+    "description": ""
   },
   {
-    "name": "Store food properly.",
-    "description": "Please don't leave food on counters or outside the fridge — it attracts ants quickly in this climate."
+    "name": "Store food properly. Please don't leave food on counters or outside the fridge — it attracts ants quickly in this climate.",
+    "description": ""
   },
   {
-    "name": "Dishes: clean before you go.",
-    "description": "As a courtesy to the next guest and our cleaning team, please wash and put away your dishes before checking out."
+    "name": "Clean dishes before you go.",
+    "description": ""
   },
   {
-    "name": "No towels on balcony railings.",
-    "description": "Hanging towels or clothing over the railings isn't allowed — it can be unsightly and unsafe in strong winds."
+    "name": "No towels on balcony railings. It can be unsightly and unsafe in strong winds.",
+    "description": ""
   },
   {
     "name": "Leave the furniture as is.",
-    "description": "Please avoid moving items around to prevent scratches or accidents."
+    "description": ""
   },
   {
-    "name": "Use coasters on wooden surfaces.",
-    "description": "We love our vintage wood furniture, and we hope you do too. Please use the provided coasters under drinks to keep it looking nice."
+    "name": "Use coasters on wooden surfaces. We love our vintage wood furniture, and we hope you do too.",
+    "description": ""
   },
   {
-    "name": "Toilets are for toilet paper only.",
-    "description": "Please don't flush anything besides toilet paper — no wet wipes, cotton pads, or hygiene products. It really helps avoid plumbing issues!"
+    "name": "Toilets are for toilet paper only. Please don't flush anything besides toilet paper — no wet wipes, cotton pads, or hygiene products!",
+    "description": ""
   },
   {
     "name": "Hair dyeing not allowed in bathrooms.",
-    "description": "Hair dye tends to stain tiles and grout. To avoid any damage, we ask that you don't dye hair in the bathroom."
+    "description": ""
   },
   {
     "name": "Turn off AC when not in use.",
-    "description": "To help us conserve energy and reduce our footprint, please switch off the air conditioning when you're not in the room."
+    "description": ""
   },
   {
-    "name": "Stay safe on the balcony.",
-    "description": "Please don't climb or lean on the balcony railing."
+    "name": "Please don't climb or lean on the balcony railing.",
+    "description": ""
   },
   {
-    "name": "Eco-soaps only in the outdoor shower.",
-    "description": "To protect the natural drainage and our plants, we kindly ask guests to use only biodegradable soaps in the outdoor shower."
+    "name": "Eco-soaps only in the outdoor shower. To protect the natural drainage and our plants, we kindly ask guests to use only biodegradable soaps in the outdoor shower.",
+    "description": ""
   },
   {
-    "name": "No open flames indoors.",
-    "description": "For safety reasons, we don't allow candles, incense, or any open flames inside. Thank you for understanding!"
+    "name": "No open flames indoors. For safety reasons, we don't allow candles, incense, or any open flames inside.",
+    "description": ""
   },
   {
     "name": "Windows closed before check-out.",
-    "description": "Before you leave, kindly make sure all the windows are shut."
+    "description": ""
   },
   {
     "name": "Lock up when you head out.",
-    "description": "For your safety and ours."
+    "description": ""
   },
   {
     "name": "Lights out after midnight.",
-    "description": "To be mindful of our neighbors and reduce energy usage, we ask that you switch off any outdoor lighting by 12 AM."
+    "description": ""
+  },
+  {
+    "name": "Don't adjust the wall-mounted art.",
+    "description": ""
+  },
+  {
+    "name": "Shake out sand before entering. There's a brush and towel by the door for your feet.",
+    "description": ""
+  },
+  {
+    "name": "Beach gear stays outside. We've set up a spot by the door for sandy items.",
+    "description": ""
+  },
+  {
+    "name": "Only use bath towels indoors. We've provided beach towels for your outdoor adventures, so the bath ones can stay fresh longer.",
+    "description": ""
+  },
+  {
+    "name": "Don't remove cushions from the patio set. They're tied down to stay safe in the wind — please keep them in place.",
+    "description": ""
+  },
+  {
+    "name": "Windows open = music low. We love that you're enjoying the vibes — just a heads-up that sound carries easily in this neighborhood.",
+    "description": ""
   }
 ]

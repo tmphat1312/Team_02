@@ -790,5 +790,173 @@
   {
     "propertyId": 50,
     "categoryId": 34
+  },
+  {
+    "propertyId": 51,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 52,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 53,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 53,
+    "categoryId": 27
+  },
+  {
+    "propertyId": 54,
+    "categoryId": 22
+  },
+  {
+    "propertyId": 55,
+    "categoryId": 34
+  },
+  {
+    "propertyId": 56,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 57,
+    "categoryId": 14
+  },
+  {
+    "propertyId": 58,
+    "categoryId": 27
+  },
+  {
+    "propertyId": 59,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 60,
+    "categoryId": 3
+  },
+  {
+    "propertyId": 60,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 61,
+    "categoryId": 3
+  },
+  {
+    "propertyId": 61,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 61,
+    "categoryId": 6
+  },
+  {
+    "propertyId": 61,
+    "categoryId": 24
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 7
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 13
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 19
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 24
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 29
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 34
+  },
+  {
+    "propertyId": 62,
+    "categoryId": 37
+  },
+  {
+    "propertyId": 63,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 63,
+    "categoryId": 6
+  },
+  {
+    "propertyId": 63,
+    "categoryId": 24
+  },
+  {
+    "propertyId": 63,
+    "categoryId": 29
+  },
+  {
+    "propertyId": 64,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 64,
+    "categoryId": 6
+  },
+  {
+    "propertyId": 64,
+    "categoryId": 24
+  },
+  {
+    "propertyId": 64,
+    "categoryId": 29
+  },
+  {
+    "propertyId": 64,
+    "categoryId": 34
+  },
+  {
+    "propertyId": 65,
+    "categoryId": 3
+  },
+  {
+    "propertyId": 65,
+    "categoryId": 26
+  },
+  {
+    "propertyId": 65,
+    "categoryId": 27
+  },
+  {
+    "propertyId": 66,
+    "categoryId": 27
+  },
+  {
+    "propertyId": 67,
+    "categoryId": 3
+  },
+  {
+    "propertyId": 67,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 67,
+    "categoryId": 27
+  },
+  {
+    "propertyId": 68,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 69,
+    "categoryId": 4
+  },
+  {
+    "propertyId": 70,
+    "categoryId": 6
   }
 ]

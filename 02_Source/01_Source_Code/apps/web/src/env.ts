@@ -7,6 +7,9 @@ export const env = createEnv({
     NEXT_PUBLIC_API_GATEWAY_URL: type("string | undefined").pipe(
       (v) => v ?? "http://localhost:3001"
     ),
+    NEXT_PUBLIC_PAYMENT_URL: type("string | undefined").pipe(
+      (v) => v ?? "http://localhost:3008/payment-url"
+    ),
     NEXT_PUBLIC_APP_URL: type("string | undefined").pipe(
       (v) => v ?? "http://localhost:3000"
     ),
@@ -20,6 +23,7 @@ export const env = createEnv({
   },
   runtimeEnv: {
     NEXT_PUBLIC_API_GATEWAY_URL: process.env.NEXT_PUBLIC_API_GATEWAY_URL,
+    NEXT_PUBLIC_PAYMENT_URL: process.env.NEXT_PUBLIC_PAYMENT_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN:
       process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,

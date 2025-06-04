@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "db:push": "drizzle-kit push",
+    "dev": "tsx --watch src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "@t3-oss/env-core": "^0.13.6",
+    "better-call": "^1.0.9",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.0",
+    "std-env": "^3.9.0",
+    "vnpay": "^2.2.0",
+    "zod": "^3.25.34"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^22.15.24",
+    "drizzle-kit": "^0.31.1",
+    "typescript": "^5.8.3"
+  }
+}

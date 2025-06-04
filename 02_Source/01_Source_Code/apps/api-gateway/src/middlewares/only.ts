@@ -9,6 +9,11 @@ type Variables = {
 };
 
 export function only(roles: Role[]) {
+  if (roles.includes("user")) {
+    roles = roles.filter((role) => role !== "user");
+    roles.push("tenant", "host");
+  }
+
   return createMiddleware<{ Variables: Variables }>(async (c, next) => {
     // 1. Check if the request is authenticated
     const session = await auth.api.getSession(c.req.raw);

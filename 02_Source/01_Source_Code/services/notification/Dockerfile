@@ -1,19 +1,27 @@
-ARG BUN_VERSION=1.2.5
-FROM oven/bun:${BUN_VERSION}-slim AS base
+FROM node:22-alpine AS base
+
+FROM base AS builder
+
+RUN apk add --no-cache gcompat
 WORKDIR /app
 
-FROM base AS install
-RUN mkdir -p /temp/prod
-COPY package.json bun.lock /temp/prod/
-RUN cd /temp/prod && bun install --frozen-lockfile --production
+COPY package*json tsconfig.json src ./
 
-FROM base AS prerelease
-COPY --link . .
+RUN npm i && \
+    npm run build && \
+    npm prune --production
 
-FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /app .
+FROM base AS runner
+WORKDIR /app
 
-USER bun
-EXPOSE 5003/tcp
-ENTRYPOINT [ "bun", "run", "start" ]
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 hono
+
+COPY --from=builder --chown=hono:nodejs /app/node_modules /app/node_modules
+COPY --from=builder --chown=hono:nodejs /app/dist /app/dist
+COPY --from=builder --chown=hono:nodejs /app/package.json /app/package.json
+
+USER hono
+EXPOSE 8004/tcp
+
+CMD ["node", "/app/dist/index.js"]

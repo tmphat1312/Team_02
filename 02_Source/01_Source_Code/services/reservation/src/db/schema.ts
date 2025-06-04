@@ -12,6 +12,7 @@ export const reservationStatus = pgEnum("status", [
   "Confirmed",
   "Paid",
   "Canceled",
+  "Refunded",
 ]);
 
 export const reservationTable = pgTable("reservations", {

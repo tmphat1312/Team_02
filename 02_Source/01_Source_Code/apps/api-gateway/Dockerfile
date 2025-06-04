@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 
 FROM base AS builder
 
@@ -25,6 +25,6 @@ COPY --from=builder --chown=api-gateway:nodejs /app/dist /app/dist
 COPY --from=builder --chown=api-gateway:nodejs /app/package.json /app/package.json
 
 USER api-gateway
-EXPOSE 3001/tcp
+EXPOSE 8000/tcp
 
 CMD ["node", "/app/dist/server.js"]
