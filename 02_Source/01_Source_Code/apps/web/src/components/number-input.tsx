@@ -15,6 +15,7 @@ type Props = {
   minValue?: number;
   disabled?: boolean;
   greaterInput?: boolean;
+  semantic?: boolean;
   onValueChange: (value: number) => void;
 };
 
@@ -26,6 +27,7 @@ export function NumberInput({
   maxValue,
   minValue,
   disabled,
+  semantic = true,
 }: Props) {
   const increment = () => {
     const newValue = Math.min(maxValue ?? Infinity, value + 1);
@@ -48,7 +50,7 @@ export function NumberInput({
         <CountButton onClick={decrement} disabled={decrementDisabled}>
           <Minus />
         </CountButton>
-        <span className="text-center">{semanticValue}</span>
+        <span className="text-center">{semantic ? semanticValue : value}</span>
         <CountButton onClick={increment} disabled={incrementDisabled}>
           <Plus />
         </CountButton>

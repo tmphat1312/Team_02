@@ -57,24 +57,27 @@ export function NumbersForm() {
           label="Bedrooms"
           value={bedrooms}
           onValueChange={handleBedroomsChange}
-          minValue={1}
+          minValue={0}
           maxValue={20}
+          semantic={false}
         />
         <Separator />
         <NumberInput
           label="Beds"
           value={beds}
           onValueChange={handleBedsChange}
-          minValue={1}
+          minValue={0}
           maxValue={20}
+          semantic={false}
         />
         <Separator />
         <NumberInput
           label="Bathrooms"
           value={bathrooms}
           onValueChange={handleBathroomsChange}
-          minValue={1}
+          minValue={0}
           maxValue={20}
+          semantic={false}
         />
       </Stack>
     </StepSection>

@@ -58,9 +58,9 @@ const Steps = [
     component: NumbersForm,
     checkNextDisabled: (state: CreateListingContextState) =>
       state.guests <= 0 ||
-      state.bedrooms <= 0 ||
-      state.beds <= 0 ||
-      state.bathrooms <= 0,
+      state.bedrooms < 0 ||
+      state.beds < 0 ||
+      state.bathrooms < 0,
   },
   {
     component: ImageForm,
@@ -163,9 +163,9 @@ export function CreateListingForm() {
     !!state.coordinates &&
     !!state.address &&
     state.guests > 0 &&
-    state.bedrooms > 0 &&
-    state.beds > 0 &&
-    state.bathrooms > 0 &&
+    state.bedrooms >= 0 &&
+    state.beds >= 0 &&
+    state.bathrooms >= 0 &&
     state.images.length >= 5 &&
     state.imageFiles.length >= 5 &&
     state.amenities.length > 0 &&
