@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: rento-postgres
+    environment:
+      POSTGRES_DB: rento-property
+      POSTGRES_USER: rento-property_owner
+      POSTGRES_PASSWORD: npg_Sn1LWwU4lCQA
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rento-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rento-property_owner -d rento-property"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  search:
+    build:
+      context: ./02_Source/01_Source_Code/services/search
+      dockerfile: Dockerfile
+    container_name: rento-search
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/rento-property
+      - SPRING_DATASOURCE_USERNAME=rento-property_owner
+      - SPRING_DATASOURCE_PASSWORD=npg_Sn1LWwU4lCQA
+      - SPRING_ELASTICSEARCH_URIS=https://67912903224c4a45bc255ec063468186.ap-southeast-1.aws.found.io:443
+      - SPRING_ELASTICSEARCH_USERNAME=minhnguyet
+      - SPRING_ELASTICSEARCH_PASSWORD=Learning-purpose-0
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - rento-network
+
+volumes:
+  postgres_data:
+
+networks:
+  rento-network:
+    driver: bridge 
