@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "npx concurrently -k -n DOCKER,WEB -c yellow,red \"npm run docker:up && npm run api-gateway:install && npm run api-gateway:start\" \"npm run web:install && npm run web:start\"",
+    "start": "npx concurrently -k -n DOCKER,WEB -c yellow,blue \"npm run docker:up && npm run api-gateway:install && npm run api-gateway:start\" \"npm run web:install && npm run web:start\"",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "web:install": "npm i --prefix apps/web",
