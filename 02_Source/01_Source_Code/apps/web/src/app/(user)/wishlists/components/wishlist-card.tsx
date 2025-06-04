@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { Star, X } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,10 +36,6 @@ export function WishlistCard({ item }: WishlistCardProps) {
         />
         <Stack className="justify-between">
           <h3 className="font-semibold">{item.name}</h3>
-          <span className="inline-flex items-center gap-1 opacity-70">
-            <Star className="fill-current mt-0.5" size={12} />
-            {item.rating}
-          </span>
         </Stack>
         <p>{format(new Date(item.createdAt), "eeee, MMMM d")}</p>
       </Link>
