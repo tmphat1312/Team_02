@@ -1,14 +1,8 @@
-# Use the official OpenJDK base image for Java 22
-FROM eclipse-temurin:22-jdk
+FROM maven:3.8.5-openjdk-17 AS build
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the application's build file and dependencies
-# Assumes the project is built into a JAR file (using a build tool like Maven or Gradle)
-COPY target/property-search-service-1.0-SNAPSHOT.jar /app/app.jar
-
-# Expose the port the application will run on (default for Jakarta EE: 8080)
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=build /target/*.jar app.jar
 EXPOSE 8082
-# Run the application
-CMD ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
