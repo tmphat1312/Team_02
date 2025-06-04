@@ -17,16 +17,43 @@ import {
 const MaxPrice = 100_000;
 const MinPrice = 2;
 
+function formatCurrency(value: string) {
+  const num = parseFloat(value.replace(/[^0-9.]/g, ""));
+  if (isNaN(num)) return "";
+  return num.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  });
+}
+
+function unformatCurrency(value: string) {
+  return value.replace(/[^0-9.]/g, "");
+}
+
 export function PriceForm() {
   const { state, dispatch } = useCreateListingContext();
 
   const id = useId();
   const [exceedPriceRange, setExceedPriceRange] = useState(false);
-  const [price, setPrice] = useState(formatPrice(state.price));
+  const [priceInput, setPriceInput] = useState(
+    state.price ? state.price.toString() : ""
+  );
+  const [isFocused, setIsFocused] = useState(false);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const priceStr = e.target.value;
-    const priceNum = parseFloat(priceStr.replace(/[^0-9.-]+/g, ""));
+    const input = e.target.value;
+    // Remove non-numeric except dot
+    if (
+      !/^\$?\d{0,3}(,\d{3})*(\.\d*)?$/.test(input.replace(/ /g, "")) &&
+      input !== ""
+    )
+      return;
+
+    const raw = unformatCurrency(input);
+    setPriceInput(raw);
+
+    const priceNum = parseFloat(raw);
     const price = isNaN(priceNum) ? 0 : priceNum;
 
     if (price < MinPrice || price > MaxPrice) {
@@ -36,8 +63,19 @@ export function PriceForm() {
       setExceedPriceRange(false);
       dispatch({ type: ActionType.SET_PRICE, payload: price });
     }
+  };
 
-    setPrice(formatPrice(price));
+  const handleBlur = () => {
+    setIsFocused(false);
+    setPriceInput((prev) => {
+      if (!prev) return "";
+      return formatCurrency(prev);
+    });
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setPriceInput((prev) => unformatCurrency(prev));
   };
 
   return (
@@ -54,9 +92,19 @@ export function PriceForm() {
         <input
           id={id}
           className="text-7xl focus:outline-none font-semibold text-center! max-w-lg"
-          value={price}
+          value={
+            isFocused
+              ? priceInput
+              : priceInput
+              ? formatCurrency(priceInput)
+              : ""
+          }
           onChange={handlePriceChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           autoComplete="off"
+          inputMode="decimal"
+          pattern="^\d*\.?\d*$"
         />
         {exceedPriceRange && (
           <p

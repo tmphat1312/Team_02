@@ -5,19 +5,19 @@ import React from "react";
 import { FileMetadata } from "@/hooks/use-file-upload";
 
 const InitialState: CreateListingContextState = {
-  title: "Beautiful House",
-  description: "A beautiful house in the countryside",
-  categories: [8, 6],
+  title: "",
+  description: "",
+  categories: [],
   price: 10,
-  address: "Can Gio, Ho Chi Minh City, Vietnam",
+  address: "",
   guests: 4,
   bedrooms: 2,
   beds: 2,
   bathrooms: 1,
   images: [],
   imageFiles: [],
-  amenities: [42, 41, 38, 37],
-  rules: [14, 13, 12, 11, 10],
+  amenities: [],
+  rules: [],
   customRules: [],
   coordinates: [106.8094544274897, 10.606903854022747],
 };
