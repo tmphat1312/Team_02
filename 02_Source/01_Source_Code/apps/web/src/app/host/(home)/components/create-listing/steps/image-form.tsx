@@ -62,10 +62,9 @@ export function ImageForm() {
   return (
     <StepSection className="overflow-y-auto max-h-140 pe-2">
       <StepHeader>
-        <StepHeading>Add some photos of your shepherd’s hut</StepHeading>
+        <StepHeading>Add some photos of your place</StepHeading>
         <StepDescription>
-          You&apos;ll need 5 photos to get started. You can add more or make
-          changes later.
+          You&apos;ll need 5 photos to get started.
         </StepDescription>
       </StepHeader>
 

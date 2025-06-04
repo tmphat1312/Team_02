@@ -82,7 +82,9 @@ export function PriceForm() {
     <StepSection>
       <StepHeader>
         <StepHeading>Now, set your price</StepHeading>
-        <StepDescription>You can change it anytime.</StepDescription>
+        <StepDescription>
+          Choose a nightly price that works for you.
+        </StepDescription>
       </StepHeader>
 
       <form className="mb-18" onSubmit={(e) => e.preventDefault()}>

@@ -41,7 +41,8 @@ export function NumbersForm() {
       <StepHeader>
         <StepHeading>Share some basic about your place</StepHeading>
         <StepDescription>
-          You&apos;ll add more details later, like bed types
+          Select the right numbers of guests, bedrooms, beds and bathrooms of
+          your place.
         </StepDescription>
       </StepHeader>
       <Stack orientation="vertical" className="gap-4">

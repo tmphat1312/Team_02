@@ -108,7 +108,7 @@ export function CoordinatesForm() {
       <StepHeader>
         <StepHeading>Where is your listing located?</StepHeading>
         <StepDescription>
-          Make your shepherd’s hut a home by adding your address here.
+          Help guests find your place by selecting its location on the map.
         </StepDescription>
       </StepHeader>
       <div className="relative">

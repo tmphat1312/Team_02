@@ -95,7 +95,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       <StepHeader>
         <StepHeading>Tell guests what your place has to offer</StepHeading>
         <StepDescription>
-          You can add more amenities after you publish your listing.
+          Select the amenities you provide to help guests know what to expect
+          during their stay.
         </StepDescription>
       </StepHeader>
       {children}

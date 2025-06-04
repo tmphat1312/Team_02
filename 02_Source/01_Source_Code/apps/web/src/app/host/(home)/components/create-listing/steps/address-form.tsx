@@ -31,8 +31,7 @@ export function AddressForm() {
       <StepHeader>
         <StepHeading>Polish your address</StepHeading>
         <StepDescription>
-          This is how your listing will appear on our platform. You can change
-          it later.
+          This is how your listing will appear on our platform.
         </StepDescription>
       </StepHeader>
       <form onSubmit={(e) => e.preventDefault()}>
