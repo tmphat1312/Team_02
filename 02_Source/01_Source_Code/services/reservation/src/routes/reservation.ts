@@ -51,13 +51,13 @@ route.post("/", zValidator("json", reservationSchema), async (c) => {
     .returning();
 
   await Promise.all([
-    $notification("@post/notifications", {
-      body: {
-        userId: newReservation.hostId,
-        title: "New Reservation",
-        message: `You have a new reservation waiting for confirmation.`,
-      },
-    }),
+    // $notification("@post/notifications", {
+    //   body: {
+    //     userId: newReservation.hostId,
+    //     title: "New Reservation",
+    //     message: `You have a new reservation waiting for confirmation.`,
+    //   },
+    // }),
     $payment("@post/user-payment-history/:reservationId/deposit-payment", {
       body: {
         fromUserId: newReservation.tenantId,

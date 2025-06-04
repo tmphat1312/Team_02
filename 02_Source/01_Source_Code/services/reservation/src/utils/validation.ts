@@ -14,7 +14,7 @@ export const reservationSchema = z
     numberOfGuests: z.number().int().positive(),
     note: z.string().optional(),
   })
-  .refine((data) => data.checkOutDate > data.checkInDate, {
+  .refine((data) => data.checkOutDate >= data.checkInDate, {
     message: "must be after check-in date",
     path: ["Check-out date"],
   })
