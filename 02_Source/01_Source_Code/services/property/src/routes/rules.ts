@@ -19,7 +19,9 @@ const route = new Hono();
 route.get("/", transformPaginationQuery, async (c) => {
   const { page, pageSize } = c.var.pagination;
   const offset = calculateOffset({ page, pageSize });
+
   const type = c.req.query("type");
+  const order = c.req.query("order") ?? "desc";
 
   const whereClause = type
     ? eq(rulesTable.type, type as "common" | "custom")
@@ -31,7 +33,7 @@ route.get("/", transformPaginationQuery, async (c) => {
     .where(whereClause)
     .limit(pageSize)
     .offset(offset)
-    .orderBy(desc(rulesTable.id));
+    .orderBy(order === "asc" ? rulesTable.id : desc(rulesTable.id));
   const countRulesQuery = db.$count(rulesTable, whereClause);
 
   const [rules, totalItems] = await Promise.all([
