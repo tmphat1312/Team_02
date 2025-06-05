@@ -111,8 +111,7 @@ export function RuleForm() {
         <StepHeader>
           <StepHeading>Custom Rules</StepHeading>
           <StepDescription>
-            You can add custom rules to your listing. These rules will be
-            displayed to your guests when they book your property.
+            Every home is different — feel free to write your own rules.
           </StepDescription>
         </StepHeader>
         <form className="mb-4" onSubmit={handleCustomRuleSubmit}>
