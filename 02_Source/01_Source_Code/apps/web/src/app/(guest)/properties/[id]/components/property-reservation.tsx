@@ -210,7 +210,7 @@ export function PropertyReservation({ item }: Props) {
               <span>{formatPrice(item.pricePerNight * numberOfNights)}</span>
             </Stack>
             <Stack className="justify-between">
-              <span>Airbnb service fee</span>
+              <span>Rento service fee</span>
               <span>{formatPrice(SERVICE_FEE)}</span>
             </Stack>
             <Stack className="justify-between">
@@ -269,7 +269,7 @@ export function PropertyReservation({ item }: Props) {
           <span>{formatPrice(item.pricePerNight * numberOfNights)}</span>
         </Stack>
         <Stack className="justify-between">
-          <span>Airbnb service fee</span>
+          <span>Rento service fee</span>
           <span>{formatPrice(SERVICE_FEE)}</span>
         </Stack>
       </Stack>

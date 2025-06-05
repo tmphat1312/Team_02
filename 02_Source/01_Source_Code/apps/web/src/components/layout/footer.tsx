@@ -44,7 +44,7 @@ export function Footer({ containerType = "wide" }: FooterProps) {
             orientation="vertical"
             className="items-center gap-1 md:flex-row"
           >
-            <p>&copy;2025 Airbnb, Inc.</p>
+            <p>&copy;2025 Rento, Inc.</p>
             <Dot size={16} className="hidden md:block" />
             <Link href="#" className="hover:underline">
               Terms

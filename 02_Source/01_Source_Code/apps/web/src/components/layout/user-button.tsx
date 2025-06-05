@@ -68,7 +68,7 @@ function SignedOutItems() {
       <DropdownMenuSeparator />
       <DropdownMenuGroup className="py-2">
         <DropdownMenuItem asChild>
-          <LinkItem href="/host">Airbnb your home</LinkItem>
+          <LinkItem href="/host">Rento your home</LinkItem>
         </DropdownMenuItem>
       </DropdownMenuGroup>
     </SignedOut>
@@ -122,7 +122,7 @@ function TenantSignedInItems() {
   return (
     <TenantSignedIn>
       <DropdownMenuItem asChild>
-        <LinkItem href="/host">Airbnb your home</LinkItem>
+        <LinkItem href="/host">Rento your home</LinkItem>
       </DropdownMenuItem>
     </TenantSignedIn>
   );

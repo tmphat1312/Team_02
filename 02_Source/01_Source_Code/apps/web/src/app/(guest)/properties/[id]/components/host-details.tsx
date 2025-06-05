@@ -46,7 +46,7 @@ export function HostDetails({ host }: HostDetailsProps) {
           </div>
           <Separator className="my-5" />
           <TextAlert>
-            To help protect your payment, always use Airbnb to send money and
+            To help protect your payment, always use Rento to send money and
             communicate with hosts.
           </TextAlert>
         </section>

@@ -85,7 +85,7 @@ export function SignInForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-5 px-7 mt-6 mb-9"
         >
-          <h2 className="text-[1.375rem] font-medium">Welcome to Airbnb</h2>
+          <h2 className="text-[1.375rem] font-medium">Welcome to Rento</h2>
 
           {errMsg && (
             <Alert variant="destructive" className="border-destructive">

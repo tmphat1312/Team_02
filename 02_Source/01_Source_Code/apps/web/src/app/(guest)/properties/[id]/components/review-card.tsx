@@ -24,7 +24,7 @@ export function ReviewCard({ item }: { item: ReviewWithTenant }) {
         <section>
           <h5 className="font-medium">{item.tenant.name}</h5>
           <p>
-            {calculateRelativeTime(new Date(item.tenant.createdAt))} on Airbnb
+            {calculateRelativeTime(new Date(item.tenant.createdAt))} on Rento
           </p>
         </section>
       </Stack>

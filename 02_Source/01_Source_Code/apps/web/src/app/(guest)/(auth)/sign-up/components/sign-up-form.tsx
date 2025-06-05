@@ -112,7 +112,7 @@ export default function SignUpForm() {
           className="space-y-4 px-7 pt-6 mb-9"
         >
           <h2 className="text-[1.375rem] mb-5 font-medium">
-            Create an Airbnb account
+            Create an Rento account
           </h2>
 
           {errMsg && (

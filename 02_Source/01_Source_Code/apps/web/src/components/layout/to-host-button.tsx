@@ -9,7 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export function ToHostButton() {
   const { isLoading, isHost } = useUser();
-  const linkText = isHost ? "Switch to hosting" : "Airbnb your home";
+  const linkText = isHost ? "Switch to hosting" : "Rento your home";
 
   if (isLoading) {
     return <Skeleton className="h-8 w-32 rounded-full" />;
