@@ -2,8 +2,9 @@
 
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
+import Image from "next/image";
 
-import { LogoCompact } from "@/components/icons/logo-compact";
+import icon from "@/assets/icon.png";
 import { Grid } from "@/components/layout/grid";
 import { Stack } from "@/components/layout/stack";
 import { Button } from "@/components/ui/button";
@@ -174,7 +175,12 @@ export function CreateListingForm() {
   return (
     <Grid className="grid-rows-[auto_1fr_auto] gap-2">
       <Stack className="py-6 px-10 justify-between">
-        <LogoCompact />
+        <Image
+          src={icon}
+          alt="Icon"
+          className="hidden md:block w-auto h-10"
+          height={180}
+        />
         <Stack className="gap-3">
           <Button
             variant={"outline"}
