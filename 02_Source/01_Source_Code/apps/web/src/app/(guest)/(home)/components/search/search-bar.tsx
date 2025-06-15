@@ -29,7 +29,7 @@ export function SearchBar() {
   return (
     <div
       className={cn(
-        "fixed left-1/2 -translate-x-1/2 top-4 z-100 border rounded-full shadow-md px-2 flex items-center bg-background",
+        "fixed left-1/2 -translate-x-1/2 top-4 z-50 border rounded-full shadow-md px-2 flex items-center bg-background",
         searchOpen && "bg-muted"
       )}
     >
