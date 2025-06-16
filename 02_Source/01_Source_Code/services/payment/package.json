@@ -2,7 +2,8 @@
   "scripts": {
     "db:push": "drizzle-kit push",
     "dev": "tsx --watch src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@types/node": "^22.15.24",
     "drizzle-kit": "^0.31.1",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }
