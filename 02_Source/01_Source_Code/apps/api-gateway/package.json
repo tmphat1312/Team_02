@@ -5,7 +5,10 @@
     "dev": "tsx watch --env-file=.env ./src/server",
     "build": "tsc",
     "start:load": "tsc && pm2 start dist/server.js -i max --name api-gateway",
-    "start": "tsx --env-file=.env ./src/server"
+    "start": "tsx --env-file=.env ./src/server",
+    "db:push": "npx @better-auth/cli migrate",
+    "db:generate": "npx @better-auth/cli generate",
+    "db:migrate": "npx @better-auth/cli migrate"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
