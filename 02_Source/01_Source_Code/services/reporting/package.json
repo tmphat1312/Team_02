@@ -10,13 +10,13 @@
     "dotenv": "^16.5.0",
     "pg": "^8.16.0",
     "std-env": "^3.9.0",
+    "tsx": "^4.20.3",
     "zod": "^3.25.34"
   },
   "type": "module",
   "devDependencies": {
     "@types/node": "^22.15.24",
     "@types/pg": "^8.15.2",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }

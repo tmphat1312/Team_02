@@ -23,4 +23,4 @@ COPY --from=builder --chown=hono:nodejs /app/package.json /app/package.json
 USER hono
 EXPOSE 8007/tcp
 
-CMD ["npx", "tsx", "src/index.ts"]
+CMD ["npm", "run", "start"]
