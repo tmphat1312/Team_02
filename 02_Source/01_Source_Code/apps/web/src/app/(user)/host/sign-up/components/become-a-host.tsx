@@ -20,7 +20,7 @@ export function BecomeAHost({ userId }: { userId: string }) {
   const handleBecomeHost = () => {
     startTransition(async () => {
       await http.post(`/users/${userId}/host`);
-      router.replace("/host");
+      router.push("/host");
     });
   };
 
