@@ -1,3 +1,5 @@
+"use client";
+
 import { DefaultUserAvatar } from "@/components/icons/default-user-avatar";
 import { Stack } from "@/components/layout/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,13 +9,10 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { User } from "@/typings/models";
+import { useUserContext } from "@/features/auth/contexts/UserContext";
 
-type Props = {
-  user: User;
-};
-
-export function ProfileCard({ user }: Props) {
+export function ProfileCard() {
+  const user = useUserContext();
   const year = new Date(user.createdAt).getFullYear();
   return (
     <Card>
