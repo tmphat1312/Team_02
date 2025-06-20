@@ -98,11 +98,11 @@ export function Location() {
         className="p-3 ps-8 block text-sm font-medium cursor-pointer relative"
         htmlFor="location-search"
       >
-        Where
+        <span className="pt-2">Where</span>
         <input
           id="location-search"
           placeholder="Search destinations"
-          className="w-full focus:outline-none"
+          className="mt-1 w-full focus:outline-none placeholder:text-base"
           autoComplete="off"
           onFocus={() => {
             setSuggestedOpen(true);
