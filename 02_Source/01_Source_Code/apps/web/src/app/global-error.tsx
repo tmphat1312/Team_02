@@ -6,12 +6,12 @@ export default function GlobalError() {
   useEffect(() => {
     async function wakeServicesUp() {
       const serviceUrls = [
-        "https://rento_services-api-gateway.onrender.com",
-        "https://rento_services-notification.onrender.com",
-        "https://rento_services-payment.onrender.com",
-        "https://rento_services-property.onrender.com",
-        "https://rento_services-reporting.onrender.com",
-        "https://rento_services-reservation.onrender.com",
+        "https://rento-services-api-gateway.onrender.com",
+        "https://rento-services-notification.onrender.com",
+        "https://rento-services-payment.onrender.com",
+        "https://rento-services-property.onrender.com",
+        "https://rento-services-reporting.onrender.com",
+        "https://rento-services-reservation.onrender.com",
       ] as const;
 
       async function makeRequest(url: string) {
