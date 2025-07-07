@@ -22,9 +22,9 @@ export default function GlobalError() {
       await Promise.all(serviceUrls.map(makeRequest));
     }
 
-    // wakeServicesUp()
-    //   .then(() => console.log("All services woken up successfully."))
-    //   .catch((error) => console.error("Error waking up services:", error));
+    wakeServicesUp()
+      .then(() => console.log("All services woken up successfully."))
+      .catch((error) => console.error("Error waking up services:", error));
   }, []);
 
   return (
