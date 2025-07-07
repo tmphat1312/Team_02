@@ -10,15 +10,11 @@ export function AuthLayout() {
   }
 
   if (error) {
-    return <div>An error occurred</div>;
+    return <Navigate to="/service-unavailable" replace={true} />;
   }
 
   if (data && data.user?.role === 'admin') {
     return <Navigate to="/amenities" replace={true} />;
-  }
-
-  if (!data?.user?.role) {
-    return <Navigate to="/service-unavailable" replace={true} />;
   }
 
   return (
