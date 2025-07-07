@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { AuthLayout } from './components/layout/Auth';
 import { DashboardLayout } from './components/layout/Dashboard';
 import { ProtectedLayout } from './components/layout/Protected';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const CommonRules = lazy(() => import('./routes/CommonRules'));
 const Categories = lazy(() => import('./routes/Categories'));
@@ -29,6 +30,7 @@ export function RoutesProvider() {
             <Route path="/common-rules" element={<CommonRules />} />
           </Route>
         </Route>
+        <Route path="/service-unavailable" element={<ErrorBoundary />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </BrowserRouter>

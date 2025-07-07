@@ -13,7 +13,7 @@ export function ProtectedLayout() {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!data) {
+  if (!data || !data.user) {
     return <Navigate to="/login" replace={true} />;
   }
 
